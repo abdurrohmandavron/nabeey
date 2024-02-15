@@ -1,0 +1,30 @@
+# IntelliJ related
+.idea/
+*.iml
+
+# VS Code related
+.vscode/
+
+# Flutter/Dart related
+*.dart_tool/
+*.flutter-plugins
+*.flutter-plugins-dependencies
+build/
+.dart_tool/
+.pub/
+/.metadata
+.history
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Miscellaneous
+*.log
+*.log.*
+*.log-*
+*.tmproj
+.DS_Store
+ios/Flutter/.last_build_id
+ios/Flutter/App.framework/Info.plist
+ios/Flutter/Flutter.framework/Info.plist
+ios/Flutter/Flutter.podspec

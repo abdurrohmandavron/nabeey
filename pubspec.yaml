@@ -1,0 +1,40 @@
+name: nabeey
+description: Nabeey learning platform.
+publish_to: 'none'
+
+version: 1.0.1+2
+
+environment:
+  sdk: '>=3.0.5 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  icons_flutter: ^0.0.4
+  audioplayers: ^5.1.0
+  image_picker: any
+  flutter_launcher_icons: ^0.13.1
+  youtube_player_flutter: ^8.1.2
+  http: ^0.13.3
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/icon.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/icons/ic_foreground.png"
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/images/
