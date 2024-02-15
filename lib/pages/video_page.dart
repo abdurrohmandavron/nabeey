@@ -234,7 +234,7 @@ Future<List<List<dynamic>>> fetchFuture(int authorIndex,
 }
 
 Future<YTVideo> videoDetails(String url) async {
-  String apiKey = "AIzaSyDNzuOoBriciKkmmUcdCT8XV7vX1Lf1LGY";
+  String apiKey = ""; //Youtube api key
   try {
     final videoId = YoutubePlayer.convertUrlToId(url);
     Uri uri = Uri.parse(
