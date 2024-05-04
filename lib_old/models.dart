@@ -1,0 +1,256 @@
+class User {
+  int id;
+  String firstName;
+  String lastName;
+  String email;
+  String phone;
+  int userRole;
+  Image? asset;
+
+  User({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.phone,
+    required this.userRole,
+    required this.asset,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+        id: json["id"],
+        firstName: json["firstName"],
+        lastName: json["lastName"],
+        email: json["email"],
+        phone: json["phone"],
+        userRole: json["userRole"],
+        asset: json["asset"] != null
+            ? Image.fromJson(json["asset"])
+            : Image(
+                fileName: "temp",
+                filePath:
+                    "https://api.nabeey.uz/Images/e342893178ab49fd85a8570f3ba598d2.jpg",
+              ),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "phone": phone,
+        "userRole": userRole,
+        "asset": asset == null
+            ? Image(
+                fileName: "temp",
+                filePath:
+                    "https://api.nabeey.uz/Images/e342893178ab49fd85a8570f3ba598d2.jpg")
+            : asset!.toJson(),
+      };
+}
+
+class CategoryModel {
+  int id;
+  String name;
+  Image image;
+  String description;
+  List<dynamic> books;
+  List<dynamic> audios;
+  List<dynamic> videos;
+  List<dynamic> articles;
+
+  CategoryModel({
+    required this.id,
+    required this.name,
+    required this.image,
+    required this.books,
+    required this.audios,
+    required this.videos,
+    required this.articles,
+    required this.description,
+  });
+
+  factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
+        id: json["id"],
+        name: json["name"],
+        description: json["description"],
+        image: Image.fromJson(json["image"]),
+        books: List<dynamic>.from(json["books"].map((x) => x)),
+        audios: List<dynamic>.from(json["audios"].map((x) => x)),
+        videos: List<dynamic>.from(json["videos"].map((x) => x)),
+        articles: List<dynamic>.from(json["articles"].map((x) => x)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "description": description,
+        "image": image,
+        "books": List<dynamic>.from(books.map((x) => x)),
+        "audios": List<dynamic>.from(audios.map((x) => x)),
+        "videos": List<dynamic>.from(videos.map((x) => x)),
+        "articles": List<dynamic>.from(articles.map((x) => x)),
+      };
+}
+
+class FileModel {
+  String fileName;
+  String filePath;
+
+  FileModel({
+    required this.fileName,
+    required this.filePath,
+  });
+
+  factory FileModel.fromJson(Map<String, dynamic> json) => FileModel(
+        fileName: json["fileName"],
+        filePath: json["filePath"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "fileName": fileName,
+        "filePath": filePath,
+      };
+}
+
+class ArticleData {
+  int id;
+  String text;
+  Category category;
+  Image image;
+  User user;
+
+  ArticleData({
+    required this.id,
+    required this.text,
+    required this.category,
+    required this.image,
+    required this.user,
+  });
+
+  factory ArticleData.fromJson(Map<String, dynamic> json) => ArticleData(
+        id: json["id"],
+        text: json["text"],
+        category: Category.fromJson(json["category"]),
+        image: Image.fromJson(json["image"]),
+        user: User.fromJson(json["user"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "text": text,
+        "category": category.toJson(),
+        "image": image.toJson(),
+        "user": user.toJson(),
+      };
+}
+
+class AudioData {
+  int id;
+  String title;
+  String description;
+  FileClass audio;
+
+  AudioData({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.audio,
+  });
+
+  factory AudioData.fromJson(Map<String, dynamic> json) => AudioData(
+        id: json["id"],
+        title: json["title"],
+        description: json["description"],
+        audio: FileClass.fromJson(json["audio"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "description": description,
+        "audio": audio.toJson(),
+      };
+}
+
+class VideoData {
+  int id;
+  String title;
+  String description;
+  String videoLink;
+  String author;
+
+  VideoData({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.videoLink,
+    required this.author,
+  });
+
+  factory VideoData.fromJson(Map<String, dynamic> json) => VideoData(
+        id: json["id"],
+        title: json["title"],
+        description: json["description"],
+        videoLink: json["videoLink"],
+        author: json["author"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "description": description,
+        "author": author,
+      };
+}
+
+class YTVideo {
+  String? title;
+  String? description;
+  String? image;
+  String? views;
+  String? date;
+  YTVideo({
+    this.title,
+    this.description,
+    this.image,
+    this.views,
+    this.date,
+  });
+}
+
+class BookData {
+  int id;
+  String title;
+  String author;
+  String description;
+  FileClass file;
+  FileClass image;
+
+  BookData({
+    required this.id,
+    required this.title,
+    required this.author,
+    required this.description,
+    required this.file,
+    required this.image,
+  });
+
+  factory BookData.fromJson(Map<String, dynamic> json) => BookData(
+        id: json["id"],
+        title: json["title"],
+        author: json["author"],
+        description: json["description"],
+        file: FileClass.fromJson(json["file"]),
+        image: FileClass.fromJson(json["image"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "author": author,
+        "description": description,
+        "file": file.toJson(),
+        "image": image.toJson(),
+      };
+}

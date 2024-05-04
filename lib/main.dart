@@ -1,24 +1,13 @@
-import 'package:nabeey/imports.dart';
+import 'package:nabeey/app.dart';
+import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+Future<void> main() async {
+  /// Widgets Binding
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  /// GetX Local Storage
+  await GetStorage.init();
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Nabeey App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromRGBO(245, 156, 22, 1),
-        ),
-        useMaterial3: true,
-      ),
-      home: const HomePage(),
-    );
-  }
+  runApp(const App());
 }
