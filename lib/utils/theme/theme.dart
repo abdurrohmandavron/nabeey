@@ -13,8 +13,9 @@ class ADTheme {
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     fontFamily: 'SFProDisplay',
-    primaryColor: ADColors.primary,
     brightness: Brightness.light,
+    primaryColor: ADColors.primary,
+    indicatorColor: ADColors.primary,
     textTheme: ADTextTheme.lightTextTheme,
     scaffoldBackgroundColor: ADColors.white,
     appBarTheme: ADAppBarTheme.lightAppBarTheme,
@@ -22,12 +23,14 @@ class ADTheme {
     elevatedButtonTheme: ADElevatedButtonTheme.lightElevatedButtonTheme,
     outlinedButtonTheme: ADOutlinedButtonTheme.lightOutlinedButtonTheme,
     inputDecorationTheme: ADInputDecorationTheme.lightInputDecorationTheme,
+    progressIndicatorTheme: const ProgressIndicatorThemeData(color: ADColors.primary),
   );
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,
     fontFamily: 'SFProDisplay',
-    primaryColor: ADColors.primary,
     brightness: Brightness.dark,
+    indicatorColor: ADColors.white,
+    primaryColor: ADColors.primary,
     textTheme: ADTextTheme.darkTextTheme,
     scaffoldBackgroundColor: ADColors.black,
     appBarTheme: ADAppBarTheme.darkAppBarTheme,
@@ -35,5 +38,6 @@ class ADTheme {
     elevatedButtonTheme: ADElevatedButtonTheme.darkElevatedButtonTheme,
     outlinedButtonTheme: ADOutlinedButtonTheme.darkOutlinedButtonTheme,
     inputDecorationTheme: ADInputDecorationTheme.darkInputDecorationTheme,
+    progressIndicatorTheme: const ProgressIndicatorThemeData(color: ADColors.primary),
   );
 }

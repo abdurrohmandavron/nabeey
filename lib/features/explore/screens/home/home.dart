@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nabeey/features/explore/controllers/category_controller.dart';
 import 'package:nabeey/features/explore/screens/home/widgets/category_item.dart';
+import 'package:nabeey/utils/constants/sizes.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -27,7 +28,10 @@ class HomeScreen extends StatelessWidget {
             );
           } else if (state is CategoryError) {
             return Center(
-              child: Text('Xato: ${state.message}'),
+              child: Padding(
+                padding: const EdgeInsets.all(ADSizes.defaultSpace),
+                child: Text('Xato: ${state.message}'),
+              ),
             );
           } else {
             return const Text('Nimadir xato ketdi!');

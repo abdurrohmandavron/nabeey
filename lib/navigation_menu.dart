@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_flutter/icons_flutter.dart';
 import 'package:nabeey/utils/constants/enums.dart';
 import 'package:nabeey/utils/constants/colors.dart';
+import 'package:nabeey/utils/helpers/helper_functions.dart';
 import 'package:nabeey/features/explore/screens/home/home.dart';
 
 class NavigationMenu extends StatelessWidget {
@@ -11,6 +12,7 @@ class NavigationMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = HelperFunctions.isDarkMode(context);
 
     return BlocProvider(
       create: (context) => NavigationCubit(),
@@ -23,7 +25,7 @@ class NavigationMenu extends StatelessWidget {
               color: ADColors.white,
               selectedIndex: state.index,
               selectedItemColor: const Color(0xFFF59C16),
-              unselectedItemColor: const Color.fromRGBO(17, 17, 17, 0.5),
+              unselectedItemColor: dark ? ADColors.white : const Color.fromRGBO(17, 17, 17, 0.5),
               onDestinationSelected: (index) {
                 if (index == 0) {
                   BlocProvider.of<NavigationCubit>(context).getNavBarItem(NavigationEvent.home);
@@ -118,12 +120,14 @@ class NavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = HelperFunctions.isDarkMode(context);
+
     return Container(
       height: height,
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.only(topLeft: Radius.circular(radius), topRight: Radius.circular(radius)),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10.0, spreadRadius: 5.0)],
+        boxShadow: [BoxShadow(color: dark ? Colors.grey.withOpacity(0.1) : Colors.black.withOpacity(0.1), blurRadius: 10.0, spreadRadius: 5.0)],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(radius), topRight: Radius.circular(radius)),
