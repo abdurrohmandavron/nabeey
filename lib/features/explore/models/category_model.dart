@@ -35,7 +35,7 @@ class CategoryModel {
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "image": image,
+        "image": image.toJson(),
         "description": description,
         "books": List<dynamic>.from(books.map((x) => x)),
         "audios": List<dynamic>.from(audios.map((x) => x)),

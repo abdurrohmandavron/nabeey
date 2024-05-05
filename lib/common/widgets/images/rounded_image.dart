@@ -1,7 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:nabeey/utils/constants/colors.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
+import 'package:nabeey/utils/constants/colors.dart';
 
 class RoundedImage extends StatelessWidget {
   const RoundedImage({
@@ -45,7 +44,7 @@ class RoundedImage extends StatelessWidget {
         decoration: BoxDecoration(
           border: border,
           color: backgroundColor,
-          image: DecorationImage(image: isNetworkImage ? CachedNetworkImage(imageUrl: imageUrl) as ImageProvider : AssetImage(imageUrl) as ImageProvider),
+          image: DecorationImage(image: isNetworkImage ? NetworkImage(imageUrl) : AssetImage(imageUrl) as ImageProvider),
           borderRadius: BorderRadius.circular(borderRadius),
         ),
         child: ClipRRect(

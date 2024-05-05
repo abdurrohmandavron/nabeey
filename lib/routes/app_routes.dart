@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nabeey/routes/routes.dart';
 import 'package:nabeey/features/explore/screens/home/home.dart';
 
-
-class AppRoutes{
+class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case ADRoutes.home:

@@ -14,7 +14,6 @@ class App extends StatelessWidget {
       title: "Nabeey App",
       theme: ADTheme.lightTheme,
       themeMode: ThemeMode.system,
-      
       darkTheme: ADTheme.darkTheme,
       debugShowCheckedModeBanner: false,
       home: MultiBlocProvider(

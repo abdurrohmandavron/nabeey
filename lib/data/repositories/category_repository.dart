@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nabeey/features/explore/models/category_model.dart';
 import 'package:nabeey/utils/http/http_client.dart';
+import 'package:nabeey/features/explore/models/category_model.dart';
 
 abstract class CategoryRepository {
   @protected
@@ -23,8 +23,9 @@ class CategoryRepositoryImpl implements CategoryRepository {
   @override
   Future<List<CategoryModel>> getCategories() async {
     final response = await _httpClient.get(HttpHelper.categoriesR);
-    // Handle API response (error checking, data parsing)
-    return response['data'].map((category) => CategoryModel.fromJson(category)).toList();
+    final List<dynamic> categoryListJson = response['data'];
+    final List<CategoryModel> categories = categoryListJson.map((categoryJson) => CategoryModel.fromJson(categoryJson)).toList();
+    return categories;
   }
 
   @override

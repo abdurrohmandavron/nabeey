@@ -23,9 +23,9 @@ class ADDeviceUtils {
 
   static void setFullScreen(bool enable) => SystemChrome.setEnabledSystemUIMode(enable ? SystemUiMode.immersiveSticky : SystemUiMode.edgeToEdge);
 
-  static double getStringHeight(BuildContext context) => MediaQuery.of(context).size.height;
+  static double getScreenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
-  static double getStringWidth(BuildContext context) => MediaQuery.of(context).size.width;
+  static double getScreenWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
   static double getPixelRatio(BuildContext context) => MediaQuery.of(context).devicePixelRatio;
 

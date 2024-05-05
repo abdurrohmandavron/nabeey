@@ -13,12 +13,13 @@ class CategoryItem extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 1.4,
       child: GestureDetector(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => CategoryScreen(category: category))),
+        onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ContentScreen(category: category))),
         child: RoundedImage(
           borderRadius: 20,
           fit: BoxFit.cover,
           width: double.infinity,
           height: double.infinity,
+          isNetworkImage: true,
           imageUrl: category.image.filePath,
           margin: const EdgeInsets.only(bottom: 20),
           child: Container(
