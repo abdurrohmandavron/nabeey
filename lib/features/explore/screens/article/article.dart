@@ -30,11 +30,11 @@ class ArticleScreen extends StatelessWidget {
                 /// Articles
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
                     child: ListView.separated(
                       shrinkWrap: true,
                       itemCount: state.articles.length,
-                      separatorBuilder: (_, __) => const SizedBox(height: 16),
+                      separatorBuilder: (_, __) => const SizedBox(height: 24),
                       itemBuilder: (context, index) {
                         final article = state.articles[index];
                         return ArticleItem(article: article);

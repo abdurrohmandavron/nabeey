@@ -25,39 +25,43 @@ class ADHeader extends StatelessWidget {
             gradient: LinearGradient(begin: Alignment.bottomRight, colors: [Color.fromRGBO(0, 0, 0, 1), Color.fromRGBO(0, 0, 0, 0.9), Color.fromRGBO(0, 0, 0, 0.8), Color.fromRGBO(0, 0, 0, 0.1)]),
             borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    /// Back button
-                    IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Iconsax.arrow_left, color: ADColors.white)),
+              /// Back button
+              Container(
+                margin: const EdgeInsets.only(top: 16),
+                child: IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Iconsax.arrow_left, color: ADColors.white)),
+              ),
 
-                    /// Texts
-                    Column(
+              /// Row
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  /// Texts
+                  Expanded(
+                    flex: 2,
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(category.name, style: Theme.of(context).textTheme.headlineMedium!.apply(color: ADColors.white)),
                         Text(category.description, style: Theme.of(context).textTheme.bodySmall!.apply(color: ADColors.white)),
                       ],
                     ),
-                  ],
-                ),
-              ),
+                  ),
 
-              /// Check Knowledge Button
-              Expanded(
-                flex: 1,
-                child: ElevatedButton(
-                  onPressed: () => Navigator.pushNamed(context, '/quiz'),
-                  style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
-                  child: Text(ADTexts.checkKnowledge, style: Theme.of(context).textTheme.bodyMedium!.apply(color: ADColors.white)),
-                ),
+                  /// Check Knowledge Button
+                  Expanded(
+                    flex: 1,
+                    child: ElevatedButton(
+                      onPressed: () => Navigator.pushNamed(context, '/quiz'),
+                      style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
+                      child: Text(ADTexts.checkKnowledge, style: Theme.of(context).textTheme.bodyMedium!.apply(color: ADColors.white)),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

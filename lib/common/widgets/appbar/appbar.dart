@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter/material.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
@@ -32,7 +31,7 @@ class ADAppBar extends StatelessWidget implements PreferredSizeWidget {
         automaticallyImplyLeading: false,
         leading: showBackArrow
             ? IconButton(
-                onPressed: () => Get.back(),
+                onPressed: () => Navigator.pop(context),
                 icon: Icon(Iconsax.arrow_left, color: dark ? ADColors.white : ADColors.dark),
               )
             : leadingIcon != null

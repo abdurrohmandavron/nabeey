@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:nabeey/common/widgets/appbar/appbar.dart';
 import 'package:nabeey/common/widgets/images/rounded_image.dart';
 import 'package:nabeey/features/explore/models/article_model.dart';
@@ -16,9 +17,10 @@ class ArticleContent extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             /// Image
-            RoundedImage(imageUrl: article.image.filePath, fit: BoxFit.cover, isNetworkImage: true),
+            AspectRatio(aspectRatio: 1.4, child: RoundedImage(imageUrl: article.image.filePath, fit: BoxFit.cover, isNetworkImage: true)),
             const SizedBox(height: 20),
 
             /// Name
