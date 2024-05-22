@@ -1,3 +1,3 @@
 class ADAPIs {
-  static const String customSecretApiKey = '';
+  static const String youTubeSecretApiKey = 'AIzaSyC455mcFdJrv07Pq8qb4pKFIcuOWGirrTA';
 }

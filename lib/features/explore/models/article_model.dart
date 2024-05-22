@@ -1,34 +1,35 @@
 import 'package:nabeey/data/models/file_model.dart';
+import 'package:nabeey/features/explore/models/user_model.dart';
 import 'package:nabeey/features/explore/models/category_model.dart';
 
 class ArticleModel {
   int id;
   String text;
-  CategoryModel category;
+  UserModel user;
   FileModel image;
-  // User user;
+  CategoryModel category;
 
   ArticleModel({
     required this.id,
     required this.text,
-    required this.category,
+    required this.user,
     required this.image,
-    // required this.user,
+    required this.category,
   });
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) => ArticleModel(
         id: json["id"],
         text: json["text"],
-        category: CategoryModel.fromJson(json["category"]),
+        user: UserModel.fromJson(json["user"]),
         image: FileModel.fromJson(json["image"]),
-        // user: User.fromJson(json["user"]),
+        category: CategoryModel.fromJson(json["category"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "text": text,
-        "category": category.toJson(),
+        "user": user.toJson(),
         "image": image.toJson(),
-        // "user": user.toJson(),
+        "category": category.toJson(),
       };
 }

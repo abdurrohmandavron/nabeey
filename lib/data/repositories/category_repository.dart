@@ -6,13 +6,13 @@ abstract class CategoryRepository {
   @protected
   Future<List<CategoryModel>> getCategories();
 
-  Future<CategoryModel?> getCategory(int userId);
+  Future<CategoryModel?> getCategory(int categoryId);
 
-  Future<void> createCategory(CategoryModel user);
+  Future<void> createCategory(CategoryModel category);
 
-  Future<void> updateCategory(CategoryModel user);
+  Future<void> updateCategory(CategoryModel category);
 
-  Future<void> deleteCategory(int userId);
+  Future<void> deleteCategory(int categoryId);
 }
 
 class CategoryRepositoryImpl implements CategoryRepository {

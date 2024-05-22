@@ -44,6 +44,8 @@ class ArticleScreen extends StatelessWidget {
                 )
               ],
             );
+          } else if (state is ArticleEmpty) {
+            return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text("Maqola mavjud emas.", style: Theme.of(context).textTheme.bodyLarge)));
           } else if (state is ArticleError) {
             return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text(state.message, style: Theme.of(context).textTheme.bodyLarge)));
           } else {

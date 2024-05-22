@@ -21,8 +21,8 @@ class ContentItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
       decoration: BoxDecoration(
-        color: dark ? const Color.fromRGBO(25, 118, 210, 1) : ADColors.white,
         borderRadius: BorderRadius.circular(20),
+        color: dark ? const Color.fromRGBO(25, 118, 210, 1) : ADColors.white,
         boxShadow: [BoxShadow(color: dark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.1), blurRadius: 10.0)],
       ),
       child: Row(
@@ -37,7 +37,13 @@ class ContentItem extends StatelessWidget {
               Text(type[index]['name'], style: Theme.of(context).textTheme.titleMedium),
             ],
           ),
-          Transform.rotate(angle: -0.4, child: Align(alignment: Alignment.centerRight, child: Icon(type[index]['icon'], size: 50, color: dark ? ADColors.white.withOpacity(0.5) : Colors.grey))),
+          Transform.rotate(
+            angle: -0.4,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Icon(type[index]['icon'], size: 50, color: dark ? ADColors.white.withOpacity(0.5) : Colors.grey),
+            ),
+          ),
         ],
       ),
     );

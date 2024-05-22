@@ -1,11 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:icons_flutter/icons_flutter.dart';
 
 class ArticleDetailsRow extends StatelessWidget {
-  const ArticleDetailsRow({
-    super.key,
-  });
+  const ArticleDetailsRow({super.key});
 
   @override
   Widget build(BuildContext context) {

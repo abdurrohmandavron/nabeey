@@ -1,19 +1,41 @@
 import 'dart:async';
-// import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:nabeey/data/models/file_model.dart';
+import 'package:nabeey/features/explore/models/video_model.dart';
+import 'package:nabeey/utils/constants/api_constants.dart';
+import 'package:nabeey/features/explore/models/user_model.dart';
 import 'package:nabeey/features/explore/models/article_model.dart';
 import 'package:nabeey/features/explore/models/category_model.dart';
+import 'package:nabeey/utils/logging/logger.dart';
 
 // class HttpHelper {
 //   HttpHelper();
 
-//   final String _baseUrl = "https://api.nabeey.uz";
+// static const String _baseUrl = "https://api.nabeey.uz";
 
-//   static const String categoryC = 'api/content-categories/create/';
-//   static const String categoryR = 'api/content-categories/get-by-id/';
-//   static const String categoryU = 'api/content-categories/update/';
-//   static const String categoryD = 'api/content-categories/delete/';
-//   static const String categoriesR = 'api/content-categories/get-all/';
+// static const String categoryC = 'api/content-categories/create/';
+// static const String categoryR = 'api/content-categories/get-by-id/';
+// static const String categoryU = 'api/content-categories/update/';
+// static const String categoryD = 'api/content-categories/delete/';
+
+// static const String categoriesR = 'api/content-categories/get-all/';
+
+// static const String articleC = 'api/articles/create/';
+// static const String articleR = 'api/articles/get-by-id/';
+// static const String articleU = 'api/articles/update/';
+// static const String articleD = 'api/articles/delete/';
+
+// static const String articlesR = 'api/articles/get-all/';
+
+// static const String videoC = 'api/articles/create/';
+// static const String videoR = 'api/articles/get-by-id/';
+// static const String videoU = 'api/articles/update/';
+// static const String videoD = 'api/articles/delete/';
+
+// static const String videosR = 'api/articles/get-all/';
+
+// static const String youtubeR = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=$videoId&key=$apiKey';
 
 //   Future<Map<String, dynamic>> get(String endpoint) async {
 //     final response = await http.get(Uri.parse('$_baseUrl/$endpoint'));
@@ -45,6 +67,11 @@ import 'package:nabeey/features/explore/models/category_model.dart';
 //     return _handleResponse(response);
 //   }
 
+//   Future<Map<String, dynamic>> getVideoMetaData() async {
+//     final response = await http.get(Uri.parse(youtubeR));
+//     return _handleResponse(response);
+//   }
+
 //   Map<String, dynamic> _handleResponse(http.Response response) {
 //     if (response.statusCode == 200) {
 //       return json.decode(response.body);
@@ -73,6 +100,15 @@ class HttpHelper {
 
   static const String articlesR = 'api/articles/get-all/';
 
+  static const String videoC = 'api/video/create/';
+  static const String videoR = 'api/video/get-by-id/';
+  static const String videoU = 'api/video/update/';
+  static const String videoD = 'api/video/delete/';
+
+  static const String videosR = 'api/videos/get-all/';
+
+  static const String youtubeR = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=';
+
   Future<Map<String, dynamic>> get(String endpoint) async {
     final response = Jsons().get('$_baseUrl/$endpoint');
     return _handleResponse(response);
@@ -91,6 +127,19 @@ class HttpHelper {
   Future<Map<String, dynamic>> delete(String endpoint) async {
     final response = Jsons().get('$_baseUrl/$endpoint');
     return _handleResponse(response);
+  }
+
+  Future<Map<String, dynamic>> getVideoData(String videoId) async {
+    final uri = Uri.parse('$youtubeR$videoId&key=${ADAPIs.youTubeSecretApiKey}');
+    final response = await http.get(uri);
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      LoggerHelper.info(jsonData);
+      return jsonData;
+    } else {
+      throw Exception('Failed to load data: ${response.statusCode}');
+    }
   }
 
   Map<String, dynamic> _handleResponse(Map<String, dynamic> response) {
@@ -127,15 +176,35 @@ class Jsons {
     List<Map<String, dynamic>> articles = [];
 
     for (int i = 1; i <= 4; i++) {
-      articles.add(ArticleModel(
-        id: i,
-        image: FileModel(fileName: 'image-$i', filePath: 'https://picsum.photos/id/${i * 25}/350/250'),
-        category: CategoryModel.fromJson(Jsons.createCategories()[0]),
-        text:
-            "This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i.",
-      ).toJson());
+      articles.add(
+        ArticleModel(
+                id: i,
+                image: FileModel(fileName: 'image-$i', filePath: 'https://picsum.photos/id/${i * 25}/350/250'),
+                category: CategoryModel.fromJson(Jsons.createCategories()[0]),
+                user: UserModel.fromJson(UserModel(id: 1, firstName: 'Abdurahmon', lastName: 'Davronov', email: 'abdurakhmon278@gmail.com', phone: '+998915550895', userRole: 0).toJson()),
+                text:
+                    "This is text of article-$i. cle-$i. This is text of . This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text")
+            .toJson(),
+      );
     }
     return articles;
+  }
+
+  static const List<String> youtubeLinks = [
+    'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Rick Astley - Never Gonna Give You Up
+    'https://www.youtube.com/watch?v=Iwuy4hHO3YQ', // nope.avi
+    'https://www.youtube.com/watch?v=NHqA2sdL9KI', // Bruno Mars - The Lazy Song
+    'https://www.youtube.com/watch?v=oSxj7S3JiPw', // PSY - GANGNAM STYLE
+    'https://www.youtube.com/watch?v=gvdf5n-zI14', // Rick Roll (Different link + no ads)
+  ];
+
+  static List<Map<String, dynamic>> createVideos() {
+    List<Map<String, dynamic>> videos = [];
+
+    for (int i = 1; i <= 4; i++) {
+      videos.add(VideoModel(id: 1, title: 'Video title-$i', author: 'Author $i', videoLink: Jsons.youtubeLinks[i - 1], description: 'Video description $i').toJson());
+    }
+    return videos;
   }
 
   Map<String, dynamic> get(String uri) => jsons[uri]!;
@@ -151,8 +220,8 @@ class Jsons {
       "message": "Successful",
       "data": Jsons.createCategories()[0],
     },
-    "https://api.nabeey.uz/api/content-categories/update/": {},
-    "https://api.nabeey.uz/api/content-categories/delete/": {"": ""},
+    "https://api.nabeey.uz/api/content-categories/update/1": {},
+    "https://api.nabeey.uz/api/content-categories/delete/1": {"": ""},
     "${HttpHelper._baseUrl}/${HttpHelper.categoriesR}": {
       "statusCode": 200,
       "message": "Successful",
@@ -163,17 +232,34 @@ class Jsons {
       "message": "Successful",
       "data": Jsons.createArticles()[0],
     },
-    "${HttpHelper._baseUrl}/${HttpHelper.articleR}": {
+    "${HttpHelper._baseUrl}/${HttpHelper.articleR}1": {
       "statusCode": 200,
       "message": "Successful",
       "data": Jsons.createArticles()[0],
     },
-    "${HttpHelper._baseUrl}/${HttpHelper.articleU}": {},
-    "${HttpHelper._baseUrl}/${HttpHelper.articleD}": {"": ""},
+    "${HttpHelper._baseUrl}/${HttpHelper.articleU}1": {},
+    "${HttpHelper._baseUrl}/${HttpHelper.articleD}1": {"": ""},
     "${HttpHelper._baseUrl}/${HttpHelper.articlesR}": {
       "statusCode": 200,
       "message": "Successful",
       "data": [Jsons.createArticles()[0], Jsons.createArticles()[1], Jsons.createArticles()[2], Jsons.createArticles()[3]],
+    },
+    "${HttpHelper._baseUrl}/${HttpHelper.videoC}": {
+      "statusCode": 200,
+      "message": "Successful",
+      "data": Jsons.createArticles()[0],
+    },
+    "${HttpHelper._baseUrl}/${HttpHelper.videoR}1": {
+      "statusCode": 200,
+      "message": "Successful",
+      "data": Jsons.createArticles()[0],
+    },
+    "${HttpHelper._baseUrl}/${HttpHelper.videoU}1": {},
+    "${HttpHelper._baseUrl}/${HttpHelper.videoD}1": {"": ""},
+    "${HttpHelper._baseUrl}/${HttpHelper.videosR}": {
+      "statusCode": 200,
+      "message": "Successful",
+      "data": [Jsons.createVideos()[0], Jsons.createVideos()[1], Jsons.createVideos()[2], Jsons.createVideos()[3]],
     },
   };
 }

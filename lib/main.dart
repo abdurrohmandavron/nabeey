@@ -1,13 +1,13 @@
 import 'package:nabeey/app.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:nabeey/utils/local_storage/storage_utility.dart';
 
 Future<void> main() async {
   /// Widgets Binding
   WidgetsFlutterBinding.ensureInitialized();
 
-  /// GetX Local Storage
-  await GetStorage.init();
+  /// Hive Local Storage
+  LocalStorage.initHive();
 
   runApp(const App());
 }

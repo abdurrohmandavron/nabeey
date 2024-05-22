@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:nabeey/utils/constants/colors.dart';
 
 class SectionHeading extends StatelessWidget {
-  const SectionHeading({super.key, this.onPressed, this.textColor, required this.title, this.buttonTitle = "Barchasi", this.showActionButton = true});
+  const SectionHeading({
+    super.key,
+    this.onPressed,
+    required this.title,
+    this.showActionButton = true,
+    this.buttonTitle = "Barchasi",
+    this.textColor = ADColors.primary,
+  });
 
   final Color? textColor;
   final bool showActionButton;

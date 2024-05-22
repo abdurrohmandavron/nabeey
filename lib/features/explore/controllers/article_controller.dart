@@ -65,6 +65,13 @@ class ArticleLoaded extends ArticleState {
   String toString() => 'ArticleLoaded { Articles: $articles }';
 }
 
+class ArticleEmpty extends ArticleState {
+  const ArticleEmpty();
+
+  @override
+  String toString() => 'ArticleEmpty';
+}
+
 class ArticleError extends ArticleState {
   final String message;
 
@@ -75,16 +82,4 @@ class ArticleError extends ArticleState {
 
   @override
   String toString() => 'ArticleError { message: $message }';
-}
-
-class ArticleEmpty extends ArticleState {
-  final String message;
-
-  const ArticleEmpty(this.message);
-
-  @override
-  List<Object> get props => [message];
-
-  @override
-  String toString() => 'ArticleEmpty { message: $message }';
 }

@@ -6,13 +6,13 @@ abstract class ArticleRepository {
   @protected
   Future<List<ArticleModel>> getArticles();
 
-  Future<ArticleModel?> getArticle(int userId);
+  Future<ArticleModel?> getArticle(int articleId);
 
-  Future<void> createArticle(ArticleModel user);
+  Future<void> createArticle(ArticleModel article);
 
-  Future<void> updateArticle(ArticleModel user);
+  Future<void> updateArticle(ArticleModel article);
 
-  Future<void> deleteArticle(int userId);
+  Future<void> deleteArticle(int articleId);
 }
 
 class ArticleRepositoryImpl implements ArticleRepository {

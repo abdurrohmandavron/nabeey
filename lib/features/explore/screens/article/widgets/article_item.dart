@@ -16,6 +16,7 @@ class ArticleItem extends StatelessWidget {
     final dark = HelperFunctions.isDarkMode(context);
 
     return GestureDetector(
+      // See content of Article
       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ArticleContent(article: article))),
       child: AspectRatio(
         aspectRatio: 1,
