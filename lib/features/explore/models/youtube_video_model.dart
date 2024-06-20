@@ -1,5 +1,4 @@
 class YouTubeVideoModel {
-  int views;
   String date;
   String title;
   String image;
@@ -9,12 +8,12 @@ class YouTubeVideoModel {
     required this.date,
     required this.title,
     required this.image,
-    required this.views,
     required this.description,
   });
 
+  static YouTubeVideoModel empty() => YouTubeVideoModel(date: '', title: '', image: '', description: '');
+
   factory YouTubeVideoModel.fromJson(Map<String, dynamic> json) => YouTubeVideoModel(
-        views: 13354,
         title: json['title'],
         description: json['description'],
         image: json['thumbnails']['high']['url'],

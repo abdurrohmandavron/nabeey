@@ -8,7 +8,7 @@ class SectionHeading extends StatelessWidget {
     required this.title,
     this.showActionButton = true,
     this.buttonTitle = "Barchasi",
-    this.textColor = ADColors.primary,
+    this.textColor = ADColors.black,
   });
 
   final Color? textColor;

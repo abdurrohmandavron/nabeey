@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nabeey/utils/logging/logger.dart';
 import 'package:nabeey/utils/http/http_client.dart';
 import 'package:nabeey/features/explore/models/video_model.dart';
 import 'package:nabeey/features/explore/models/youtube_video_model.dart';
@@ -70,13 +69,11 @@ class VideoRepositoryImpl implements VideoRepository {
   @override
   Future<YouTubeVideoModel?> getVideoData(VideoModel video) async {
     final response = await _httpClient.getVideoData(parser(video.videoLink));
-    LoggerHelper.info(parser(video.videoLink));
-
     if (response.containsKey('items') && (response['items'] as List).isNotEmpty) {
       final firstItem = response['items'][0]; // Get the first video entry
       return YouTubeVideoModel.fromJson(firstItem['snippet']); // Parse snippet for data
     } else {
-      return null;
+      return YouTubeVideoModel.empty();
     }
   }
 

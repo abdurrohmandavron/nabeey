@@ -20,8 +20,10 @@ class VideoController extends Bloc<VideoEvent, VideoState> {
 
         for (var author in videos.keys.toList()) {
           List<YouTubeVideoModel> ytVideosList = [];
+
           for (VideoModel video in videos[author]!) {
             final ytVideo = await videoRepository.getVideoData(video);
+
             if (ytVideo != null) {
               ytVideosList.add(ytVideo);
             } else {

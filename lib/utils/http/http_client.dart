@@ -7,7 +7,6 @@ import 'package:nabeey/utils/constants/api_constants.dart';
 import 'package:nabeey/features/explore/models/user_model.dart';
 import 'package:nabeey/features/explore/models/article_model.dart';
 import 'package:nabeey/features/explore/models/category_model.dart';
-import 'package:nabeey/utils/logging/logger.dart';
 
 // class HttpHelper {
 //   HttpHelper();
@@ -131,11 +130,12 @@ class HttpHelper {
 
   Future<Map<String, dynamic>> getVideoData(String videoId) async {
     final uri = Uri.parse('$youtubeR$videoId&key=${ADAPIs.youTubeSecretApiKey}');
+
     final response = await http.get(uri);
 
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
-      LoggerHelper.info(jsonData);
+
       return jsonData;
     } else {
       throw Exception('Failed to load data: ${response.statusCode}');
@@ -178,31 +178,38 @@ class Jsons {
     for (int i = 1; i <= 4; i++) {
       articles.add(
         ArticleModel(
-                id: i,
-                image: FileModel(fileName: 'image-$i', filePath: 'https://picsum.photos/id/${i * 25}/350/250'),
-                category: CategoryModel.fromJson(Jsons.createCategories()[0]),
-                user: UserModel.fromJson(UserModel(id: 1, firstName: 'Abdurahmon', lastName: 'Davronov', email: 'abdurakhmon278@gmail.com', phone: '+998915550895', userRole: 0).toJson()),
-                text:
-                    "This is text of article-$i. cle-$i. This is text of . This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text")
-            .toJson(),
+          id: i,
+          category: CategoryModel.fromJson(Jsons.createCategories()[0]),
+          image: FileModel(fileName: 'image-$i', filePath: 'https://picsum.photos/id/${i * 25}/350/250'),
+          user: UserModel.fromJson(UserModel(id: 1, firstName: 'Abdurahmon', lastName: 'Davronov', email: 'abdurakhmon278@gmail.com', phone: '+998915550895', userRole: 0).toJson()),
+          text: "This is text of article-$i. cle-$i. This is text of . This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text of article-$i. This is text",
+        ).toJson(),
       );
     }
     return articles;
   }
 
   static const List<String> youtubeLinks = [
-    'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Rick Astley - Never Gonna Give You Up
-    'https://www.youtube.com/watch?v=Iwuy4hHO3YQ', // nope.avi
-    'https://www.youtube.com/watch?v=NHqA2sdL9KI', // Bruno Mars - The Lazy Song
-    'https://www.youtube.com/watch?v=oSxj7S3JiPw', // PSY - GANGNAM STYLE
-    'https://www.youtube.com/watch?v=gvdf5n-zI14', // Rick Roll (Different link + no ads)
+    "https://www.youtube.com/watch?v=52RySwIJS4M&list=PLY0icf9y8v8JuHaTNzOslMQDLtJ6EAVSj&index=7",
+    'https://www.youtube.com/watch?v=tRe1DBOPbxM&list=PLY0icf9y8v8JuHaTNzOslMQDLtJ6EAVSj&index=7&pp=iAQB',
+    'https://www.youtube.com/watch?v=EIAcRUbeN7o&list=PLY0icf9y8v8JuHaTNzOslMQDLtJ6EAVSj&index=8&pp=iAQB',
+    'https://www.youtube.com/watch?v=ibAmzTS2h1Y&list=PLY0icf9y8v8JuHaTNzOslMQDLtJ6EAVSj&index=9&pp=iAQB',
   ];
 
   static List<Map<String, dynamic>> createVideos() {
     List<Map<String, dynamic>> videos = [];
 
     for (int i = 1; i <= 4; i++) {
-      videos.add(VideoModel(id: 1, title: 'Video title-$i', author: 'Author $i', videoLink: Jsons.youtubeLinks[i - 1], description: 'Video description $i').toJson());
+      videos.add(
+        VideoModel(
+          id: 1,
+          title: 'Video title-$i',
+          // author: i <= 2 ? 'Author 1' : 'Author 2',
+          author: 'Nurulloh Raufxon',
+          videoLink: Jsons.youtubeLinks[i - 1],
+          description: 'Video description $i',
+        ).toJson(),
+      );
     }
     return videos;
   }

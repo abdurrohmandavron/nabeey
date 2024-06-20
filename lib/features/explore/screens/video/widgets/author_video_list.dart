@@ -4,6 +4,7 @@ import 'package:nabeey/common/widgets/texts/section_heading.dart';
 import 'package:nabeey/features/explore/models/youtube_video_model.dart';
 import 'package:nabeey/features/explore/screens/video/author_videos_screen.dart';
 import 'package:nabeey/features/explore/screens/video/widgets/author_video_item.dart';
+import 'package:nabeey/utils/constants/sizes.dart';
 
 class AuthorVideoList extends StatelessWidget {
   const AuthorVideoList({
@@ -24,13 +25,23 @@ class AuthorVideoList extends StatelessWidget {
         SectionHeading(
           title: author,
           showActionButton: true,
-          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AuthorVideosScreen(videos: videos, ytVideos: ytVideos))),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return AuthorVideosScreen(videos: videos, ytVideos: ytVideos);
+              },
+            ),
+          ),
         ),
-        ListView.separated(
-          itemCount: videos.length,
-          scrollDirection: Axis.horizontal,
-          separatorBuilder: (_, __) => const Divider(),
-          itemBuilder: (context, index) => AuthorVideoItem(videos: videos, ytVideos: ytVideos, index: index),
+        SizedBox(
+          height: 180,
+          child: ListView.separated(
+            itemCount: videos.length,
+            scrollDirection: Axis.horizontal,
+            separatorBuilder: (_, __) => const SizedBox(width: ADSizes.spaceBtwItems),
+            itemBuilder: (context, index) => AuthorVideoItem(videos: videos, ytVideos: ytVideos, index: index),
+          ),
         ),
       ],
     );

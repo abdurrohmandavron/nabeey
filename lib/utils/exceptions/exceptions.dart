@@ -7,6 +7,6 @@ class ADException {
   ADException(exception) {
     message = "Xatolik yuz berdi.";
 
-    if (kDebugMode) LoggerHelper.error(message + code);
+    if (kDebugMode) LoggerHelper.error(exception.toString() + code + message);
   }
 }
