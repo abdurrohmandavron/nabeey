@@ -7,6 +7,8 @@ class FileModel {
     required this.filePath,
   });
 
+  static FileModel empty() => FileModel(fileName: '', filePath: '');
+
   factory FileModel.fromJson(Map<String, dynamic> json) => FileModel(
         fileName: json["fileName"],
         filePath: json["filePath"],

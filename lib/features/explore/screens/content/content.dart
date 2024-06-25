@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nabeey/features/explore/controllers/audio_controller.dart';
+import 'package:nabeey/features/explore/screens/audio/audio.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/common/widgets/header/header.dart';
 import 'package:nabeey/common/widgets/layouts/grid_layout.dart';
@@ -36,7 +38,7 @@ class ContentScreen extends StatelessWidget {
                     case 1:
                       Navigator.push(context, MaterialPageRoute(builder: (_) => BlocProvider(create: (_) => VideoController(), child: VideoScreen(category: category))));
                     case 2:
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => ArticleScreen(category: category)));
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => BlocProvider(create: (_) => AudioController(), child: AudioScreen(category: category))));
                     case 3:
                       Navigator.push(context, MaterialPageRoute(builder: (_) => ArticleScreen(category: category)));
                   }

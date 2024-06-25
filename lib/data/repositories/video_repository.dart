@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nabeey/utils/http/http_client.dart';
 import 'package:nabeey/features/explore/models/video_model.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:nabeey/features/explore/models/youtube_video_model.dart';
 
 abstract class VideoRepository {
@@ -68,21 +69,12 @@ class VideoRepositoryImpl implements VideoRepository {
 
   @override
   Future<YouTubeVideoModel?> getVideoData(VideoModel video) async {
-    final response = await _httpClient.getVideoData(parser(video.videoLink));
+    final response = await _httpClient.getVideoData(YoutubePlayer.convertUrlToId(video.videoLink)!);
     if (response.containsKey('items') && (response['items'] as List).isNotEmpty) {
       final firstItem = response['items'][0]; // Get the first video entry
       return YouTubeVideoModel.fromJson(firstItem['snippet']); // Parse snippet for data
     } else {
       return YouTubeVideoModel.empty();
     }
-  }
-
-  String parser(String url) {
-    const regex = r"(?:https?://)?(?:www\.)?(?:youtube\.com|youtu\.be)/watch\?v=([^#&?]+)|(?:https?://)?(?:www\.)?(?:youtu\.be)/([^#&?]+)";
-    final match = RegExp(regex).firstMatch(url);
-
-    if (match != null) return match.group(1) ?? match.group(2)!;
-
-    return 'u31qwQUeGuM';
   }
 }

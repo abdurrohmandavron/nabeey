@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:icons_flutter/icons_flutter.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/utils/constants/colors.dart';
 import 'package:nabeey/common/widgets/images/rounded_image.dart';
@@ -45,7 +44,7 @@ class AuthorVideoItem extends StatelessWidget {
                 /// Play Button
                 Center(
                   child: IconButton(
-                    icon: const Icon(Feather.play_circle, color: ADColors.white),
+                    icon: const Icon(Icons.play_circle, color: ADColors.white),
                     onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) {

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:nabeey/data/models/file_model.dart';
+import 'package:nabeey/features/explore/models/audio_model.dart';
 import 'package:nabeey/features/explore/models/video_model.dart';
 import 'package:nabeey/utils/constants/api_constants.dart';
 import 'package:nabeey/features/explore/models/user_model.dart';
@@ -35,6 +36,13 @@ import 'package:nabeey/features/explore/models/category_model.dart';
 // static const String videosR = 'api/articles/get-all/';
 
 // static const String youtubeR = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=$videoId&key=$apiKey';
+
+// static const String audioC = 'api/audios/create/';
+// static const String audioR = 'api/audios/get-by-id/';
+// static const String audioU = 'api/audios/update/';
+// static const String audioD = 'api/audios/delete/';
+
+// static const String audiosR = 'api/audios/get-all/';
 
 //   Future<Map<String, dynamic>> get(String endpoint) async {
 //     final response = await http.get(Uri.parse('$_baseUrl/$endpoint'));
@@ -99,14 +107,21 @@ class HttpHelper {
 
   static const String articlesR = 'api/articles/get-all/';
 
-  static const String videoC = 'api/video/create/';
-  static const String videoR = 'api/video/get-by-id/';
-  static const String videoU = 'api/video/update/';
-  static const String videoD = 'api/video/delete/';
+  static const String videoC = 'api/videos/create/';
+  static const String videoR = 'api/videos/get-by-id/';
+  static const String videoU = 'api/videos/update/';
+  static const String videoD = 'api/videos/delete/';
 
   static const String videosR = 'api/videos/get-all/';
 
   static const String youtubeR = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=';
+
+  static const String audioC = 'api/audios/create/';
+  static const String audioR = 'api/audios/get-by-id/';
+  static const String audioU = 'api/audios/update/';
+  static const String audioD = 'api/audios/delete/';
+
+  static const String audiosR = 'api/audios/get-all/';
 
   Future<Map<String, dynamic>> get(String endpoint) async {
     final response = Jsons().get('$_baseUrl/$endpoint');
@@ -214,6 +229,28 @@ class Jsons {
     return videos;
   }
 
+  static const List<String> audioLinks = [
+    "https://download.quranicaudio.com/quran/abdullaah_3awwaad_al-juhaynee/001.mp3",
+    "https://media.blubrry.com/muslim_central_quran/podcasts.qurancentral.com/aaar-al-hudhoudi/002.mp3",
+    "https://download.quranicaudio.com/quran/abdullaah_3awwaad_al-juhaynee/112.mp3",
+    "https://download.quranicaudio.com/quran/abdullaah_3awwaad_al-juhaynee/113.mp3",
+    "https://download.quranicaudio.com/quran/abdullaah_3awwaad_al-juhaynee/114.mp3",
+  ];
+
+  static List<Map<String, dynamic>> createAudios() {
+    List<Map<String, dynamic>> audios = [];
+
+    for (int i = 1; i <= 5; i++) {
+      audios.add(AudioModel(
+        id: i,
+        title: 'Audio title - $i',
+        audio: FileModel(fileName: 'audio-$i', filePath: Jsons.audioLinks[i - 1]),
+        description: "Audio description - $i",
+      ).toJson());
+    }
+    return audios;
+  }
+
   Map<String, dynamic> get(String uri) => jsons[uri]!;
 
   Map<String, Map<String, dynamic>> jsons = {
@@ -239,7 +276,7 @@ class Jsons {
       "message": "Successful",
       "data": Jsons.createArticles()[0],
     },
-    "${HttpHelper._baseUrl}/${HttpHelper.articleR}1": {
+    "${HttpHelper._baseUrl}/${HttpHelper.articleR}": {
       "statusCode": 200,
       "message": "Successful",
       "data": Jsons.createArticles()[0],
@@ -256,7 +293,7 @@ class Jsons {
       "message": "Successful",
       "data": Jsons.createArticles()[0],
     },
-    "${HttpHelper._baseUrl}/${HttpHelper.videoR}1": {
+    "${HttpHelper._baseUrl}/${HttpHelper.videoR}": {
       "statusCode": 200,
       "message": "Successful",
       "data": Jsons.createArticles()[0],
@@ -267,6 +304,11 @@ class Jsons {
       "statusCode": 200,
       "message": "Successful",
       "data": [Jsons.createVideos()[0], Jsons.createVideos()[1], Jsons.createVideos()[2], Jsons.createVideos()[3]],
+    },
+    "${HttpHelper._baseUrl}/${HttpHelper.audiosR}": {
+      "statusCode": 200,
+      "message": "Successful",
+      "data": [Jsons.createAudios()[0], Jsons.createAudios()[1], Jsons.createAudios()[2], Jsons.createAudios()[3], Jsons.createAudios()[4]],
     },
   };
 }

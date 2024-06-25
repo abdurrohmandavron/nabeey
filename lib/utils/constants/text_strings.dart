@@ -2,7 +2,7 @@ class ADTexts {
   ADTexts._();
 
   // Global texts
-  static const String checkKnowledge = "Bilimingizni sinab ko'ring!";
+  static const String checkKnowledge = "Bilimingizni\nsinab ko'ring!";
   static const String all = "Barchasi";
   static const String forTest = "Testga qatnashish uchun";
   static const String signup = "Ro'yxatdan o'ting";
