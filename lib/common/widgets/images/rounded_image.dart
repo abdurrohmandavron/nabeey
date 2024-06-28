@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/utils/constants/colors.dart';
+import 'package:nabeey/common/widgets/shimmers/shimmer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class RoundedImage extends StatelessWidget {
   const RoundedImage({
@@ -9,6 +11,7 @@ class RoundedImage extends StatelessWidget {
     this.border,
     this.margin,
     this.padding,
+    this.gradient,
     this.onPressed,
     this.height = 200,
     required this.imageUrl,
@@ -24,6 +27,7 @@ class RoundedImage extends StatelessWidget {
   final Widget? child;
   final String imageUrl;
   final BoxBorder? border;
+  final Gradient? gradient;
   final double borderRadius;
   final bool isNetworkImage;
   final double width, height;
@@ -40,14 +44,34 @@ class RoundedImage extends StatelessWidget {
       child: Container(
         width: width,
         height: height,
-        padding: padding,
-        decoration: BoxDecoration(
-          border: border,
-          color: backgroundColor,
-          image: DecorationImage(image: isNetworkImage ? NetworkImage(imageUrl) : AssetImage(imageUrl) as ImageProvider, fit: fit),
-          borderRadius: BorderRadius.circular(borderRadius),
+        decoration: BoxDecoration(border: border, color: backgroundColor, borderRadius: BorderRadius.circular(borderRadius)),
+        child: Stack(
+          children: [
+            /// Image
+            ClipRRect(
+              borderRadius: applyImageRadius ? BorderRadius.circular(borderRadius) : BorderRadius.zero,
+              child: CachedNetworkImage(
+                fit: fit,
+                imageUrl: imageUrl,
+                width: double.infinity,
+                height: double.infinity,
+                placeholder: (_, __) => const ADShimmerEffect(width: double.infinity, height: double.infinity),
+              ),
+            ),
+
+            /// Child
+            Container(
+              padding: padding,
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                gradient: gradient,
+                borderRadius: applyImageRadius ? BorderRadius.circular(borderRadius) : BorderRadius.zero,
+              ),
+              child: child,
+            ),
+          ],
         ),
-        child: ClipRRect(borderRadius: applyImageRadius ? BorderRadius.circular(borderRadius) : BorderRadius.zero, child: child),
       ),
     );
   }

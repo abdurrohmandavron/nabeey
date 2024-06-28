@@ -11,30 +11,30 @@ class CategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1.4,
+      aspectRatio: 1.5,
       child: GestureDetector(
         onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ContentScreen(category: category))),
         child: RoundedImage(
           borderRadius: 20,
           fit: BoxFit.cover,
+          isNetworkImage: true,
+          applyImageRadius: true,
           width: double.infinity,
           height: double.infinity,
-          isNetworkImage: true,
           imageUrl: category.image.filePath,
           margin: const EdgeInsets.only(bottom: 20),
-          child: Container(
+          gradient: const LinearGradient(
+            begin: Alignment.bottomRight,
+            colors: [
+              Color.fromRGBO(0, 0, 0, 0.7),
+              Color.fromRGBO(0, 0, 0, 0.5),
+              Color.fromRGBO(0, 0, 0, 0.3),
+              Color.fromRGBO(0, 0, 0, 0.1),
+              Color.fromRGBO(0, 0, 0, 0.0),
+            ],
+          ),
+          child: Padding(
             padding: const EdgeInsets.all(16),
-
-            /// Gradient
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              gradient: const LinearGradient(
-                begin: Alignment.bottomRight,
-                colors: [Color.fromRGBO(0, 0, 0, 1), Color.fromRGBO(0, 0, 0, 0.8), Color.fromRGBO(0, 0, 0, 0.5), Color.fromRGBO(0, 0, 0, 0.0)],
-              ),
-            ),
-
-            /// Title and Description
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,

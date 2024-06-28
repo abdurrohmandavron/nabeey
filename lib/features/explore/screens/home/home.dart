@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
+import 'package:nabeey/common/widgets/shimmers/category_item_shimmer.dart';
 import 'package:nabeey/features/explore/controllers/category_controller.dart';
 import 'package:nabeey/features/explore/screens/home/widgets/category_item.dart';
 
@@ -17,10 +18,18 @@ class HomeScreen extends StatelessWidget {
       body: BlocBuilder<CategoryController, CategoryState>(
         builder: (context, state) {
           if (state is CategoryLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Container(
+              margin: const EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: ListView.separated(
+                itemCount: 4,
+                separatorBuilder: (_, __) => const SizedBox(height: 16),
+                itemBuilder: (context, index) => const CategoryItemShimmer(),
+              ),
+            );
           } else if (state is CategoryLoaded) {
             return Container(
-              margin: const EdgeInsets.symmetric(vertical: 20),
+              margin: const EdgeInsets.only(top: 20),
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ListView.separated(
                 separatorBuilder: (_, __) => const SizedBox(height: 16),
