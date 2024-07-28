@@ -41,7 +41,7 @@ class ArticleItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(article.category.name.toString(), style: Theme.of(context).textTheme.titleLarge),
+                    Text(article.title.toString(), style: Theme.of(context).textTheme.titleLarge),
                     const SizedBox(height: ADSizes.sm),
                     Text(maxLines: 3, article.text.toString(), style: const TextStyle(overflow: TextOverflow.ellipsis)),
                     const SizedBox(height: 12),

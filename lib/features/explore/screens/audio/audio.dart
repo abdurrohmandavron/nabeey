@@ -22,20 +22,20 @@ class AudioScreen extends StatelessWidget {
       canPop: true,
       onPopInvoked: (value) => controller.playingAudio = null,
       child: Scaffold(
-        body: Column(
-          children: [
-            /// Category Description
-            ADHeader(category: category),
+        body: BlocBuilder<AudioController, AudioState>(
+          builder: (context, state) {
+            if (state is AudioLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is AudioLoaded) {
+              final audios = state.audios;
 
-            /// Audios
-            BlocBuilder<AudioController, AudioState>(
-              builder: (context, state) {
-                if (state is AudioLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is AudioLoaded) {
-                  final audios = state.audios;
+              return Column(
+                children: [
+                  /// Category Description
+                  ADHeader(category: category),
 
-                  return Expanded(
+                  /// Audios
+                  Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(
                         top: ADSizes.defaultSpace,
@@ -66,17 +66,17 @@ class AudioScreen extends StatelessWidget {
                             .toList(),
                       ),
                     ),
-                  );
-                } else if (state is AudioEmpty) {
-                  return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text("Maqola mavjud emas.", style: Theme.of(context).textTheme.bodyLarge)));
-                } else if (state is AudioError) {
-                  return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text(state.message, style: Theme.of(context).textTheme.bodyLarge)));
-                } else {
-                  return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text("Nimadir xato ketdi.", style: Theme.of(context).textTheme.bodyLarge)));
-                }
-              },
-            ),
-          ],
+                  ),
+                ],
+              );
+            } else if (state is AudioEmpty) {
+              return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text("Maqola mavjud emas.", style: Theme.of(context).textTheme.bodyLarge)));
+            } else if (state is AudioError) {
+              return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text(state.message, style: Theme.of(context).textTheme.bodyLarge)));
+            } else {
+              return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text("Nimadir xato ketdi.", style: Theme.of(context).textTheme.bodyLarge)));
+            }
+          },
         ),
       ),
     );

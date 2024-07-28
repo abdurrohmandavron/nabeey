@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:nabeey/utils/constants/colors.dart';
 
 class SectionHeading extends StatelessWidget {
   const SectionHeading({
     super.key,
     this.onPressed,
+    this.textColor,
     required this.title,
     this.showActionButton = true,
     this.buttonTitle = "Barchasi",
-    this.textColor = ADColors.black,
   });
 
   final Color? textColor;
@@ -19,7 +18,12 @@ class SectionHeading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Text(title, style: Theme.of(context).textTheme.headlineSmall!.apply(color: textColor), maxLines: 1, overflow: TextOverflow.ellipsis),
+      Text(
+        title,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: Theme.of(context).textTheme.headlineSmall!.apply(color: textColor),
+      ),
       if (showActionButton) TextButton(onPressed: onPressed, child: Text(buttonTitle)),
     ]);
   }

@@ -1,6 +1,6 @@
-import 'package:nabeey/data/models/file_model.dart';
+import 'package:nabeey/features/explore/models/file_model.dart';
 
-class BookData {
+class BookModel {
   int id;
   String title;
   String author;
@@ -8,7 +8,7 @@ class BookData {
   FileModel file;
   FileModel image;
 
-  BookData({
+  BookModel({
     required this.id,
     required this.title,
     required this.author,
@@ -17,7 +17,7 @@ class BookData {
     required this.image,
   });
 
-  factory BookData.fromJson(Map<String, dynamic> json) => BookData(
+  factory BookModel.fromJson(Map<String, dynamic> json) => BookModel(
         id: json["id"],
         title: json["title"],
         author: json["author"],

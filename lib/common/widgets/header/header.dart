@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:flutter/material.dart';
 import 'package:nabeey/utils/constants/colors.dart';
 import 'package:nabeey/utils/constants/text_strings.dart';
 import 'package:nabeey/common/widgets/images/rounded_image.dart';
@@ -40,7 +40,27 @@ class ADHeader extends StatelessWidget {
             /// Back button
             Container(
               margin: const EdgeInsets.only(top: 16),
-              child: IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Iconsax.arrow_left, color: ADColors.white)),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [
+                    ADColors.black.withOpacity(.30),
+                    ADColors.black.withOpacity(.25),
+                    ADColors.black.withOpacity(.20),
+                    ADColors.black.withOpacity(.15),
+                    ADColors.black.withOpacity(.10),
+                    ADColors.black.withOpacity(.05),
+                    ADColors.black.withOpacity(.01),
+                  ],
+                ),
+              ),
+              child: IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(
+                  Iconsax.arrow_left,
+                  color: ADColors.white,
+                ),
+              ),
             ),
 
             /// Row

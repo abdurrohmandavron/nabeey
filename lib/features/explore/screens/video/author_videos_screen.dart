@@ -1,12 +1,11 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:nabeey/features/explore/controllers/author_videos_controller.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/common/widgets/appbar/appbar.dart';
 import 'package:nabeey/features/explore/models/video_model.dart';
 import 'package:nabeey/features/explore/models/youtube_video_model.dart';
-import 'package:nabeey/features/explore/screens/video/widgets/video_player.dart';
-import 'package:nabeey/utils/formatters/formatter.dart';
+import 'package:nabeey/features/explore/controllers/author_videos_controller.dart';
+import 'package:nabeey/features/explore/screens/video/widgets/author_video_item.dart';
 
 class AuthorVideosScreen extends StatelessWidget {
   const AuthorVideosScreen({
@@ -49,28 +48,11 @@ class AuthorVideosScreen extends StatelessWidget {
                 final video = videos[index];
                 final ytVideo = ytVideos[index];
 
-                return SizedBox(
-                  height: 317,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      /// YouTube Player
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: VideoPlayer(
-                          url: video.videoLink,
-                          play: play != null && play == index ? true : false,
-                        ),
-                      ),
-                      const SizedBox(height: ADSizes.spaceBtwItems),
-
-                      /// Date
-                      Text(Formatter.formatDate(DateTime.parse(ytVideo.date)), style: Theme.of(context).textTheme.labelLarge),
-
-                      /// Title
-                      Text(ytVideo.title, style: Theme.of(context).textTheme.titleMedium),
-                    ],
-                  ),
+                return AuthorVideoItem(
+                  play: play,
+                  index: index,
+                  video: video,
+                  ytVideo: ytVideo,
                 );
               },
             ),

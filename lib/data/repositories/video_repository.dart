@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nabeey/utils/http/http_client.dart';
+import 'package:nabeey/utils/constants/api_constants.dart';
 import 'package:nabeey/features/explore/models/video_model.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:nabeey/features/explore/models/youtube_video_model.dart';
@@ -26,7 +27,7 @@ class VideoRepositoryImpl implements VideoRepository {
 
   @override
   Future<Map<String, List<VideoModel>>> getVideos() async {
-    final response = await _httpClient.get(HttpHelper.videosR);
+    final response = await _httpClient.get(ADAPIs.videosR);
     final List<dynamic> videoListJson = response['data'];
     final List<VideoModel> videos = videoListJson.map((videoJson) => VideoModel.fromJson(videoJson)).toList();
 
@@ -44,7 +45,7 @@ class VideoRepositoryImpl implements VideoRepository {
 
   @override
   Future<VideoModel?> getVideo(int videoId) async {
-    final response = await _httpClient.get('${HttpHelper.videoR}/$videoId');
+    final response = await _httpClient.get('${ADAPIs.videoR}/$videoId');
     // Handle API response (error checking, data parsing)
     return response['data'] != null ? VideoModel.fromJson(response['data']) : null;
   }
@@ -52,19 +53,19 @@ class VideoRepositoryImpl implements VideoRepository {
   @override
   Future<void> createVideo(VideoModel video) async {
     // Send create Video request to API
-    await _httpClient.post(HttpHelper.videoC, video.toJson());
+    await _httpClient.post(ADAPIs.videoC, video.toJson());
   }
 
   @override
   Future<void> updateVideo(VideoModel video) async {
     // Send update Video request to API
-    await _httpClient.put(HttpHelper.videoU + video.id.toString(), video.toJson());
+    await _httpClient.put(ADAPIs.videoU + video.id.toString(), video.toJson());
   }
 
   @override
   Future<void> deleteVideo(int videoId) async {
     // Send delete Video request to API
-    await _httpClient.delete(HttpHelper.videoD + videoId.toString());
+    await _httpClient.delete(ADAPIs.videoD + videoId.toString());
   }
 
   @override

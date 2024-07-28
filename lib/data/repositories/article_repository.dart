@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nabeey/utils/http/http_client.dart';
+import 'package:nabeey/utils/constants/api_constants.dart';
 import 'package:nabeey/features/explore/models/article_model.dart';
 
 abstract class ArticleRepository {
@@ -22,15 +23,20 @@ class ArticleRepositoryImpl implements ArticleRepository {
 
   @override
   Future<List<ArticleModel>> getArticles() async {
-    final response = await _httpClient.get(HttpHelper.articlesR);
-    final List<dynamic> articleListJson = response['data'];
-    final List<ArticleModel> articles = articleListJson.map((articleJson) => ArticleModel.fromJson(articleJson)).toList();
-    return articles;
+    try {
+      final response = await _httpClient.get(ADAPIs.articlesR);
+      final List<dynamic> articleListJson = response['data'];
+      final List<ArticleModel> articles = articleListJson.map((articleJson) => ArticleModel.fromJson(articleJson)).toList();
+
+      return articles;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
   Future<ArticleModel?> getArticle(int articleId) async {
-    final response = await _httpClient.get(HttpHelper.articleR);
+    final response = await _httpClient.get(ADAPIs.articleR);
     // Handle API response (error checking, data parsing)
     return response['data'] != null ? ArticleModel.fromJson(response['data']) : null;
   }
@@ -38,18 +44,18 @@ class ArticleRepositoryImpl implements ArticleRepository {
   @override
   Future<void> createArticle(ArticleModel article) async {
     // Send create Article request to API
-    await _httpClient.post(HttpHelper.articleC, article.toJson());
+    await _httpClient.post(ADAPIs.articleC, article.toJson());
   }
 
   @override
   Future<void> updateArticle(ArticleModel article) async {
     // Send update Article request to API
-    await _httpClient.put(HttpHelper.articleU + article.id.toString(), article.toJson());
+    await _httpClient.put(ADAPIs.articleU + article.id.toString(), article.toJson());
   }
 
   @override
   Future<void> deleteArticle(int articleId) async {
     // Send delete Article request to API
-    await _httpClient.delete(HttpHelper.articleD + articleId.toString());
+    await _httpClient.delete(ADAPIs.articleD + articleId.toString());
   }
 }

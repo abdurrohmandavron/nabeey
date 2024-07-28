@@ -1,65 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
-import 'package:nabeey/utils/constants/colors.dart';
-import 'package:nabeey/common/widgets/images/rounded_image.dart';
+import 'package:nabeey/utils/formatters/formatter.dart';
 import 'package:nabeey/features/explore/models/video_model.dart';
 import 'package:nabeey/features/explore/models/youtube_video_model.dart';
-import 'package:nabeey/features/explore/screens/video/author_videos_screen.dart';
+import 'package:nabeey/features/explore/screens/video/widgets/video_player.dart';
 
 class AuthorVideoItem extends StatelessWidget {
   const AuthorVideoItem({
     super.key,
+    required this.play,
     required this.index,
-    required this.videos,
-    required this.ytVideos,
+    required this.video,
+    required this.ytVideo,
   });
 
+  final VideoModel video;
+  final int? play;
   final int index;
-  final List<VideoModel> videos;
-  final List<YouTubeVideoModel> ytVideos;
+  final YouTubeVideoModel ytVideo;
 
   @override
   Widget build(BuildContext context) {
-    final VideoModel video = videos[index];
-    final YouTubeVideoModel ytVideo = ytVideos[index];
-
     return SizedBox(
-      width: 240,
+      height: 317,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// Poster
-          SizedBox(
-            height: 130,
-            child: Stack(
-              children: [
-                /// Thumbnail
-                RoundedImage(
-                  imageUrl: ytVideo.image,
-                  borderRadius: ADSizes.borderRadiusMd,
-                  isNetworkImage: true,
-                  fit: BoxFit.cover,
-                ),
-
-                /// Play Button
-                Center(
-                  child: IconButton(
-                    icon: const Icon(Icons.play_circle, color: ADColors.white),
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) {
-                        return AuthorVideosScreen(videos: videos, ytVideos: ytVideos, play: index);
-                      }),
-                    ),
-                  ),
-                ),
-              ],
+          /// YouTube Player
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: VideoPlayer(
+              url: video.videoLink,
+              play: play != null && play == index ? true : false,
             ),
           ),
-          const SizedBox(height: ADSizes.sm),
+          const SizedBox(height: ADSizes.spaceBtwItems),
+
+          /// Date
+          Text(Formatter.formatDate(DateTime.parse(ytVideo.date)), style: Theme.of(context).textTheme.labelLarge),
 
           /// Title
-          Text(video.title, style: Theme.of(context).textTheme.labelLarge!.apply(overflow: TextOverflow.ellipsis)),
+          Text(ytVideo.title, style: Theme.of(context).textTheme.titleMedium),
         ],
       ),
     );

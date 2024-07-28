@@ -1,4 +1,4 @@
-import 'package:nabeey/data/models/file_model.dart';
+import 'package:nabeey/features/explore/models/file_model.dart';
 
 class CategoryModel {
   int id;
@@ -21,11 +21,13 @@ class CategoryModel {
     required this.description,
   });
 
+  static CategoryModel empty() => CategoryModel(id: 0, name: '', image: FileModel.empty(), books: [], audios: [], videos: [], articles: [], description: '');
+
   factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
         id: json["id"],
         name: json["name"],
         description: json["description"],
-        image: FileModel.fromJson(json["image"]),
+        image: json["image"] != null ? FileModel.fromJson(json["image"]) : FileModel.empty(),
         books: List<dynamic>.from(json["books"].map((x) => x)),
         audios: List<dynamic>.from(json["audios"].map((x) => x)),
         videos: List<dynamic>.from(json["videos"].map((x) => x)),

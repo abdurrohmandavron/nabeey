@@ -23,7 +23,7 @@ class ArticleContent extends StatelessWidget {
             const SizedBox(height: 20),
 
             /// Name
-            Text(article.category.name, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+            Text(article.title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
             const SizedBox(height: 10),
 
             /// Details Row

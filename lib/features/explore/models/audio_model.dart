@@ -1,4 +1,4 @@
-import 'package:nabeey/data/models/file_model.dart';
+import 'package:nabeey/features/explore/models/file_model.dart';
 
 class AudioModel {
   int id;
