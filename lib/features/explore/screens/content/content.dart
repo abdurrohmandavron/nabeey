@@ -8,10 +8,10 @@ import 'package:nabeey/features/explore/screens/audio/audio.dart';
 import 'package:nabeey/features/explore/screens/video/video.dart';
 import 'package:nabeey/features/explore/models/category_model.dart';
 import 'package:nabeey/features/explore/screens/article/article.dart';
+import 'package:nabeey/features/explore/blocs/article/article_bloc.dart';
 import 'package:nabeey/features/explore/controllers/book_controller.dart';
 import 'package:nabeey/features/explore/controllers/audio_controller.dart';
 import 'package:nabeey/features/explore/controllers/video_controller.dart';
-import 'package:nabeey/features/explore/controllers/article_controller.dart';
 import 'package:nabeey/features/explore/screens/content/widgets/content_item.dart';
 
 class ContentScreen extends StatelessWidget {
@@ -36,7 +36,7 @@ class ContentScreen extends StatelessWidget {
                 onTap: () {
                   switch (index) {
                     case 0:
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => BlocProvider(create: (_) => ArticleController(), child: ArticleScreen(category: category))));
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => BlocProvider(create: (_) => ArticleBloc(), child: ArticleScreen(category: category))));
                     case 1:
                       Navigator.push(context, MaterialPageRoute(builder: (_) => BlocProvider(create: (_) => VideoController(), child: VideoScreen(category: category))));
                     case 2:

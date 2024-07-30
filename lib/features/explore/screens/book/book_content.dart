@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nabeey/common/widgets/appbar/appbar.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
+import 'package:nabeey/common/widgets/appbar/appbar.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:nabeey/features/explore/models/book_model.dart';
 import 'package:nabeey/features/explore/screens/book/widgets/book_tile.dart';
@@ -27,10 +27,18 @@ class BookContent extends StatelessWidget {
             const SizedBox(height: ADSizes.spaceBtwItems),
 
             /// Content
-            SizedBox(
-              height: 500,
-              width: double.infinity,
-              child: SfPdfViewer.network(book.file.filePath),
+            ElevatedButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SizedBox(
+                    height: 850,
+                    width: double.infinity,
+                    child: SfPdfViewer.network(book.file.filePath),
+                  ),
+                ),
+              ),
+              child: const Text("O'qish"),
             ),
           ],
         ),

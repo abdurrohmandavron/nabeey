@@ -3,9 +3,15 @@ class ADAPIs {
   static const String youTubeSecretApiKey = 'AIzaSyC455mcFdJrv07Pq8qb4pKFIcuOWGirrTA';
 
   /// API Base URL
-  static const String baseUrl = "http://nabeey.ddns.net:8080";
+  static const String baseUrl = "http://nabeey.ddns.net:8080/";
 
   /// API Endpoints
+  static const String userC = 'api/user/create';
+  static const String userU = 'api/user/update';
+  static const String userR = 'api/user/get/';
+  static const String usersR = 'api/user/get-all';
+  static const String userD = 'api/user/delete/';
+
   static const String articleC = 'api/article/create';
   static const String articleU = 'api/article/update';
   static const String articleR = 'api/article/get/';

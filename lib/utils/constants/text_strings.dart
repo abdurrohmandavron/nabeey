@@ -4,6 +4,11 @@ class ADTexts {
   // Global texts
   static const String checkKnowledge = "Bilimingizni\nsinab ko'ring!";
   static const String all = "Barchasi";
+  static const String firstName = "Ism";
+  static const String lastName = "Familya";
+  static const String email = "Elektron pochta";
+  static const String phoneNo = "Telefon raqam";
+  static const String password = "Parol";
   static const String forTest = "Testga qatnashish uchun";
   static const String signup = "Ro'yxatdan o'ting";
   static const String toSignup = "Ro'yxatdan o'tish";

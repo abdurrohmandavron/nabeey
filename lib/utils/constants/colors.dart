@@ -12,9 +12,10 @@ class ADColors {
   // Text Colors
 
   static const Color textPrimary = Color(0xFF111111);
-  static Color textSecondary = const Color(0xFF888888);
+  static const Color textSecondary = Color(0xFF888888);
   static const Color textWhite = Colors.white;
   static const Color textLittle = Color(0xFF808080);
+  static const Color textBlue = Color(0xFF007BEC);
 
   // Background Colors
 

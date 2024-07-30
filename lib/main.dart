@@ -7,7 +7,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   /// Hive Local Storage
-  LocalStorage.initHive();
+  await LocalStorage.initHive();
 
   runApp(const App());
 }

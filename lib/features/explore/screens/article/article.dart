@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/common/widgets/header/header.dart';
 import 'package:nabeey/features/explore/models/category_model.dart';
-import 'package:nabeey/features/explore/controllers/article_controller.dart';
+import 'package:nabeey/features/explore/blocs/article/article_bloc.dart';
+import 'package:nabeey/features/explore/blocs/article/article_event.dart';
+import 'package:nabeey/features/explore/blocs/article/article_state.dart';
 import 'package:nabeey/features/explore/screens/article/widgets/article_item.dart';
 
 class ArticleScreen extends StatelessWidget {
@@ -13,11 +15,11 @@ class ArticleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = BlocProvider.of<ArticleController>(context);
+    final controller = BlocProvider.of<ArticleBloc>(context);
     controller.add(const LoadArticles());
 
     return Scaffold(
-      body: BlocBuilder<ArticleController, ArticleState>(
+      body: BlocBuilder<ArticleBloc, ArticleState>(
         builder: (context, state) {
           if (state is ArticleLoading) {
             return const Center(child: CircularProgressIndicator());

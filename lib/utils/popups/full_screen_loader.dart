@@ -14,7 +14,7 @@ class FullScreenLoader {
           color: HelperFunctions.isDarkMode(context) ? ADColors.dark : ADColors.white,
           child: Center(
             child: Column(
-              mainAxisSize: MainAxisSize.min, // Center the content vertically
+              mainAxisSize: MainAxisSize.min,
               children: [
                 const SizedBox(height: 250),
                 AnimationLoaderWidget(text: text, animation: animation),

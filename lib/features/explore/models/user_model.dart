@@ -48,15 +48,23 @@ class UserModel extends HiveObject {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "firstName": firstName,
-        "lastName": lastName,
-        "email": email,
-        "phone": phone,
-        "userRole": userRole,
-        "asset": asset?.toJson(),
-      };
+  Map<String, dynamic> toJson({String? password}) => password != null
+      ? {
+          "firstName": firstName,
+          "lastName": lastName,
+          "email": email,
+          "phone": phone,
+          "password": password,
+        }
+      : {
+          "id": id,
+          "firstName": firstName,
+          "lastName": lastName,
+          "email": email,
+          "phone": phone,
+          "userRole": userRole,
+          "asset": asset?.toJson(),
+        };
 
   factory UserModel.empty() {
     return UserModel(

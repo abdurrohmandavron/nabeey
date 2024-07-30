@@ -9,19 +9,19 @@ class LocalStorage {
 
   LocalStorage._internal();
 
-  Future<void> _initHive() async {
+  static Future<void> _initHive() async {
     // Register your adapters for the data types you want to store
-    // e.g., Hive.registerAdapter(MyClassAdapter());
+    Hive.registerAdapter(UserModelAdapter());
   }
 
   static Future<void> initHive() async {
     final appDocumentDirectory = await getApplicationDocumentsDirectory();
     Hive.init(appDocumentDirectory.path);
-    Hive.registerAdapter(UserModelAdapter());
+    await _initHive();
+    Hive.openBox('general');
   }
 
   Future<void> openBox(String boxName) async {
-    await _initHive();
     if (!Hive.isBoxOpen(boxName)) {
       await Hive.openBox(boxName);
     }
@@ -29,7 +29,7 @@ class LocalStorage {
 
   T? readData<T>(String boxName, String key) {
     final box = Hive.box(boxName);
-    return box.get(key);
+    return box.get(key) as T?;
   }
 
   Future<void> clearAll(String boxName) async {
