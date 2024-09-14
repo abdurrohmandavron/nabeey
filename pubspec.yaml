@@ -18,9 +18,10 @@ dependencies:
   # Utility Packages
   http: ^1.2.0
   intl: ^0.19.0
-  logger: ^2.0.2+1
   lottie: ^3.1.0
   shimmer: ^3.0.0
+  logger: ^2.0.2+1
+  http_parser: ^4.0.2
   url_launcher: ^6.2.4
   image_picker: ^1.0.7
   connectivity_plus: ^6.0.1
@@ -44,7 +45,6 @@ dependencies:
   cached_network_image: ^3.3.1
   expansion_tile_group: ^1.2.4
   syncfusion_flutter_pdfviewer: ^24.2.8
-  http_parser: ^4.0.2
   
 dev_dependencies:
   flutter_test:

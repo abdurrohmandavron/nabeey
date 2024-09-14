@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/common/widgets/header/header.dart';
 import 'package:nabeey/features/explore/models/category_model.dart';
-import 'package:nabeey/features/explore/controllers/video_controller.dart';
+import 'package:nabeey/features/explore/blocs/video/video_bloc.dart';
+import 'package:nabeey/features/explore/blocs/video/video_event.dart';
+import 'package:nabeey/features/explore/blocs/video/video_state.dart';
 import 'package:nabeey/features/explore/screens/video/widgets/author_video_list.dart';
 
 class VideoScreen extends StatelessWidget {
@@ -13,11 +15,11 @@ class VideoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = BlocProvider.of<VideoController>(context);
-    controller.add(const LoadVideos());
+    final controller = BlocProvider.of<VideoBloc>(context);
+    controller.add(LoadVideos());
 
     return Scaffold(
-      body: BlocBuilder<VideoController, VideoState>(builder: (context, state) {
+      body: BlocBuilder<VideoBloc, VideoState>(builder: (context, state) {
         if (state is VideoLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is VideoLoaded) {

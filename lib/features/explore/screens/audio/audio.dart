@@ -4,9 +4,11 @@ import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/common/widgets/header/header.dart';
 import 'package:expansion_tile_group/expansion_tile_group.dart';
 import 'package:nabeey/features/explore/models/category_model.dart';
-import 'package:nabeey/features/explore/controllers/audio_controller.dart';
+import 'package:nabeey/features/explore/blocs/audio/audio_bloc.dart';
+import 'package:nabeey/features/explore/blocs/audio/audio_event.dart';
+import 'package:nabeey/features/explore/blocs/audio/audio_state.dart';
 import 'package:nabeey/features/explore/screens/audio/widgets/audio_item.dart';
-import 'package:nabeey/features/explore/controllers/audio_playback_controller.dart';
+import 'package:nabeey/features/explore/cubits/audio/audio_playback_cubit.dart';
 
 class AudioScreen extends StatelessWidget {
   const AudioScreen({super.key, required this.category});
@@ -15,14 +17,14 @@ class AudioScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = BlocProvider.of<AudioController>(context);
-    controller.add(const LoadAudios());
+    final controller = BlocProvider.of<AudioBloc>(context);
+    controller.add(LoadAudios());
 
     return PopScope(
       canPop: true,
       onPopInvoked: (value) => controller.playingAudio = null,
       child: Scaffold(
-        body: BlocBuilder<AudioController, AudioState>(
+        body: BlocBuilder<AudioBloc, AudioState>(
           builder: (context, state) {
             if (state is AudioLoading) {
               return const Center(child: CircularProgressIndicator());
@@ -57,7 +59,7 @@ class AudioScreen extends StatelessWidget {
                                 title: Center(child: Text(audio.title, style: Theme.of(context).textTheme.titleLarge)),
                                 children: [
                                   BlocProvider(
-                                    create: (_) => PlaybackController(audioController: controller),
+                                    create: (_) => AudioPlaybackCubit(audioController: controller),
                                     child: AudioItem(audio: audio),
                                   )
                                 ],

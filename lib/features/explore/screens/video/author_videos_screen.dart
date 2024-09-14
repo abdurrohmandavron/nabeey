@@ -4,7 +4,7 @@ import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/common/widgets/appbar/appbar.dart';
 import 'package:nabeey/features/explore/models/video_model.dart';
 import 'package:nabeey/features/explore/models/youtube_video_model.dart';
-import 'package:nabeey/features/explore/controllers/author_videos_controller.dart';
+import 'package:nabeey/features/explore/cubits/video/author_videos_cubit.dart';
 import 'package:nabeey/features/explore/screens/video/widgets/author_video_item.dart';
 
 class AuthorVideosScreen extends StatelessWidget {
@@ -22,9 +22,9 @@ class AuthorVideosScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ScrollCubit(),
-      child: BlocBuilder<ScrollCubit, void>(builder: (context, state) {
-        final controller = context.read<ScrollCubit>();
+      create: (_) => AuthorVideosCubit(),
+      child: BlocBuilder<AuthorVideosCubit, void>(builder: (context, state) {
+        final controller = context.read<AuthorVideosCubit>();
 
         if (play != null && play! < videos.length) {
           WidgetsBinding.instance.addPostFrameCallback((_) {

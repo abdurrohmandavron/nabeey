@@ -3,7 +3,7 @@ import 'package:nabeey/routes/app_routes.dart';
 import 'package:nabeey/utils/theme/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nabeey/common/navigation/views/navigation_menu.dart';
-import 'package:nabeey/features/explore/controllers/category_controller.dart';
+import 'package:nabeey/features/explore/blocs/category/category_bloc.dart';
 import 'package:nabeey/common/navigation/viewmodels/navigation_controller.dart';
 
 class App extends StatelessWidget {
@@ -21,7 +21,7 @@ class App extends StatelessWidget {
       home: MultiBlocProvider(
         providers: [
           BlocProvider<NavigationCubit>(create: (context) => NavigationCubit()),
-          BlocProvider<CategoryController>(create: (context) => CategoryController()),
+          BlocProvider<CategoryBloc>(create: (context) => CategoryBloc()),
         ],
         child: const NavigationMenu(),
       ),

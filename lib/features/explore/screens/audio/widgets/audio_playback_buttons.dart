@@ -3,7 +3,7 @@ import 'package:icons_flutter/icons_flutter.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/utils/constants/colors.dart';
 import 'package:nabeey/features/explore/models/audio_model.dart';
-import 'package:nabeey/features/explore/controllers/audio_playback_controller.dart';
+import 'package:nabeey/features/explore/cubits/audio/audio_playback_cubit.dart';
 
 class AudioPlaybackButtons extends StatelessWidget {
   const AudioPlaybackButtons({
@@ -19,7 +19,7 @@ class AudioPlaybackButtons extends StatelessWidget {
   final AudioModel audio;
   final Duration position;
   final Duration duration;
-  final PlaybackController controller;
+  final AudioPlaybackCubit controller;
 
   @override
   Widget build(BuildContext context) {
