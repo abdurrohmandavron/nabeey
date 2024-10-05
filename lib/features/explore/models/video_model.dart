@@ -1,10 +1,11 @@
 class VideoModel {
-  int id;
-  String title;
-  String author;
-  String videoLink;
-  String description;
+  final int id;
+  final String title;
+  final String author;
+  final String videoLink;
+  final String description;
 
+  // Constructor
   VideoModel({
     required this.id,
     required this.title,
@@ -13,19 +14,36 @@ class VideoModel {
     required this.description,
   });
 
-  factory VideoModel.fromJson(Map<String, dynamic> json) => VideoModel(
-        id: json["id"],
-        title: json["title"],
-        author: json["author"],
-        videoLink: json["videoLink"],
-        description: json["description"],
-      );
+  // Factory constructor for creating an instance from JSON
+  factory VideoModel.fromJson(Map<String, dynamic> json) {
+    return VideoModel(
+      id: json["id"] ?? 0,
+      title: json["title"] ?? '',
+      author: json["author"] ?? '',
+      videoLink: json["videoLink"] ?? '',
+      description: json["description"] ?? '',
+    );
+  }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "author": author,
-        "videoLink": videoLink,
-        "description": description,
-      };
+  // Method to convert the instance to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "title": title,
+      "author": author,
+      "videoLink": videoLink,
+      "description": description,
+    };
+  }
+
+  // Static method to create an empty instance
+  static VideoModel empty() {
+    return VideoModel(
+      id: 0,
+      title: '',
+      author: '',
+      videoLink: '',
+      description: '',
+    );
+  }
 }

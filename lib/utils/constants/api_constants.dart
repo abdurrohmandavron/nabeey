@@ -1,12 +1,5 @@
 class ADAPIs {
-  /// YouTube Data API Key
-  static const String youTubeSecretApiKey = 'AIzaSyC455mcFdJrv07Pq8qb4pKFIcuOWGirrTA';
-
-  /// API Base URL
-  static const String baseUrl = "http://nabeey.ddns.net:8080/";
-
   /// API Endpoints
-  static const String userC = 'api/user/create';
   static const String userU = 'api/user/update';
   static const String userR = 'api/user/get/';
   static const String usersR = 'api/user/get-all';
@@ -44,5 +37,6 @@ class ADAPIs {
   static const String videoR = 'api/content-videos/get/';
   static const String videoRC = 'api/content-videos/get-by-categoryId/';
   static const String videosR = 'api/content-videos/get-all';
-  static const String youtubeR = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=';
+  static const String youtubeBase = 'www.googleapis.com';
+  static const String youtubeR = 'youtube/v3/videos';
 }

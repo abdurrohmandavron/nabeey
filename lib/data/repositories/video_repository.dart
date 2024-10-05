@@ -1,34 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:nabeey/utils/http/http_client.dart';
-import 'package:nabeey/utils/constants/api_constants.dart';
-import 'package:nabeey/features/explore/models/video_model.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:nabeey/features/explore/models/youtube_video_model.dart';
 
-abstract class VideoRepository {
-  @protected
-  Future<Map<String, dynamic>> getVideos();
+import '../../utils/constants/api_constants.dart';
+import '../../features/explore/models/video_model.dart';
+import '../../features/explore/models/youtube_video_model.dart';
 
-  Future<VideoModel?> getVideo(int videoId);
+import 'base_repository.dart';
 
-  Future<void> createVideo(VideoModel video);
-
-  Future<void> updateVideo(VideoModel video);
-
-  Future<void> deleteVideo(int videoId);
-
-  Future<YouTubeVideoModel?> getVideoData(VideoModel video);
-}
-
-class VideoRepositoryImpl implements VideoRepository {
-  final HttpHelper _httpClient = HttpHelper();
-
-  VideoRepositoryImpl();
+class VideoRepository extends BaseRepository<VideoModel> {
+  @override
+  VideoModel fromJson(Map<String, dynamic> json) => VideoModel.fromJson(json);
 
   @override
+  VideoModel empty() => VideoModel.empty();
+
   Future<Map<String, List<VideoModel>>> getVideos() async {
-    final response = await _httpClient.get(ADAPIs.videosR);
-    final List<dynamic> videoListJson = response['data'];
+    final response = await httpClient.get(ADAPIs.videosR);
+    final List<dynamic> videoListJson = response['data'] ?? [];
     final List<VideoModel> videos = videoListJson.map((videoJson) => VideoModel.fromJson(videoJson)).toList();
 
     Map<String, List<VideoModel>> videosByAuthor = {};
@@ -43,37 +30,19 @@ class VideoRepositoryImpl implements VideoRepository {
     return videosByAuthor;
   }
 
-  @override
-  Future<VideoModel?> getVideo(int videoId) async {
-    final response = await _httpClient.get('${ADAPIs.videoR}/$videoId');
-    // Handle API response (error checking, data parsing)
-    return response['data'] != null ? VideoModel.fromJson(response['data']) : null;
-  }
+  Future<VideoModel?> getVideo(int videoId) => getById(ADAPIs.videoR, videoId);
 
-  @override
-  Future<void> createVideo(VideoModel video) async {
-    // Send create Video request to API
-    await _httpClient.post(ADAPIs.videoC, video.toJson());
-  }
+  Future<void> createVideo(VideoModel video) => create(ADAPIs.videoC, video.toJson());
 
-  @override
-  Future<void> updateVideo(VideoModel video) async {
-    // Send update Video request to API
-    await _httpClient.put(ADAPIs.videoU + video.id.toString(), video.toJson());
-  }
+  Future<void> updateVideo(VideoModel video) => update(ADAPIs.videoU, video.id, video.toJson());
 
-  @override
-  Future<void> deleteVideo(int videoId) async {
-    // Send delete Video request to API
-    await _httpClient.delete(ADAPIs.videoD + videoId.toString());
-  }
+  Future<void> deleteVideo(int videoId) => delete(ADAPIs.videoD, videoId);
 
-  @override
   Future<YouTubeVideoModel?> getVideoData(VideoModel video) async {
-    final response = await _httpClient.getVideoData(YoutubePlayer.convertUrlToId(video.videoLink)!);
+    final response = await httpClient.getVideoData(YoutubePlayer.convertUrlToId(video.videoLink)!);
     if (response.containsKey('items') && (response['items'] as List).isNotEmpty) {
-      final firstItem = response['items'][0]; // Get the first video entry
-      return YouTubeVideoModel.fromJson(firstItem['snippet']); // Parse snippet for data
+      final firstItem = response['items'][0];
+      return YouTubeVideoModel.fromJson(firstItem['snippet']);
     } else {
       return YouTubeVideoModel.empty();
     }

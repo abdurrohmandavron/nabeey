@@ -23,6 +23,8 @@ build/
 *.log.*
 *.log-*
 *.tmproj
+.env
+.gitignore
 .DS_Store
 ios/Flutter/.last_build_id
 ios/Flutter/App.framework/Info.plist

@@ -26,16 +26,18 @@ class UserModel extends HiveObject {
   @HiveField(7)
   final FileModel? asset;
 
+  // Constructor
   UserModel({
-    this.asset,
     required this.id,
-    required this.phone,
-    required this.email,
-    required this.userRole,
-    required this.lastName,
     required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.phone,
+    required this.userRole,
+    this.asset,
   });
 
+  // Factory constructor for JSON deserialization
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json["id"] ?? 0,
@@ -48,24 +50,27 @@ class UserModel extends HiveObject {
     );
   }
 
-  Map<String, dynamic> toJson({String? password}) => password != null
-      ? {
-          "firstName": firstName,
-          "lastName": lastName,
-          "email": email,
-          "phone": phone,
-          "password": password,
-        }
-      : {
-          "id": id,
-          "firstName": firstName,
-          "lastName": lastName,
-          "email": email,
-          "phone": phone,
-          "userRole": userRole,
-          "asset": asset?.toJson(),
-        };
+  // Method to serialize to JSON
+  Map<String, dynamic> toJson({String? password}) {
+    final Map<String, dynamic> json = {
+      "firstName": firstName,
+      "lastName": lastName,
+      "email": email,
+      "phone": phone,
+      "userRole": userRole,
+      "asset": asset?.toJson(),
+    };
 
+    if (password != null) {
+      json["password"] = password;
+    } else {
+      json["id"] = id;
+    }
+
+    return json;
+  }
+
+  // Static method to provide an empty instance
   factory UserModel.empty() {
     return UserModel(
       id: 0,

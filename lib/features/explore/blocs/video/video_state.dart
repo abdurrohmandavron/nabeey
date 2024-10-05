@@ -1,8 +1,8 @@
-import 'package:equatable/equatable.dart';
+import 'package:nabeey/features/explore/blocs/base/base_bloc.dart';
 import 'package:nabeey/features/explore/models/video_model.dart';
 import 'package:nabeey/features/explore/models/youtube_video_model.dart';
 
-abstract class VideoState extends Equatable {
+abstract class VideoState extends BaseState {
   const VideoState();
 
   @override

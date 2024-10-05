@@ -1,6 +1,9 @@
-import 'package:nabeey/app.dart';
 import 'package:flutter/material.dart';
-import 'package:nabeey/utils/local_storage/storage_utility.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'app.dart';
+import 'service_locator.dart';
+import 'utils/local_storage/storage_utility.dart';
 
 Future<void> main() async {
   /// Widgets Binding
@@ -9,5 +12,12 @@ Future<void> main() async {
   /// Hive Local Storage
   await LocalStorage.initHive();
 
+  /// Initialize the service locator
+  setupLocator();
+
+  /// Load environment variables
+  await dotenv.load();
+
+  /// Run the App
   runApp(const App());
 }

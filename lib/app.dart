@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nabeey/service_locator.dart';
 import 'package:nabeey/routes/app_routes.dart';
 import 'package:nabeey/utils/theme/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +22,7 @@ class App extends StatelessWidget {
       home: MultiBlocProvider(
         providers: [
           BlocProvider<NavigationCubit>(create: (context) => NavigationCubit()),
-          BlocProvider<CategoryBloc>(create: (context) => CategoryBloc()),
+          BlocProvider<CategoryBloc>(create: (context) => getIt<CategoryBloc>()),
         ],
         child: const NavigationMenu(),
       ),

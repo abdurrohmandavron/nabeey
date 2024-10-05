@@ -1,6 +1,6 @@
-import 'package:nabeey/features/explore/models/file_model.dart';
-import 'package:nabeey/features/explore/models/user_model.dart';
-import 'package:nabeey/features/explore/models/category_model.dart';
+import '../../../features/explore/models/file_model.dart';
+import '../../../features/explore/models/user_model.dart';
+import '../../../features/explore/models/category_model.dart';
 
 class ArticleModel {
   final int id;
@@ -10,6 +10,7 @@ class ArticleModel {
   final FileModel image;
   final CategoryModel category;
 
+  // Constructor
   ArticleModel({
     required this.id,
     required this.title,
@@ -19,15 +20,17 @@ class ArticleModel {
     required this.category,
   });
 
+  // Factory constructor for JSON deserialization
   factory ArticleModel.fromJson(Map<String, dynamic> json) => ArticleModel(
         id: json["id"] ?? 0,
         title: json["title"] ?? '',
         text: json["text"] ?? '',
-        user: json["user"] != null ? UserModel.fromJson(json["user"]) : UserModel.empty(),
-        image: json["image"] != null ? FileModel.fromJson(json["image"]) : FileModel.empty(),
-        category: json["category"] != null ? CategoryModel.fromJson(json["category"]) : CategoryModel.empty(),
+        user: UserModel.fromJson(json["user"] ?? UserModel.empty()),
+        image: FileModel.fromJson(json["image"] ?? FileModel.empty()),
+        category: CategoryModel.fromJson(json["category"] ?? CategoryModel.empty()),
       );
 
+  // Method to serialize to JSON
   Map<String, dynamic> toJson() => {
         "id": id,
         "title": title,
@@ -36,4 +39,16 @@ class ArticleModel {
         "image": image.toJson(),
         "category": category.toJson(),
       };
+
+  // Static method to provide an empty instance
+  static ArticleModel empty() {
+    return ArticleModel(
+      id: 0,
+      title: '',
+      text: '',
+      user: UserModel.empty(),
+      image: FileModel.empty(),
+      category: CategoryModel.empty(),
+    );
+  }
 }

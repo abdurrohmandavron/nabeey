@@ -1,9 +1,10 @@
 class YouTubeVideoModel {
-  String date;
-  String title;
-  String image;
-  String description;
+  final String date;
+  final String title;
+  final String image;
+  final String description;
 
+  // Constructor
   YouTubeVideoModel({
     required this.date,
     required this.title,
@@ -11,12 +12,23 @@ class YouTubeVideoModel {
     required this.description,
   });
 
-  static YouTubeVideoModel empty() => YouTubeVideoModel(date: '', title: '', image: '', description: '');
+  // Factory constructor for creating an instance from JSON
+  factory YouTubeVideoModel.fromJson(Map<String, dynamic> json) {
+    return YouTubeVideoModel(
+      title: json['title'] ?? '',
+      description: json['description'] ?? '',
+      image: (json['thumbnails'] != null && json['thumbnails']['high'] != null) ? json['thumbnails']['high']['url'] ?? '' : '',
+      date: json['publishedAt'] != null ? json['publishedAt'].toString().substring(0, 10) : '',
+    );
+  }
 
-  factory YouTubeVideoModel.fromJson(Map<String, dynamic> json) => YouTubeVideoModel(
-        title: json['title'],
-        description: json['description'],
-        image: json['thumbnails']['high']['url'],
-        date: json['publishedAt'].toString().substring(0, 10),
-      );
+  // Static method to create an empty instance
+  static YouTubeVideoModel empty() {
+    return YouTubeVideoModel(
+      date: '',
+      title: '',
+      image: '',
+      description: '',
+    );
+  }
 }

@@ -22,7 +22,7 @@ class AudioScreen extends StatelessWidget {
 
     return PopScope(
       canPop: true,
-      onPopInvoked: (value) => controller.playingAudio = null,
+      onPopInvokedWithResult: (value, _) => controller.playingAudio = null,
       child: Scaffold(
         body: BlocBuilder<AudioBloc, AudioState>(
           builder: (context, state) {

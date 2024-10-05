@@ -5,6 +5,7 @@ import 'package:nabeey/features/quiz/screens/quiz.dart';
 import 'package:nabeey/features/explore/screens/home/home.dart';
 import 'package:nabeey/features/authentication/views/signup/signup.dart';
 import 'package:nabeey/features/authentication/blocs/signup/signup_bloc.dart';
+import 'package:nabeey/service_locator.dart';
 
 class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -15,7 +16,10 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const QuizScreen());
       case ADRoutes.signup:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider<SignupBloc>(create: (context) => SignupBloc(), child: const SignupScreen()),
+          builder: (_) => BlocProvider<SignupBloc>(
+            create: (context) => getIt<SignupBloc>(),
+            child: const SignupScreen(),
+          ),
         );
       // case ADRoutes.rating:
       //   return MaterialPageRoute(builder: (_) => const RatingScreen());

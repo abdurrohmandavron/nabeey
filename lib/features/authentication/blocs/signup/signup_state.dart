@@ -6,12 +6,7 @@ abstract class SignupState extends Equatable {
   List<Object> get props => [];
 }
 
-class SignupLoading extends SignupState {
-  SignupLoading();
-
-  @override
-  String toString() => 'SignupLoading';
-}
+class SignupLoading extends SignupState {}
 
 class SignupSuccess extends SignupState {
   final UserModel user;

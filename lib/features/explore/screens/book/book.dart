@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/common/widgets/header/header.dart';
 import 'package:nabeey/features/explore/models/category_model.dart';
-import 'package:nabeey/features/explore/blocs/book/book_cubit.dart';
+import 'package:nabeey/features/explore/blocs/book/book_bloc.dart';
 import 'package:nabeey/features/explore/blocs/book/book_event.dart';
 import 'package:nabeey/features/explore/blocs/book/book_state.dart';
 import 'package:nabeey/features/explore/screens/book/widgets/book_item.dart';

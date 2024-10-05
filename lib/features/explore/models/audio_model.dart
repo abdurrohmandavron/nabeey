@@ -1,11 +1,12 @@
-import 'package:nabeey/features/explore/models/file_model.dart';
+import '../../../features/explore/models/file_model.dart';
 
 class AudioModel {
-  int id;
-  String title;
-  FileModel audio;
-  String description;
+  final int id;
+  final String title;
+  final FileModel audio;
+  final String description;
 
+  // Constructor
   AudioModel({
     required this.id,
     required this.title,
@@ -13,19 +14,33 @@ class AudioModel {
     required this.description,
   });
 
-  static AudioModel empty() => AudioModel(id: 0, title: '', audio: FileModel.empty(), description: '');
+  // Factory constructor for JSON deserialization
+  factory AudioModel.fromJson(Map<String, dynamic> json) {
+    return AudioModel(
+      id: json['id'] ?? 0,
+      title: json['title'] ?? '',
+      description: json['description'] ?? '',
+      audio: FileModel.fromJson(json['audio'] ?? FileModel.empty()),
+    );
+  }
 
-  factory AudioModel.fromJson(Map<String, dynamic> json) => AudioModel(
-        id: json["id"],
-        title: json["title"],
-        description: json["description"],
-        audio: FileModel.fromJson(json["audio"]),
-      );
+  // Method to serialize to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'audio': audio.toJson(),
+      'description': description,
+    };
+  }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "audio": audio.toJson(),
-        "description": description,
-      };
+  // Static method to provide an empty instance
+  static AudioModel empty() {
+    return AudioModel(
+      id: 0,
+      title: '',
+      description: '',
+      audio: FileModel.empty(),
+    );
+  }
 }

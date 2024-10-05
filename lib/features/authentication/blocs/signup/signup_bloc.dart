@@ -10,7 +10,7 @@ import 'package:nabeey/features/authentication/blocs/signup/signup_event.dart';
 import 'package:nabeey/features/authentication/blocs/signup/signup_state.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
-  final UserRepositoryImpl userRepository = UserRepositoryImpl();
+  final UserRepository userRepository = UserRepository();
 
   /// Variables
   final TextEditingController firstName = TextEditingController();
@@ -45,6 +45,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
           lastName: lastName.text.trim(),
           email: email.text.trim(),
           phone: '+998${phoneNo.text.trim()}',
+          asset: null,
         );
 
         // Create User

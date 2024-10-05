@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_flutter/icons_flutter.dart';
-import 'package:nabeey/features/quiz/screens/quiz.dart';
 import 'package:nabeey/utils/constants/enums.dart';
 import 'package:nabeey/utils/constants/colors.dart';
+import 'package:nabeey/features/quiz/screens/quiz.dart';
 import 'package:nabeey/utils/helpers/helper_functions.dart';
 import 'package:nabeey/features/explore/screens/home/home.dart';
 import 'package:nabeey/common/navigation/views/navigation_bar.dart';
@@ -29,14 +29,19 @@ class NavigationMenu extends StatelessWidget {
               selectedItemColor: const Color(0xFFF59C16),
               unselectedItemColor: dark ? ADColors.white : const Color.fromRGBO(17, 17, 17, 0.5),
               onDestinationSelected: (index) {
-                if (index == 0) {
-                  BlocProvider.of<NavigationCubit>(context).getNavBarItem(NavigationEvent.home);
-                } else if (index == 1) {
-                  BlocProvider.of<NavigationCubit>(context).getNavBarItem(NavigationEvent.quiz);
-                } else if (index == 2) {
-                  BlocProvider.of<NavigationCubit>(context).getNavBarItem(NavigationEvent.rating);
-                } else if (index == 3) {
-                  BlocProvider.of<NavigationCubit>(context).getNavBarItem(NavigationEvent.profile);
+                switch (index) {
+                  case 0:
+                    BlocProvider.of<NavigationCubit>(context).getNavBarItem(NavigationEvent.home);
+                    break;
+                  case 1:
+                    BlocProvider.of<NavigationCubit>(context).getNavBarItem(NavigationEvent.quiz);
+                    break;
+                  case 2:
+                    BlocProvider.of<NavigationCubit>(context).getNavBarItem(NavigationEvent.rating);
+                    break;
+                  case 3:
+                    BlocProvider.of<NavigationCubit>(context).getNavBarItem(NavigationEvent.profile);
+                    break;
                 }
               },
               destinations: const [
@@ -53,7 +58,7 @@ class NavigationMenu extends StatelessWidget {
             return [
               const HomeScreen(),
               const QuizScreen(),
-              Container(color: ADColors.grey),
+              Container(color: Colors.yellow),
               Container(color: ADColors.success),
             ][state.index];
           },

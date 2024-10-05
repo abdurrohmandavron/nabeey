@@ -1,15 +1,20 @@
-import 'package:nabeey/features/explore/models/file_model.dart';
+import '../../../features/explore/models/file_model.dart';
+import '../../../features/explore/models/book_model.dart';
+import '../../../features/explore/models/audio_model.dart';
+import '../../../features/explore/models/video_model.dart';
+import '../../../features/explore/models/article_model.dart';
 
 class CategoryModel {
-  int id;
-  String name;
-  FileModel image;
-  String description;
-  List<dynamic> books;
-  List<dynamic> audios;
-  List<dynamic> videos;
-  List<dynamic> articles;
+  final int id;
+  final String name;
+  final FileModel image;
+  final String description;
+  final List<BookModel> books;
+  final List<AudioModel> audios;
+  final List<VideoModel> videos;
+  final List<ArticleModel> articles;
 
+  // Constructor
   CategoryModel({
     required this.id,
     required this.name,
@@ -21,27 +26,51 @@ class CategoryModel {
     required this.description,
   });
 
-  static CategoryModel empty() => CategoryModel(id: 0, name: '', image: FileModel.empty(), books: [], audios: [], videos: [], articles: [], description: '');
+  // Factory constructor for JSON deserialization
+  factory CategoryModel.fromJson(Map<String, dynamic> json) {
+    return CategoryModel(
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      image: FileModel.fromJson(json['image'] ?? FileModel.empty()),
+      books: _fromJsonList<BookModel>(json['books'], BookModel.fromJson),
+      audios: _fromJsonList<AudioModel>(json['audios'], AudioModel.fromJson),
+      videos: _fromJsonList<VideoModel>(json['videos'], VideoModel.fromJson),
+      articles: _fromJsonList<ArticleModel>(json['articles'], ArticleModel.fromJson),
+    );
+  }
 
-  factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
-        id: json["id"],
-        name: json["name"],
-        description: json["description"],
-        image: json["image"] != null ? FileModel.fromJson(json["image"]) : FileModel.empty(),
-        books: List<dynamic>.from(json["books"].map((x) => x)),
-        audios: List<dynamic>.from(json["audios"].map((x) => x)),
-        videos: List<dynamic>.from(json["videos"].map((x) => x)),
-        articles: List<dynamic>.from(json["articles"].map((x) => x)),
-      );
+  // Helper function to parse data models from json list
+  static List<T> _fromJsonList<T>(List<dynamic>? jsonList, T Function(Map<String, dynamic>) fromJson) {
+    if (jsonList == null) return [];
+    return List<T>.from(jsonList.map((item) => fromJson(item as Map<String, dynamic>)));
+  }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "image": image.toJson(),
-        "description": description,
-        "books": List<dynamic>.from(books.map((x) => x)),
-        "audios": List<dynamic>.from(audios.map((x) => x)),
-        "videos": List<dynamic>.from(videos.map((x) => x)),
-        "articles": List<dynamic>.from(articles.map((x) => x)),
-      };
+  // Method to serialize to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'image': image.toJson(),
+      'description': description,
+      'books': books.map((book) => book.toJson()).toList(),
+      'audios': audios.map((audio) => audio.toJson()).toList(),
+      'videos': videos.map((video) => video.toJson()).toList(),
+      'articles': articles.map((article) => article.toJson()).toList(),
+    };
+  }
+
+  // Static method to provide an empty instance
+  static CategoryModel empty() {
+    return CategoryModel(
+      id: 0,
+      name: '',
+      books: [],
+      audios: [],
+      videos: [],
+      articles: [],
+      description: '',
+      image: FileModel.empty(),
+    );
+  }
 }

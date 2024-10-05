@@ -1,7 +1,7 @@
-import 'package:equatable/equatable.dart';
+import 'package:nabeey/features/explore/blocs/base/base_bloc.dart';
 import 'package:nabeey/features/explore/models/audio_model.dart';
 
-abstract class AudioState extends Equatable {
+abstract class AudioState extends BaseState {
   const AudioState();
 
   @override

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/common/widgets/shimmers/category_item_shimmer.dart';
 import 'package:nabeey/features/explore/blocs/category/category_bloc.dart';
-import 'package:nabeey/features/explore/blocs/category/category_event.dart';
 import 'package:nabeey/features/explore/blocs/category/category_state.dart';
 import 'package:nabeey/features/explore/screens/home/widgets/category_item.dart';
 
@@ -12,9 +11,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = BlocProvider.of<CategoryBloc>(context);
-    controller.add(LoadCategories());
-
     return Scaffold(
       appBar: AppBar(title: Text('Nabeey', style: Theme.of(context).textTheme.headlineLarge)),
       body: BlocBuilder<CategoryBloc, CategoryState>(

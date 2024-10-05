@@ -1,7 +1,7 @@
-import 'package:equatable/equatable.dart';
+import 'package:nabeey/features/explore/blocs/base/base_bloc.dart';
 import 'package:nabeey/features/explore/models/category_model.dart';
 
-abstract class CategoryState extends Equatable {
+abstract class CategoryState extends BaseState {
   const CategoryState();
 
   @override

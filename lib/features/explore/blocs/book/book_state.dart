@@ -1,7 +1,7 @@
-import 'package:equatable/equatable.dart';
+import 'package:nabeey/features/explore/blocs/base/base_bloc.dart';
 import 'package:nabeey/features/explore/models/book_model.dart';
 
-abstract class BookState extends Equatable {
+abstract class BookState extends BaseState {
   const BookState();
 
   @override
