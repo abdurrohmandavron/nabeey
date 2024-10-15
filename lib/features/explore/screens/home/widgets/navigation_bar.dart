@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nabeey/utils/helpers/helper_functions.dart';
 
+import '../../../models/navigation_model.dart';
+
 class ADNavigationBar extends StatelessWidget {
   final Color color;
   final double height;
@@ -11,7 +13,7 @@ class ADNavigationBar extends StatelessWidget {
   final Color selectedItemColor;
   final Color unselectedItemColor;
   final ValueChanged<int> onDestinationSelected;
-  final List<NavigationDestination> destinations;
+  final List<NavigationModel> destinations;
 
   const ADNavigationBar({
     super.key,

@@ -7,14 +7,10 @@ import '../../features/explore/models/youtube_video_model.dart';
 import 'base_repository.dart';
 
 class VideoRepository extends BaseRepository<VideoModel> {
-  @override
-  VideoModel fromJson(Map<String, dynamic> json) => VideoModel.fromJson(json);
 
-  @override
-  VideoModel empty() => VideoModel.empty();
+  Future<Map<String, List<VideoModel>>> getVideos(int categoryId) async {
+    final response = await httpClient.get(ADAPIs.endpoints['GETBYCATEGORY']![VideoModel]! + categoryId.toString());
 
-  Future<Map<String, List<VideoModel>>> getVideos() async {
-    final response = await httpClient.get(ADAPIs.videosR);
     final List<dynamic> videoListJson = response['data'] ?? [];
     final List<VideoModel> videos = videoListJson.map((videoJson) => VideoModel.fromJson(videoJson)).toList();
 
@@ -30,21 +26,13 @@ class VideoRepository extends BaseRepository<VideoModel> {
     return videosByAuthor;
   }
 
-  Future<VideoModel?> getVideo(int videoId) => getById(ADAPIs.videoR, videoId);
-
-  Future<void> createVideo(VideoModel video) => create(ADAPIs.videoC, video.toJson());
-
-  Future<void> updateVideo(VideoModel video) => update(ADAPIs.videoU, video.id, video.toJson());
-
-  Future<void> deleteVideo(int videoId) => delete(ADAPIs.videoD, videoId);
-
-  Future<YouTubeVideoModel?> getVideoData(VideoModel video) async {
+  Future<VideoDataModel?> getVideoData(VideoModel video) async {
     final response = await httpClient.getVideoData(YoutubePlayer.convertUrlToId(video.videoLink)!);
     if (response.containsKey('items') && (response['items'] as List).isNotEmpty) {
       final firstItem = response['items'][0];
-      return YouTubeVideoModel.fromJson(firstItem['snippet']);
+      return VideoDataModel.fromJson(firstItem['snippet']);
     } else {
-      return YouTubeVideoModel.empty();
+      return VideoDataModel.empty();
     }
   }
 }

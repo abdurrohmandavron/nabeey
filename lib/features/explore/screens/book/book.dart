@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/common/widgets/header/header.dart';
+import 'package:nabeey/features/explore/models/book_model.dart';
+import 'package:nabeey/features/explore/blocs/base/base_bloc.dart';
+import 'package:nabeey/features/explore/blocs/base/base_state.dart';
 import 'package:nabeey/features/explore/models/category_model.dart';
-import 'package:nabeey/features/explore/blocs/book/book_bloc.dart';
-import 'package:nabeey/features/explore/blocs/book/book_event.dart';
-import 'package:nabeey/features/explore/blocs/book/book_state.dart';
 import 'package:nabeey/features/explore/screens/book/widgets/book_item.dart';
 
 class BookScreen extends StatelessWidget {
@@ -15,15 +15,12 @@ class BookScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = BlocProvider.of<BookBloc>(context);
-    controller.add(LoadBooks());
-
     return Scaffold(
-      body: BlocBuilder<BookBloc, BookState>(
+      body: BlocBuilder<BaseBloc<BookModel>, BaseState>(
         builder: (context, state) {
-          if (state is BookLoading) {
+          if (state is ItemsInit) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is BookLoaded) {
+          } else if (state is ItemsLoaded) {
             return Column(
               children: [
                 /// Category Description
@@ -35,10 +32,10 @@ class BookScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: ListView.separated(
                       shrinkWrap: true,
-                      itemCount: state.books.length,
+                      itemCount: state.items.length,
                       separatorBuilder: (_, __) => const SizedBox(height: ADSizes.defaultSpace),
                       itemBuilder: (context, index) {
-                        final book = state.books[index];
+                        final BookModel book = state.items[index];
                         return BookItem(book: book);
                       },
                     ),
@@ -46,12 +43,10 @@ class BookScreen extends StatelessWidget {
                 )
               ],
             );
-          } else if (state is BookEmpty) {
-            return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text("Kitoblar mavjud emas.", style: Theme.of(context).textTheme.bodyLarge)));
-          } else if (state is BookError) {
-            return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text(state.message, style: Theme.of(context).textTheme.bodyLarge)));
+          } else if (state is ItemsError || state is ItemsEmpty) {
+            return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text(state.toString(), style: Theme.of(context).textTheme.bodyLarge)));
           } else {
-            return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text("Nimadir xato ketdi.", style: Theme.of(context).textTheme.bodyLarge)));
+            return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text("Noma'lum xatolik.", style: Theme.of(context).textTheme.bodyLarge)));
           }
         },
       ),

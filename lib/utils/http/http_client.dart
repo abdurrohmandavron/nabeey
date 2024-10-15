@@ -19,23 +19,23 @@ class HttpHelper {
   final String _youtubeBase = ADAPIs.youtubeBase;
 
   Future<Map<String, dynamic>> get(String path) async {
-    return _request('GET', path);
+    return await _request('GET', path);
   }
 
   Future<Map<String, dynamic>> getById(int id, String path) async {
-    return _request('GET', '$path/$id');
+    return await _request('GET', '$path/$id');
   }
 
   Future<Map<String, dynamic>> post(String path, Map<String, dynamic> jsonData) async {
-    return _request('POST', path, jsonData: jsonData);
+    return await _request('POST', path, jsonData: jsonData);
   }
 
   Future<Map<String, dynamic>> put(int id, String path, Map<String, dynamic> jsonData) async {
-    return _request('PUT', '$path/$id', jsonData: jsonData);
+    return await _request('PUT', '$path/$id', jsonData: jsonData);
   }
 
   Future<Map<String, dynamic>> delete(int id, String path) async {
-    return _request('DELETE', '$path/$id');
+    return await _request('DELETE', '$path/$id');
   }
 
   Future<Map<String, dynamic>> getVideoData(String videoId) async {
@@ -57,7 +57,7 @@ class HttpHelper {
     required String password,
   }) async {
     try {
-      final url = Uri.http(_baseUrl, dotenv.env['API_USER_CREATE']!);
+      final url = Uri.http(_baseUrl, ADAPIs.endpoints['CREATE']![UserModel]!);
       var request = http.MultipartRequest('POST', url)
         ..fields['firstName'] = user.firstName
         ..fields['lastName'] = user.lastName

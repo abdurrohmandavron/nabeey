@@ -16,7 +16,7 @@ class AuthorVideoList extends StatelessWidget {
 
   final String author;
   final List<VideoModel> videos;
-  final List<YouTubeVideoModel> ytVideos;
+  final List<VideoDataModel> ytVideos;
 
   @override
   Widget build(BuildContext context) {

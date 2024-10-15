@@ -16,12 +16,12 @@ class AuthorVideoListItem extends StatelessWidget {
 
   final int index;
   final List<VideoModel> videos;
-  final List<YouTubeVideoModel> ytVideos;
+  final List<VideoDataModel> ytVideos;
 
   @override
   Widget build(BuildContext context) {
     final VideoModel video = videos[index];
-    final YouTubeVideoModel ytVideo = ytVideos[index];
+    final VideoDataModel ytVideo = ytVideos[index];
 
     return SizedBox(
       width: 240,

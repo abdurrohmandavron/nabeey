@@ -1,12 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:nabeey/features/explore/models/audio_model.dart';
-import 'package:nabeey/features/explore/blocs/audio/audio_bloc.dart';
+import 'package:nabeey/features/explore/blocs/base/base_bloc.dart';
 
+import 'package:nabeey/features/explore/models/audio_model.dart';
 import 'audio_playback_state.dart';
 
 class AudioPlaybackCubit extends Cubit<AudioPlaybackState> {
-  AudioPlaybackCubit({required this.audioController}) : super(AudioPlaybackInitial()) {
+  AudioPlaybackCubit(this.bloc) : super(AudioPlaybackInitial()) {
     _audioPlayer = AudioPlayer();
     _initAudioPlayer();
   }
@@ -15,12 +15,12 @@ class AudioPlaybackCubit extends Cubit<AudioPlaybackState> {
   late AudioPlayer _audioPlayer;
   Duration _position = Duration.zero;
   Duration _duration = Duration.zero;
-  final AudioBloc audioController;
+  BaseBloc<AudioModel> bloc;
 
   void _initAudioPlayer() {
     _audioPlayer.onPositionChanged.listen((position) {
       _position = position;
-      if (audioController.playingAudio != _currentAudio) {
+      if (bloc.playingAudio != _currentAudio) {
         pause();
       }
       if (state is AudioPlaybackPlaying) {
@@ -50,7 +50,7 @@ class AudioPlaybackCubit extends Cubit<AudioPlaybackState> {
       await _audioPlayer.stop();
     }
     _currentAudio = audio;
-    audioController.playingAudio = _currentAudio;
+    bloc.playingAudio = _currentAudio;
     await _audioPlayer.play(UrlSource(audio.audio.filePath));
     emit(AudioPlaybackPlaying(position: _position, duration: _duration, audio: _currentAudio!));
   }

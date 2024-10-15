@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nabeey/utils/exceptions/exceptions.dart';
 import 'package:nabeey/utils/helpers/network_manager.dart';
-import 'package:nabeey/data/repositories/user_repository.dart';
+import 'package:nabeey/data/repositories/base_repository.dart';
 import 'package:nabeey/features/explore/models/user_model.dart';
 import 'package:nabeey/features/authentication/blocs/user/user_bloc.dart';
 import 'package:nabeey/features/authentication/blocs/user/user_event.dart';
@@ -10,7 +10,7 @@ import 'package:nabeey/features/authentication/blocs/signup/signup_event.dart';
 import 'package:nabeey/features/authentication/blocs/signup/signup_state.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
-  final UserRepository userRepository = UserRepository();
+  final repository = BaseRepository();
 
   /// Variables
   final TextEditingController firstName = TextEditingController();

@@ -17,7 +17,7 @@ class AuthorVideoItem extends StatelessWidget {
   final VideoModel video;
   final int? play;
   final int index;
-  final YouTubeVideoModel ytVideo;
+  final VideoDataModel ytVideo;
 
   @override
   Widget build(BuildContext context) {

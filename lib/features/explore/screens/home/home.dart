@@ -1,50 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nabeey/utils/constants/sizes.dart';
-import 'package:nabeey/common/widgets/shimmers/category_item_shimmer.dart';
-import 'package:nabeey/features/explore/blocs/category/category_bloc.dart';
-import 'package:nabeey/features/explore/blocs/category/category_state.dart';
-import 'package:nabeey/features/explore/screens/home/widgets/category_item.dart';
+import 'package:icons_flutter/icons_flutter.dart';
+import 'package:nabeey/utils/constants/colors.dart';
+import 'package:nabeey/features/quiz/screens/quiz.dart';
+import 'package:nabeey/utils/helpers/helper_functions.dart';
+import 'package:nabeey/features/explore/cubits/navigation/navigation_cubit.dart';
+
+import '../../../../service_locator.dart';
+import '../../blocs/base/base_bloc.dart';
+import '../../models/category_model.dart';
+import '../../models/navigation_model.dart';
+import '../category/category.dart';
+import 'widgets/navigation_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Nabeey', style: Theme.of(context).textTheme.headlineLarge)),
-      body: BlocBuilder<CategoryBloc, CategoryState>(
-        builder: (context, state) {
-          if (state is CategoryLoading) {
-            return Container(
-              margin: const EdgeInsets.only(top: 20),
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: ListView.separated(
-                itemCount: 4,
-                separatorBuilder: (_, __) => const SizedBox(height: 16),
-                itemBuilder: (context, index) => const CategoryItemShimmer(),
-              ),
-            );
-          } else if (state is CategoryLoaded) {
-            return Container(
-              margin: const EdgeInsets.only(top: 20),
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: ListView.separated(
-                separatorBuilder: (_, __) => const SizedBox(height: 16),
-                itemCount: state.categories.length,
-                itemBuilder: (context, index) {
-                  final category = state.categories[index];
-                  return CategoryItem(category: category);
-                },
-              ),
-            );
-          } else if (state is CategoryError) {
-            return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text(state.message, style: Theme.of(context).textTheme.bodyLarge)));
-          } else {
-            return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text("Nimadir xato ketdi.", style: Theme.of(context).textTheme.bodyLarge)));
-          }
-        },
-      ),
+    final dark = HelperFunctions.isDarkMode(context);
+
+    return BlocProvider(
+      create: (context) => HomeCubit(),
+      child: Builder(builder: (context) {
+        final cubit = BlocProvider.of<HomeCubit>(context);
+
+        return Scaffold(
+          bottomNavigationBar: BlocBuilder<HomeCubit, HomeState>(
+            builder: (context, state) {
+              return ADNavigationBar(
+                height: 60,
+                radius: 30.0,
+                color: ADColors.white,
+                selectedIndex: state.index,
+                selectedItemColor: const Color(0xFFF59C16),
+                unselectedItemColor: dark ? ADColors.white : const Color.fromRGBO(17, 17, 17, 0.5),
+                onDestinationSelected: cubit.onDestinationSelected,
+                destinations: const [
+                  NavigationModel(icon: Icon(Feather.home), label: "Asosiy"),
+                  NavigationModel(icon: Icon(Feather.help_circle), label: "Test"),
+                  NavigationModel(icon: Icon(Feather.activity), label: "Reyting"),
+                  NavigationModel(icon: Icon(Feather.user), label: "Profil"),
+                ],
+              );
+            },
+          ),
+          body: BlocBuilder<HomeCubit, HomeState>(
+            builder: (context, state) {
+              return [
+                BlocProvider<BaseBloc<CategoryModel>>(
+                  create: (context) => getIt<BaseBloc<CategoryModel>>(),
+                  child: const CategoryScreen(),
+                ),
+                const QuizScreen(),
+                Container(color: Colors.blue),
+                Container(color: Colors.green),
+              ][state.index];
+            },
+          ),
+        );
+      }),
     );
   }
 }

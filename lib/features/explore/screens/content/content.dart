@@ -3,16 +3,17 @@ import 'package:nabeey/service_locator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/common/widgets/header/header.dart';
+import 'package:nabeey/features/explore/models/book_model.dart';
 import 'package:nabeey/common/widgets/layouts/grid_layout.dart';
 import 'package:nabeey/features/explore/screens/book/book.dart';
+import 'package:nabeey/features/explore/models/video_model.dart';
+import 'package:nabeey/features/explore/models/audio_model.dart';
 import 'package:nabeey/features/explore/screens/audio/audio.dart';
 import 'package:nabeey/features/explore/screens/video/video.dart';
-import 'package:nabeey/features/explore/blocs/book/book_bloc.dart';
+import 'package:nabeey/features/explore/blocs/base/base_bloc.dart';
+import 'package:nabeey/features/explore/models/article_model.dart';
 import 'package:nabeey/features/explore/models/category_model.dart';
-import 'package:nabeey/features/explore/blocs/video/video_bloc.dart';
-import 'package:nabeey/features/explore/blocs/audio/audio_bloc.dart';
 import 'package:nabeey/features/explore/screens/article/article.dart';
-import 'package:nabeey/features/explore/blocs/article/article_bloc.dart';
 import 'package:nabeey/features/explore/screens/content/widgets/content_item.dart';
 
 class ContentScreen extends StatelessWidget {
@@ -35,7 +36,12 @@ class ContentScreen extends StatelessWidget {
               itemCount: 4,
               itemBuilder: (_, index) {
                 return GestureDetector(
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => contentPage(context, index))),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => contentPage(context, index),
+                    ),
+                  ),
                   child: ContentItem(index: index),
                 );
               },
@@ -49,24 +55,24 @@ class ContentScreen extends StatelessWidget {
   Widget contentPage(BuildContext contex, int index) {
     switch (index) {
       case 0:
-        return BlocProvider<ArticleBloc>(
-          create: (_) => getIt<ArticleBloc>(),
+        return BlocProvider<BaseBloc<ArticleModel>>(
+          create: (_) => getIt<BaseBloc<ArticleModel>>(),
           child: ArticleScreen(category: category),
         );
       case 1:
-        return BlocProvider<VideoBloc>(
-          create: (_) => getIt<VideoBloc>(),
+        return BlocProvider<BaseBloc<VideoModel>>(
+          create: (_) => getIt<BaseBloc<VideoModel>>(),
           child: VideoScreen(category: category),
         );
       case 2:
-        return BlocProvider<AudioBloc>(
-          create: (_) => getIt<AudioBloc>(),
+        return BlocProvider<BaseBloc<AudioModel>>(
+          create: (_) => getIt<BaseBloc<AudioModel>>(),
           child: AudioScreen(category: category),
         );
       case 3:
       default:
-        return BlocProvider(
-          create: (_) => getIt<BookBloc>(),
+        return BlocProvider<BaseBloc<BookModel>>(
+          create: (_) => getIt<BaseBloc<BookModel>>(),
           child: BookScreen(category: category),
         );
     }

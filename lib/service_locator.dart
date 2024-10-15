@@ -1,29 +1,26 @@
 import 'package:get_it/get_it.dart';
-import 'package:nabeey/data/repositories/article_repository.dart';
-import 'package:nabeey/data/repositories/audio_repository.dart';
-import 'package:nabeey/data/repositories/book_repository.dart';
-import 'package:nabeey/data/repositories/category_repository.dart';
-import 'package:nabeey/data/repositories/video_repository.dart';
-import 'package:nabeey/features/explore/blocs/article/article_bloc.dart';
-import 'package:nabeey/features/explore/blocs/audio/audio_bloc.dart';
-import 'package:nabeey/features/explore/blocs/book/book_bloc.dart';
-import 'package:nabeey/features/explore/blocs/category/category_bloc.dart';
-import 'package:nabeey/features/explore/blocs/video/video_bloc.dart';
+import 'package:nabeey/data/repositories/base_repository.dart';
+import 'package:nabeey/features/explore/blocs/base/base_bloc.dart';
+import 'package:nabeey/features/explore/models/book_model.dart';
+import 'package:nabeey/features/explore/models/audio_model.dart';
+import 'package:nabeey/features/explore/models/video_model.dart';
+import 'package:nabeey/features/explore/models/article_model.dart';
+import 'package:nabeey/features/explore/models/category_model.dart';
 
 final GetIt getIt = GetIt.instance;
 
 void setupLocator() {
   // Registering repositories
-  getIt.registerLazySingleton<CategoryRepository>(() => CategoryRepository());
-  getIt.registerLazySingleton<ArticleRepository>(() => ArticleRepository());
-  getIt.registerLazySingleton<VideoRepository>(() => VideoRepository());
-  getIt.registerLazySingleton<AudioRepository>(() => AudioRepository());
-  getIt.registerLazySingleton<BookRepository>(() => BookRepository());
+  getIt.registerLazySingleton<BaseRepository<CategoryModel>>(() => BaseRepository<CategoryModel>());
+  getIt.registerLazySingleton<BaseRepository<ArticleModel>>(() => BaseRepository<ArticleModel>());
+  getIt.registerLazySingleton<BaseRepository<VideoModel>>(() => BaseRepository<VideoModel>());
+  getIt.registerLazySingleton<BaseRepository<AudioModel>>(() => BaseRepository<AudioModel>());
+  getIt.registerLazySingleton<BaseRepository<BookModel>>(() => BaseRepository<BookModel>());
 
   // Registering BLoCs
-  getIt.registerFactory<CategoryBloc>(() => CategoryBloc(getIt<CategoryRepository>()));
-  getIt.registerFactory<ArticleBloc>(() => ArticleBloc(getIt<ArticleRepository>()));
-  getIt.registerFactory<VideoBloc>(() => VideoBloc(getIt<VideoRepository>()));
-  getIt.registerFactory<AudioBloc>(() => AudioBloc(getIt<AudioRepository>()));
-  getIt.registerFactory<BookBloc>(() => BookBloc(getIt<BookRepository>()));
+  getIt.registerFactory<BaseBloc<CategoryModel>>(() => BaseBloc(getIt<BaseRepository<CategoryModel>>()));
+  getIt.registerFactory<BaseBloc<ArticleModel>>(() => BaseBloc(getIt<BaseRepository<ArticleModel>>()));
+  getIt.registerFactory<BaseBloc<VideoModel>>(() => BaseBloc(getIt<BaseRepository<VideoModel>>()));
+  getIt.registerFactory<BaseBloc<AudioModel>>(() => BaseBloc(getIt<BaseRepository<AudioModel>>()));
+  getIt.registerFactory<BaseBloc<BookModel>>(() => BaseBloc(getIt<BaseRepository<BookModel>>()));
 }

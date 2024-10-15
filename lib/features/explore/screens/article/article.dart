@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nabeey/features/explore/models/article_model.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/common/widgets/header/header.dart';
+import 'package:nabeey/features/explore/blocs/base/base_bloc.dart';
+import 'package:nabeey/features/explore/blocs/base/base_state.dart';
 import 'package:nabeey/features/explore/models/category_model.dart';
-import 'package:nabeey/features/explore/blocs/article/article_bloc.dart';
-import 'package:nabeey/features/explore/blocs/article/article_event.dart';
-import 'package:nabeey/features/explore/blocs/article/article_state.dart';
 import 'package:nabeey/features/explore/screens/article/widgets/article_item.dart';
 
 class ArticleScreen extends StatelessWidget {
@@ -15,15 +15,12 @@ class ArticleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = BlocProvider.of<ArticleBloc>(context);
-    controller.add(const LoadArticles());
-
     return Scaffold(
-      body: BlocBuilder<ArticleBloc, ArticleState>(
+      body: BlocBuilder<BaseBloc<ArticleModel>, BaseState>(
         builder: (context, state) {
-          if (state is ArticleLoading) {
+          if (state is ItemsInit) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is ArticleLoaded) {
+          } else if (state is ItemsLoaded) {
             return Column(
               children: [
                 /// Category Description
@@ -35,10 +32,10 @@ class ArticleScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
                     child: ListView.separated(
                       shrinkWrap: true,
-                      itemCount: state.articles.length,
+                      itemCount: state.items.length,
                       separatorBuilder: (_, __) => const SizedBox(height: 24),
                       itemBuilder: (context, index) {
-                        final article = state.articles[index];
+                        final ArticleModel article = state.items[index];
                         return ArticleItem(article: article);
                       },
                     ),
@@ -46,12 +43,10 @@ class ArticleScreen extends StatelessWidget {
                 )
               ],
             );
-          } else if (state is ArticleEmpty) {
-            return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text("Maqola mavjud emas.", style: Theme.of(context).textTheme.bodyLarge)));
-          } else if (state is ArticleError) {
-            return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text(state.message, style: Theme.of(context).textTheme.bodyLarge)));
+          } else if (state is ItemsError || state is ItemsEmpty) {
+            return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text(state.toString(), style: Theme.of(context).textTheme.bodyLarge)));
           } else {
-            return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text("Nimadir xato ketdi.", style: Theme.of(context).textTheme.bodyLarge)));
+            return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text("Noma'lum xatolik!", style: Theme.of(context).textTheme.bodyLarge)));
           }
         },
       ),
