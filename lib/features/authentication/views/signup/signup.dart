@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/utils/constants/colors.dart';
 import 'package:nabeey/utils/constants/text_strings.dart';
 import 'package:nabeey/common/widgets/appbar/appbar.dart';
 import 'package:nabeey/features/authentication/views/signup/widgets/signup_form.dart';
+
+import '../../blocs/signup/signup_bloc.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
@@ -27,7 +30,10 @@ class SignupScreen extends StatelessWidget {
               const SizedBox(height: ADSizes.spaceBtwSections),
 
               /// Form
-              const SignupForm(),
+              BlocProvider(
+                create: (context) => SignupBloc(),
+                child: const SignupForm(),
+              ),
               const SizedBox(height: ADSizes.spaceBtwSections),
             ],
           ),
@@ -35,4 +41,4 @@ class SignupScreen extends StatelessWidget {
       ),
     );
   }
-}      
+}

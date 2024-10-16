@@ -23,27 +23,27 @@ class AudioScreen extends StatelessWidget {
       canPop: true,
       onPopInvokedWithResult: (value, _) => bloc.playingAudio = null,
       child: Scaffold(
-        body: BlocBuilder<BaseBloc<AudioModel>, BaseState>(
-          builder: (context, state) {
-            if (state is ItemsInit) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is ItemsLoaded) {
-              final audios = state.items as List<AudioModel>;
+        body: Column(
+          children: [
+            /// Category Description
+            ADHeader(category: category),
 
-              return Column(
-                children: [
-                  /// Category Description
-                  ADHeader(category: category),
+            /// Audios
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: ADSizes.defaultSpace,
+                  left: ADSizes.defaultSpace,
+                  right: ADSizes.defaultSpace,
+                ),
+                child: BlocBuilder<BaseBloc<AudioModel>, BaseState>(
+                  builder: (context, state) {
+                    if (state is ItemsInit) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (state is ItemsLoaded) {
+                      final audios = state.items as List<AudioModel>;
 
-                  /// Audios
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        top: ADSizes.defaultSpace,
-                        left: ADSizes.defaultSpace,
-                        right: ADSizes.defaultSpace,
-                      ),
-                      child: ExpansionTileGroup(
+                      return ExpansionTileGroup(
                         spaceBetweenItem: ADSizes.spaceBtwItems,
                         toggleType: ToggleType.expandOnlyCurrent,
                         children: audios
@@ -65,17 +65,17 @@ class AudioScreen extends StatelessWidget {
                               ),
                             )
                             .toList(),
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            } else if (state is ItemsEmpty || state is ItemsError) {
-              return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text(state.toString(), style: Theme.of(context).textTheme.bodyLarge)));
-            } else {
-              return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text("Noma'lum xatolik.", style: Theme.of(context).textTheme.bodyLarge)));
-            }
-          },
+                      );
+                    } else if (state is ItemsEmpty || state is ItemsError) {
+                      return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text(state.toString(), style: Theme.of(context).textTheme.bodyLarge)));
+                    } else {
+                      return Center(child: Padding(padding: const EdgeInsets.all(ADSizes.defaultSpace), child: Text("Noma'lum xatolik.", style: Theme.of(context).textTheme.bodyLarge)));
+                    }
+                  },
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );

@@ -38,7 +38,9 @@ class UserModel extends HiveObject {
   });
 
   // Factory constructor for JSON deserialization
-  factory UserModel.fromJson(Map<String, dynamic> json) {
+  factory UserModel.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return UserModel.empty();
+
     return UserModel(
       id: json["id"] ?? 0,
       firstName: json["firstName"] ?? '',

@@ -49,7 +49,9 @@ class HttpHelper {
       },
     );
 
-    return _request('GET', uri.toString());
+    final response = await http.get(uri);
+
+    return _handleResponse(response);
   }
 
   Future<Map<String, dynamic>> signup({
@@ -106,7 +108,7 @@ class HttpHelper {
 
       return _handleResponse(response);
     } catch (e) {
-      throw Exception('HTTP Request failed: ${e.toString()}');
+      rethrow;
     }
   }
 
@@ -114,7 +116,7 @@ class HttpHelper {
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
-      throw Exception('Failed to load data: ${response.statusCode} - ${response.body}');
+      throw Exception('Failed to load data: ${response.statusCode}');
     }
   }
 }

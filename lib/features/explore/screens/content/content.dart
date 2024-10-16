@@ -6,13 +6,13 @@ import 'package:nabeey/common/widgets/header/header.dart';
 import 'package:nabeey/features/explore/models/book_model.dart';
 import 'package:nabeey/common/widgets/layouts/grid_layout.dart';
 import 'package:nabeey/features/explore/screens/book/book.dart';
-import 'package:nabeey/features/explore/models/video_model.dart';
 import 'package:nabeey/features/explore/models/audio_model.dart';
 import 'package:nabeey/features/explore/screens/audio/audio.dart';
 import 'package:nabeey/features/explore/screens/video/video.dart';
 import 'package:nabeey/features/explore/blocs/base/base_bloc.dart';
 import 'package:nabeey/features/explore/models/article_model.dart';
 import 'package:nabeey/features/explore/models/category_model.dart';
+import 'package:nabeey/features/explore/blocs/video/video_bloc.dart';
 import 'package:nabeey/features/explore/screens/article/article.dart';
 import 'package:nabeey/features/explore/screens/content/widgets/content_item.dart';
 
@@ -56,23 +56,23 @@ class ContentScreen extends StatelessWidget {
     switch (index) {
       case 0:
         return BlocProvider<BaseBloc<ArticleModel>>(
-          create: (_) => getIt<BaseBloc<ArticleModel>>(),
+          create: (_) => getIt<BaseBloc<ArticleModel>>(param1: category.id),
           child: ArticleScreen(category: category),
         );
       case 1:
-        return BlocProvider<BaseBloc<VideoModel>>(
-          create: (_) => getIt<BaseBloc<VideoModel>>(),
+        return BlocProvider<VideoBloc>(
+          create: (_) => getIt<VideoBloc>(param1: category.id),
           child: VideoScreen(category: category),
         );
       case 2:
         return BlocProvider<BaseBloc<AudioModel>>(
-          create: (_) => getIt<BaseBloc<AudioModel>>(),
+          create: (_) => getIt<BaseBloc<AudioModel>>(param1: category.id),
           child: AudioScreen(category: category),
         );
       case 3:
       default:
         return BlocProvider<BaseBloc<BookModel>>(
-          create: (_) => getIt<BaseBloc<BookModel>>(),
+          create: (_) => getIt<BaseBloc<BookModel>>(param1: category.id),
           child: BookScreen(category: category),
         );
     }

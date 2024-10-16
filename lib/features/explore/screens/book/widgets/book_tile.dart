@@ -31,12 +31,23 @@ class BookTile extends StatelessWidget {
         const SizedBox(width: ADSizes.spaceBtwItems),
 
         /// Title & Author
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(book.title, style: Theme.of(context).textTheme.headlineMedium),
-            Text(book.author, style: Theme.of(context).textTheme.bodyMedium),
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                book.title,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              Text(
+                book.author,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ],
+          ),
         )
       ],
     );

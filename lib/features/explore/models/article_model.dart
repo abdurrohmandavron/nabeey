@@ -21,14 +21,18 @@ class ArticleModel {
   });
 
   // Factory constructor for JSON deserialization
-  factory ArticleModel.fromJson(Map<String, dynamic> json) => ArticleModel(
-        id: json["id"] ?? 0,
-        title: json["title"] ?? '',
-        text: json["text"] ?? '',
-        user: UserModel.fromJson(json["user"] ?? UserModel.empty()),
-        image: FileModel.fromJson(json["image"] ?? FileModel.empty()),
-        category: CategoryModel.fromJson(json["category"] ?? CategoryModel.empty()),
-      );
+  factory ArticleModel.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return ArticleModel.empty();
+
+    return ArticleModel(
+      id: json["id"] ?? 0,
+      title: json["title"] ?? '',
+      text: json["text"] ?? '',
+      user: UserModel.fromJson(json["user"]),
+      image: FileModel.fromJson(json["image"]),
+      category: CategoryModel.fromJson(json["category"]),
+    );
+  }
 
   // Method to serialize to JSON
   Map<String, dynamic> toJson() => {

@@ -4,6 +4,7 @@ import 'package:nabeey/data/repositories/base_repository.dart';
 import 'package:nabeey/features/explore/blocs/base/base_event.dart';
 import 'package:nabeey/features/explore/blocs/base/base_state.dart';
 import 'package:nabeey/features/explore/models/audio_model.dart';
+import 'package:nabeey/features/explore/models/category_model.dart';
 
 class BaseBloc<T> extends Bloc<BaseEvent, BaseState> {
   final BaseRepository<T> _repository;
@@ -18,7 +19,12 @@ class BaseBloc<T> extends Bloc<BaseEvent, BaseState> {
 
   Future _loadItems(LoadItems event, Emitter<BaseState> emit) async {
     try {
-      final List<T> items = await _repository.getAll();
+      final List<T> items;
+      if (T == CategoryModel) {
+        items = await _repository.getAll();
+      } else {
+        items = await _repository.getByCategoryId();
+      }
 
       items.isNotEmpty ? emit(ItemsLoaded<T>(items)) : emit(ItemsEmpty());
     } catch (e) {

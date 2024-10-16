@@ -11,35 +11,38 @@ class VideoBloc extends Bloc<BaseEvent, BaseState> {
   final VideoRepository videoRepository;
 
   VideoBloc(this.videoRepository) : super(ItemsInit()) {
-    on<LoadItems>((event, emit) async {
-      try {
-        final videos = await videoRepository.getVideos(0);
+    on<LoadItems>(_loadItems);
 
-        if (videos.isEmpty) {
-          emit(ItemsEmpty());
-          return;
-        }
+    add(LoadItems());
+  }
+  Future _loadItems(event, emit) async {
+    try {
+      final videos = await videoRepository.getVideos();
 
-        Map<String, List<VideoDataModel>> ytVideos = {};
-
-        for (var author in videos.keys) {
-          List<VideoDataModel> ytVideosList = [];
-
-          for (VideoModel video in videos[author]!) {
-            final ytVideo = await videoRepository.getVideoData(video);
-            if (ytVideo != null) {
-              ytVideosList.add(ytVideo);
-            } else {
-              emit(ItemsError('Failed to fetch YouTube data for video: ${video.id}'));
-            }
-          }
-          ytVideos[author] = ytVideosList;
-        }
-
-        emit(video_state.VideosLoaded(videos, ytVideos));
-      } catch (e) {
-        emit(ItemsError(e.toString()));
+      if (videos.isEmpty) {
+        emit(ItemsEmpty());
+        return;
       }
-    });
+
+      Map<String, List<VideoDataModel>> ytVideos = {};
+
+      for (var author in videos.keys) {
+        List<VideoDataModel> ytVideosList = [];
+
+        for (VideoModel video in videos[author]!) {
+          final ytVideo = await videoRepository.getVideoData(video);
+          if (ytVideo != null) {
+            ytVideosList.add(ytVideo);
+          } else {
+            emit(ItemsError('Failed to fetch YouTube data for video: ${video.id}'));
+          }
+        }
+        ytVideos[author] = ytVideosList;
+      }
+
+      emit(video_state.VideosLoaded(videos, ytVideos));
+    } catch (e) {
+      emit(ItemsError(e.toString()));
+    }
   }
 }

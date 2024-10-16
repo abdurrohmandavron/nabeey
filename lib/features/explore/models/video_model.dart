@@ -1,4 +1,4 @@
-import 'package:nabeey/features/explore/models/youtube_video_model.dart';
+// import 'package:nabeey/features/explore/models/youtube_video_model.dart';
 
 class VideoModel {
   final int id;
@@ -6,7 +6,7 @@ class VideoModel {
   final String author;
   final String videoLink;
   final String description;
-  late VideoDataModel data;
+  // late VideoDataModel data;
 
   // Constructor
   VideoModel({

@@ -10,10 +10,15 @@ import '../../utils/http/http_client.dart';
 
 class BaseRepository<T> {
   BaseRepository() {
-    setFunctions();
+    _setFunctions();
   }
 
   final HttpHelper httpClient = HttpHelper();
+
+  late final T Function(Map<String, dynamic>) fromJson;
+  late final T Function() empty;
+
+  int? categoryId;
 
   Future<T> getById(int id) async {
     try {
@@ -26,7 +31,7 @@ class BaseRepository<T> {
     }
   }
 
-  Future<List<T>> getByCategoryId(int categoryId) async {
+  Future<List<T>> getByCategoryId() async {
     try {
       String apiEndpoint = ADAPIs.endpoints['GETBYCATEGORY']![T]! + categoryId.toString();
       final response = await httpClient.get(apiEndpoint);
@@ -43,7 +48,8 @@ class BaseRepository<T> {
       String apiUrl = ADAPIs.endpoints['GETALL']![T]!;
       final response = await httpClient.get(apiUrl);
 
-      return response['data'].map<T>((json) => fromJson(json)).toList();
+      final List<dynamic> jsonList = response['data'] ?? [];
+      return jsonList.map((json) => fromJson(json)).toList();
     } catch (e) {
       rethrow;
     }
@@ -80,27 +86,27 @@ class BaseRepository<T> {
     }
   }
 
-  T Function(Map<String, dynamic>) fromJson = CategoryModel.fromJson as T Function(Map<String, dynamic>);
-  T Function() empty = CategoryModel.empty as T Function();
-
-  void setFunctions() {
+  void _setFunctions() {
     if (T == CategoryModel) {
-      return;
+      fromJson = (json) => CategoryModel.fromJson(json) as T;
+      empty = () => CategoryModel.empty() as T;
     } else if (T == UserModel) {
-      fromJson = UserModel.fromJson as T Function(Map<String, dynamic>);
-      empty = UserModel.empty as T Function();
+      fromJson = (json) => UserModel.fromJson(json) as T;
+      empty = () => UserModel.empty() as T;
     } else if (T == ArticleModel) {
-      fromJson = ArticleModel.fromJson as T Function(Map<String, dynamic>);
-      empty = ArticleModel.empty as T Function();
+      fromJson = (json) => ArticleModel.fromJson(json) as T;
+      empty = () => ArticleModel.empty() as T;
     } else if (T == BookModel) {
-      fromJson = BookModel.fromJson as T Function(Map<String, dynamic>);
-      empty = BookModel.empty as T Function();
+      fromJson = (json) => BookModel.fromJson(json) as T;
+      empty = () => BookModel.empty() as T;
     } else if (T == AudioModel) {
-      fromJson = AudioModel.fromJson as T Function(Map<String, dynamic>);
-      empty = AudioModel.empty as T Function();
+      fromJson = (json) => AudioModel.fromJson(json) as T;
+      empty = () => AudioModel.empty() as T;
     } else if (T == VideoModel) {
-      fromJson = VideoModel.fromJson as T Function(Map<String, dynamic>);
-      empty = VideoModel.empty as T Function();
+      fromJson = (json) => VideoModel.fromJson(json) as T;
+      empty = () => VideoModel.empty() as T;
+    } else {
+      throw UnsupportedError("Type not supported: $T");
     }
   }
 }

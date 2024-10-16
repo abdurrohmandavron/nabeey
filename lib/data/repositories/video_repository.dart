@@ -7,8 +7,8 @@ import '../../features/explore/models/youtube_video_model.dart';
 import 'base_repository.dart';
 
 class VideoRepository extends BaseRepository<VideoModel> {
-
-  Future<Map<String, List<VideoModel>>> getVideos(int categoryId) async {
+  VideoRepository();
+  Future<Map<String, List<VideoModel>>> getVideos() async {
     final response = await httpClient.get(ADAPIs.endpoints['GETBYCATEGORY']![VideoModel]! + categoryId.toString());
 
     final List<dynamic> videoListJson = response['data'] ?? [];
@@ -29,8 +29,8 @@ class VideoRepository extends BaseRepository<VideoModel> {
   Future<VideoDataModel?> getVideoData(VideoModel video) async {
     final response = await httpClient.getVideoData(YoutubePlayer.convertUrlToId(video.videoLink)!);
     if (response.containsKey('items') && (response['items'] as List).isNotEmpty) {
-      final firstItem = response['items'][0];
-      return VideoDataModel.fromJson(firstItem['snippet']);
+      final snippet = response['items'][0]['snippet'];
+      return VideoDataModel.fromJson(snippet);
     } else {
       return VideoDataModel.empty();
     }

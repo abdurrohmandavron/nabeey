@@ -27,12 +27,14 @@ class CategoryModel {
   });
 
   // Factory constructor for JSON deserialization
-  factory CategoryModel.fromJson(Map<String, dynamic> json) {
+  factory CategoryModel.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return CategoryModel.empty();
+
     return CategoryModel(
       id: json['id'],
       name: json['name'],
       description: json['description'],
-      image: FileModel.fromJson(json['image'] ?? FileModel.empty()),
+      image: FileModel.fromJson(json['image']),
       books: _fromJsonList<BookModel>(json['books'], BookModel.fromJson),
       audios: _fromJsonList<AudioModel>(json['audios'], AudioModel.fromJson),
       videos: _fromJsonList<VideoModel>(json['videos'], VideoModel.fromJson),
