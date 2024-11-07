@@ -1,4 +1,4 @@
-package uz.nabeey.mobile
+package uz.nabeey.app
 
 import io.flutter.embedding.android.FlutterActivity
 

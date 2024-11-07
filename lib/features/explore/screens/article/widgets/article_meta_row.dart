@@ -11,14 +11,20 @@ class ArticleMetaRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        /// Date Icon
         const Icon(size: 18, Feather.calendar),
         const SizedBox(width: 5),
+
+        /// Date
         Text(date, style: Theme.of(context).textTheme.bodyMedium),
         const SizedBox(width: 26),
+
+        /// Views Icon
         const Icon(size: 18, Feather.eye),
         const SizedBox(width: 5),
+
+        /// View
         Text('$views views', style: Theme.of(context).textTheme.bodyMedium),
-        const SizedBox(height: 20),
       ],
     );
   }

@@ -7,8 +7,9 @@ import 'package:nabeey/features/explore/models/audio_model.dart';
 import 'package:nabeey/features/explore/blocs/base/base_bloc.dart';
 import 'package:nabeey/features/explore/blocs/base/base_state.dart';
 import 'package:nabeey/features/explore/models/category_model.dart';
-import 'package:nabeey/features/explore/screens/audio/widgets/audio_item.dart';
-import 'package:nabeey/features/explore/cubits/audio/audio_playback_cubit.dart';
+
+import 'widgets/audio_item.dart';
+import '../../blocs/audio/audio_bloc.dart';
 
 class AudioScreen extends StatelessWidget {
   const AudioScreen({super.key, required this.category});
@@ -58,7 +59,7 @@ class AudioScreen extends StatelessWidget {
                                 title: Center(child: Text(audio.title, style: Theme.of(context).textTheme.titleLarge)),
                                 children: [
                                   BlocProvider(
-                                    create: (_) => AudioPlaybackCubit(bloc),
+                                    create: (_) => AudioBloc(bloc),
                                     child: AudioItem(audio: audio),
                                   )
                                 ],

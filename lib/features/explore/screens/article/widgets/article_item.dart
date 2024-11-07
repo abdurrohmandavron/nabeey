@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/utils/constants/colors.dart';
@@ -45,7 +46,7 @@ class ArticleItem extends StatelessWidget {
                     const SizedBox(height: ADSizes.sm),
                     Text(maxLines: 3, article.text.toString(), style: const TextStyle(overflow: TextOverflow.ellipsis)),
                     const SizedBox(height: 12),
-                    const ArticleMetaRow(date: "08.10.2024", views: 1357),
+                    kDebugMode ? const ArticleMetaRow(date: '08.10.2024', views: 1357) : const SizedBox(), // TODO
                   ],
                 ),
               )

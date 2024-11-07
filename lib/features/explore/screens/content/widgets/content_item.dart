@@ -22,7 +22,7 @@ class ContentItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: dark ? const Color.fromRGBO(25, 118, 210, 1) : ADColors.white,
+        color: dark ?  ADColors.primary : const Color.fromARGB(255, 255, 209, 141),
         boxShadow: [BoxShadow(color: dark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.1), blurRadius: 10.0)],
       ),
       child: Row(

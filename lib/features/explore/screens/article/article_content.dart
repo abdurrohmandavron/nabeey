@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nabeey/common/widgets/appbar/appbar.dart';
 import 'package:nabeey/common/widgets/images/rounded_image.dart';
 import 'package:nabeey/features/explore/models/article_model.dart';
-import 'package:nabeey/features/explore/screens/article/widgets/article_details_row.dart';
+import 'package:nabeey/features/explore/screens/article/widgets/article_meta_row.dart';
 
 class ArticleContent extends StatelessWidget {
   const ArticleContent({super.key, required this.article});
@@ -27,8 +28,10 @@ class ArticleContent extends StatelessWidget {
             const SizedBox(height: 10),
 
             /// Details Row
-            const ArticleDetailsRow(),
-            const SizedBox(height: 38),
+            kDebugMode ? const ArticleMetaRow(date: '08.10.2024', views: 1357) : const SizedBox(), // TODO
+            kDebugMode ? const SizedBox(height: 25) : const SizedBox(), // TODO
+
+            /// Content
             Text(article.text),
           ],
         ),

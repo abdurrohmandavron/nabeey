@@ -13,8 +13,8 @@ class FileModel {
     if (json == null) return FileModel.empty();
     return FileModel(
       fileName: json["fileName"] ?? '',
-      // filePath: json["filePath"] ?? '',
-      filePath: (json["filePath"] as String? ?? '').replaceAll('localhost', '10.0.2.2'), // TODO: replace this line with above one for production
+      // filePath: json["filePath"] ?? '', TODO
+      filePath: (json["filePath"] as String? ?? '').replaceAll('localhost', '10.0.2.2'),
     );
   }
 

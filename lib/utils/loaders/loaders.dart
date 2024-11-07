@@ -40,23 +40,23 @@ class ADLoaders {
     scaffold.showSnackBar(snackBar);
   }
 
-   static warningSnackBar(BuildContext context, {required String title, String message = '', int duration = 3}) {
+  static warningSnackBar(BuildContext context, {required String title, String message = '', int duration = 3}) {
     final scaffold = ScaffoldMessenger.of(Navigator.of(context).context);
     final snackBar = SnackBar(
       content: Text(title),
       backgroundColor: ADColors.primary,
-      margin: const EdgeInsets.all(10.0),
-      action: SnackBarAction(
-        label: 'Dismiss',
-        textColor: ADColors.white,
-        onPressed: () => scaffold.hideCurrentSnackBar(),
-      ),
+      // margin: const EdgeInsets.all(10.0),
+      // action: SnackBarAction(
+      //   label: 'Yopish',
+      //   textColor: ADColors.white,
+      //   onPressed: () => scaffold.hideCurrentSnackBar(),
+      // ),
       duration: Duration(seconds: duration),
     );
     scaffold.showSnackBar(snackBar);
   }
 
-   static errorSnackBar(BuildContext context, {required String title, String message = '', int duration = 3}) {
+  static errorSnackBar(BuildContext context, {required String title, String message = '', int duration = 3}) {
     final scaffold = ScaffoldMessenger.of(Navigator.of(context).context);
     final snackBar = SnackBar(
       content: Text(title),

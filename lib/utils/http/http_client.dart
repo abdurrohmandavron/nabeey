@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -15,7 +16,7 @@ class HttpHelper {
     'Content-Type': 'application/json',
   };
 
-  final String _baseUrl = dotenv.env['BASE_URL']!;
+  final String _baseUrl = kDebugMode ? '10.0.2.2' : dotenv.env['BASE_URL']!;
   final String _youtubeBase = ADAPIs.youtubeBase;
 
   Future<Map<String, dynamic>> get(String path) async {
@@ -102,7 +103,7 @@ class HttpHelper {
           break;
         case 'GET':
         default:
-          response = await http.get(uri);
+          response = await http.get(uri, headers: _headers);
           break;
       }
 

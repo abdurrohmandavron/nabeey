@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nabeey/utils/constants/colors.dart';
 import 'package:nabeey/features/explore/models/audio_model.dart';
-import 'package:nabeey/features/explore/cubits/audio/audio_playback_cubit.dart';
-import 'package:nabeey/features/explore/cubits/audio/audio_playback_state.dart';
+import 'package:nabeey/features/explore/blocs/audio/audio_bloc.dart';
 import 'package:nabeey/features/explore/screens/audio/widgets/audio_playback_buttons.dart';
 import 'package:nabeey/features/explore/screens/audio/widgets/audio_position_duration.dart';
 
@@ -14,18 +13,16 @@ class AudioItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = BlocProvider.of<AudioPlaybackCubit>(context);
+    final controller = BlocProvider.of<AudioBloc>(context);
 
-    return BlocBuilder<AudioPlaybackCubit, AudioPlaybackState>(
+    return BlocBuilder<AudioBloc, AudioState>(
       builder: (context, state) {
         Duration position = Duration.zero;
         Duration duration = Duration.zero;
-        bool isPlaying = false;
 
-        if (state is AudioPlaybackPlaying || state is AudioPlaybackPaused) {
+        if (state is AudioPlaying || state is AudioPaused) {
           position = state.position;
           duration = state.duration;
-          isPlaying = state is AudioPlaybackPlaying && state.audio == audio;
         }
 
         return Column(
@@ -36,16 +33,10 @@ class AudioItem extends StatelessWidget {
               activeColor: ADColors.primary,
               max: duration.inSeconds.toDouble(),
               value: position.inSeconds.toDouble(),
-              onChanged: (value) => controller.seek(Duration(seconds: value.toInt())),
+              onChanged: (value) => controller.add(AudioSeek(value.toInt())),
             ),
             AudioPositionDuration(position: position, duration: duration),
-            AudioPlaybackButtons(
-              audio: audio,
-              position: position,
-              duration: duration,
-              isPlaying: isPlaying,
-              controller: controller,
-            ),
+            AudioPlaybackButtons(audio: audio, controller: controller, state: state),
           ],
         );
       },

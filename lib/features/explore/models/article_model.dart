@@ -26,7 +26,7 @@ class ArticleModel {
 
     return ArticleModel(
       id: json["id"] ?? 0,
-      title: json["title"] ?? '',
+      title: json["title"] ?? 'Maqola sarlavhasi',
       text: json["text"] ?? '',
       user: UserModel.fromJson(json["user"]),
       image: FileModel.fromJson(json["image"]),
