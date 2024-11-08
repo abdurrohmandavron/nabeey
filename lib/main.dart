@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'app.dart';
-import 'service_locator.dart';
+import 'bindings/service_locator.dart';
 import 'utils/local_storage/storage_utility.dart';
 
 Future<void> main() async {

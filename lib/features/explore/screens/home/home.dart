@@ -10,7 +10,7 @@ import 'package:nabeey/features/explore/cubits/navigation/navigation_cubit.dart'
 import '../category/category.dart';
 import 'widgets/navigation_bar.dart';
 import '../../blocs/base/base_bloc.dart';
-import '../../../../service_locator.dart';
+import '../../../../bindings/service_locator.dart';
 import '../../models/category_model.dart';
 import '../../models/navigation_model.dart';
 

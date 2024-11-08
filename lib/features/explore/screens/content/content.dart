@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nabeey/service_locator.dart';
+import 'package:nabeey/bindings/service_locator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/common/widgets/header/header.dart';

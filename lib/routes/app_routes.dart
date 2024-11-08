@@ -5,7 +5,7 @@ import 'package:nabeey/features/quiz/screens/quiz.dart';
 import 'package:nabeey/features/explore/screens/category/category.dart';
 import 'package:nabeey/features/authentication/views/signup/signup.dart';
 import 'package:nabeey/features/authentication/blocs/signup/signup_bloc.dart';
-import 'package:nabeey/service_locator.dart';
+import 'package:nabeey/bindings/service_locator.dart';
 
 class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
