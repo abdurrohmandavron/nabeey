@@ -3,11 +3,9 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
-import 'package:http_parser/http_parser.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../../utils/constants/api_constants.dart';
-import '../../features/explore/models/user_model.dart';
 
 class HttpHelper {
   HttpHelper();
@@ -16,7 +14,7 @@ class HttpHelper {
     'Content-Type': 'application/json',
   };
 
-  final String _baseUrl = kDebugMode ? '10.0.2.2' : dotenv.env['BASE_URL']!;
+  final String _baseUrl = kDebugMode ? 'nabeey.ddns.net:8080' : dotenv.env['BASE_URL']!;
   final String _youtubeBase = ADAPIs.youtubeBase;
 
   Future<Map<String, dynamic>> get(String path) async {
@@ -29,6 +27,10 @@ class HttpHelper {
 
   Future<Map<String, dynamic>> post(String path, Map<String, dynamic> jsonData) async {
     return await _request('POST', path, jsonData: jsonData);
+  }
+
+  Future<Map<String, dynamic>> postMultipart(String path, Map<String, dynamic> jsonData, List<http.MultipartFile> files) async {
+    return await _request('POST-MULTIPART', path, jsonData: jsonData, files: files);
   }
 
   Future<Map<String, dynamic>> put(int id, String path, Map<String, dynamic> jsonData) async {
@@ -55,38 +57,7 @@ class HttpHelper {
     return _handleResponse(response);
   }
 
-  Future<Map<String, dynamic>> signup({
-    required UserModel user,
-    required String password,
-  }) async {
-    try {
-      final url = Uri.http(_baseUrl, ADAPIs.endpoints['CREATE']![UserModel]!);
-      var request = http.MultipartRequest('POST', url)
-        ..fields['firstName'] = user.firstName
-        ..fields['lastName'] = user.lastName
-        ..fields['email'] = user.email
-        ..fields['phone'] = user.phone
-        ..fields['password'] = password;
-
-      if (user.asset != null) {
-        request.files.add(
-          await http.MultipartFile.fromPath(
-            'Image',
-            user.asset!.filePath,
-            contentType: MediaType('image', 'jpeg'),
-          ),
-        );
-      }
-
-      final streamedResponse = await request.send();
-      final response = await http.Response.fromStream(streamedResponse);
-      return _handleResponse(response);
-    } catch (e) {
-      throw Exception('Failed to sign up user: ${e.toString()}');
-    }
-  }
-
-  Future<Map<String, dynamic>> _request(String method, String path, {Map<String, dynamic>? jsonData}) async {
+  Future<Map<String, dynamic>> _request(String method, String path, {Map<String, dynamic>? jsonData, List<http.MultipartFile>? files}) async {
     try {
       final uri = Uri.http(_baseUrl, path);
       http.Response response;
@@ -94,6 +65,15 @@ class HttpHelper {
       switch (method) {
         case 'POST':
           response = await http.post(uri, headers: _headers, body: json.encode(jsonData));
+          break;
+        case 'POST-MULTIPART':
+          var request = http.MultipartRequest('POST', uri);
+          
+          request.fields.addAll(jsonData as Map<String, String>);
+          request.headers.addAll(_headers);
+          if (files != null) request.files.addAll(files);
+
+          response = await http.Response.fromStream(await request.send());
           break;
         case 'PUT':
           response = await http.put(uri, headers: _headers, body: json.encode(jsonData));

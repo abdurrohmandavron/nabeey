@@ -1,4 +1,4 @@
-import '../../../features/explore/models/file_model.dart';
+import '../../../data/models/file_model.dart';
 
 class BookModel {
   final int id;

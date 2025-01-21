@@ -1,6 +1,6 @@
-import '../../../features/explore/models/file_model.dart';
-import '../../../features/explore/models/user_model.dart';
-import '../../../features/explore/models/category_model.dart';
+import '../../../data/models/file_model.dart';
+import '../../../data/models/user_model.dart';
+import '../../../data/models/category_model.dart';
 
 class ArticleModel {
   final int id;

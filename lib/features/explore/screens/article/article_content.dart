@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:nabeey/common/widgets/appbar/appbar.dart';
 import 'package:nabeey/common/widgets/images/rounded_image.dart';
 import 'package:nabeey/features/explore/models/article_model.dart';

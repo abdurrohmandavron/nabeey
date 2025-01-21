@@ -1,15 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nabeey/data/models/user_model.dart';
 import 'package:nabeey/utils/exceptions/exceptions.dart';
 import 'package:nabeey/utils/helpers/network_manager.dart';
-import 'package:nabeey/features/explore/models/user_model.dart';
 import 'package:nabeey/features/authentication/blocs/user/user_bloc.dart';
 import 'package:nabeey/features/authentication/blocs/user/user_event.dart';
 import 'package:nabeey/features/authentication/blocs/signup/signup_event.dart';
 import 'package:nabeey/features/authentication/blocs/signup/signup_state.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
-
   /// Variables
   final TextEditingController firstName = TextEditingController();
   final TextEditingController lastName = TextEditingController();
@@ -19,9 +18,9 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
   final GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 
-  final userBloc = UserBloc();
+  final UserBloc userBloc;
 
-  SignupBloc() : super(SignupLoading()) {
+  SignupBloc(this.userBloc) : super(SignupLoading()) {
     on<SignupSubmit>((event, emit) async {
       try {
         // Check Internet Connectivity

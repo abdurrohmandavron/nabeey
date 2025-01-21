@@ -4,7 +4,7 @@ import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/utils/constants/colors.dart';
 import 'package:nabeey/utils/constants/text_strings.dart';
 import 'package:nabeey/common/widgets/appbar/appbar.dart';
-import 'package:nabeey/features/authentication/views/signup/widgets/signup_form.dart';
+import 'package:nabeey/features/authentication/screens/signup/widgets/signup_form.dart';
 
 import '../../blocs/signup/signup_bloc.dart';
 
@@ -13,6 +13,7 @@ class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = BlocProvider.of<SignupBloc>(context);
     return Scaffold(
       appBar: const ADAppBar(showBackArrow: true),
       body: SingleChildScrollView(
@@ -30,10 +31,7 @@ class SignupScreen extends StatelessWidget {
               const SizedBox(height: ADSizes.spaceBtwSections),
 
               /// Form
-              BlocProvider(
-                create: (context) => SignupBloc(),
-                child: const SignupForm(),
-              ),
+              SignupForm(bloc: bloc),
               const SizedBox(height: ADSizes.spaceBtwSections),
             ],
           ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nabeey/routes/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nabeey/features/quiz/screens/quiz.dart';
+import 'package:nabeey/features/quiz/screens/quiz/quiz.dart';
 import 'package:nabeey/features/explore/screens/category/category.dart';
-import 'package:nabeey/features/authentication/views/signup/signup.dart';
+import 'package:nabeey/features/authentication/screens/signup/signup.dart';
 import 'package:nabeey/features/authentication/blocs/signup/signup_bloc.dart';
 import 'package:nabeey/bindings/service_locator.dart';
 

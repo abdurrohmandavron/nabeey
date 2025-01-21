@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:nabeey/features/explore/models/user_model.dart';
+import 'package:nabeey/data/models/user_model.dart';
 
 abstract class UserEvent extends Equatable {
   @override

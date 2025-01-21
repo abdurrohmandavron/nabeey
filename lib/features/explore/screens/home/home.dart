@@ -1,18 +1,19 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_flutter/icons_flutter.dart';
-import 'package:nabeey/utils/constants/colors.dart';
-import 'package:nabeey/features/quiz/screens/quiz.dart';
-import 'package:nabeey/utils/helpers/helper_functions.dart';
-import 'package:nabeey/features/explore/cubits/navigation/navigation_cubit.dart';
 
 import '../category/category.dart';
 import 'widgets/navigation_bar.dart';
 import '../../blocs/base/base_bloc.dart';
-import '../../../../bindings/service_locator.dart';
-import '../../models/category_model.dart';
 import '../../models/navigation_model.dart';
+import '../../../../data/models/user_model.dart';
+import '../../../../utils/constants/colors.dart';
+import '../../../../bindings/service_locator.dart';
+import '../../../../data/models/category_model.dart';
+import '../../../../utils/helpers/helper_functions.dart';
+import '../../../../features/quiz/models/quiz_model.dart';
+import '../../../../features/quiz/screens/quiz/quiz.dart';
+import '../../../../features/explore/cubits/navigation/navigation_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -27,28 +28,25 @@ class HomeScreen extends StatelessWidget {
         final cubit = BlocProvider.of<HomeCubit>(context);
 
         return Scaffold(
-          // TODO
-          bottomNavigationBar: kDebugMode
-              ? BlocBuilder<HomeCubit, HomeState>(
-                  builder: (context, state) {
-                    return ADNavigationBar(
-                      height: 60,
-                      radius: 30.0,
-                      color: ADColors.white,
-                      selectedIndex: state.index,
-                      selectedItemColor: const Color(0xFFF59C16),
-                      unselectedItemColor: dark ? ADColors.white : const Color.fromRGBO(17, 17, 17, 0.5),
-                      onDestinationSelected: cubit.onDestinationSelected,
-                      destinations: const [
-                        NavigationModel(icon: Icon(Feather.home), label: "Asosiy"),
-                        NavigationModel(icon: Icon(Feather.help_circle), label: "Test"),
-                        NavigationModel(icon: Icon(Feather.activity), label: "Reyting"),
-                        NavigationModel(icon: Icon(Feather.user), label: "Profil"),
-                      ],
-                    );
-                  },
-                )
-              : const SizedBox(),
+          bottomNavigationBar: BlocBuilder<HomeCubit, HomeState>(
+            builder: (context, state) {
+              return ADNavigationBar(
+                height: 60,
+                radius: 30.0,
+                color: ADColors.white,
+                selectedIndex: state.index,
+                selectedItemColor: const Color(0xFFF59C16),
+                unselectedItemColor: dark ? ADColors.white : const Color.fromRGBO(17, 17, 17, 0.5),
+                onDestinationSelected: cubit.onDestinationSelected,
+                destinations: const [
+                  NavigationModel(icon: Icon(Feather.home), label: "Asosiy"),
+                  NavigationModel(icon: Icon(Feather.help_circle), label: "Test"),
+                  NavigationModel(icon: Icon(Feather.activity), label: "Reyting"),
+                  NavigationModel(icon: Icon(Feather.user), label: "Profil"),
+                ],
+              );
+            },
+          ),
           body: BlocBuilder<HomeCubit, HomeState>(
             builder: (context, state) {
               return [
@@ -56,9 +54,19 @@ class HomeScreen extends StatelessWidget {
                   create: (context) => getIt<BaseBloc<CategoryModel>>(),
                   child: const CategoryScreen(),
                 ),
-                const QuizScreen(),
-                Container(color: Colors.blue),
-                Container(color: Colors.green),
+                BlocProvider<BaseBloc<QuizModel>>(
+                  create: (context) => getIt<BaseBloc<QuizModel>>(),
+                  child: const QuizScreen(),
+                ),
+                // BlocProvider<BaseBloc<RatingModel>>(
+                //   create: (context) => getIt<BaseBloc<RatingModel>>(),
+                //   child: const RatingScreen(),
+                const SizedBox(),
+                // ),
+                BlocProvider<BaseBloc<UserModel>>(
+                  create: (context) => getIt<BaseBloc<UserModel>>(),
+                  // child: const ProfileScreen(),
+                ),
               ][state.index];
             },
           ),

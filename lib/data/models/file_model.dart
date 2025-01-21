@@ -1,3 +1,5 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class FileModel {
   final String fileName;
   final String filePath;
@@ -14,7 +16,7 @@ class FileModel {
     return FileModel(
       fileName: json["fileName"] ?? '',
       // filePath: json["filePath"] ?? '', TODO
-      filePath: (json["filePath"] as String? ?? '').replaceAll('localhost', '10.0.2.2'),
+      filePath: (json["filePath"] as String? ?? '').replaceAll('localhost', dotenv.env['BASE_URL']!),
     );
   }
 

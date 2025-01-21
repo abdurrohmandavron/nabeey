@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nabeey/common/widgets/header/header.dart';
+import 'package:nabeey/common/widgets/headers/header.dart';
 import 'package:nabeey/utils/helpers/check_bloc_state.dart';
 import 'package:nabeey/features/explore/models/article_model.dart';
 import 'package:nabeey/features/explore/blocs/base/base_bloc.dart';
 import 'package:nabeey/features/explore/blocs/base/base_state.dart';
-import 'package:nabeey/features/explore/models/category_model.dart';
+import 'package:nabeey/data/models/category_model.dart';
 import 'package:nabeey/features/explore/screens/article/widgets/article_item.dart';
 
 class ArticleScreen extends StatelessWidget {

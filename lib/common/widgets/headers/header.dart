@@ -1,11 +1,11 @@
 import 'package:iconsax/iconsax.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:nabeey/utils/constants/colors.dart';
+import 'package:nabeey/data/models/category_model.dart';
 import 'package:nabeey/common/widgets/images/rounded_image.dart';
-import 'package:nabeey/features/explore/models/category_model.dart';
 
 import '../../../utils/constants/text_strings.dart';
+import '../../../utils/local_storage/storage_utility.dart';
 
 class ADHeader extends StatelessWidget {
   const ADHeader({super.key, required this.category});
@@ -82,18 +82,15 @@ class ADHeader extends StatelessWidget {
                   ),
                 ),
 
-                /// Check Knowledge Button TODO
-                kDebugMode
-                    ? Expanded(
-                        flex: 1,
-                        child: ElevatedButton(
-                          onPressed: () => Navigator.pushNamed(context, '/quiz'),
-                          // onPressed: () => LocalStorage().readData('general', 'currentUser') != null ? Navigator.pushNamed(context, '/quiz') : Navigator.pushNamed(context, '/signup'), TODO
-                          style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
-                          child: Text(ADTexts.checkKnowledge, style: Theme.of(context).textTheme.bodyMedium!.apply(color: ADColors.white)),
-                        ),
-                      )
-                    : const SizedBox(),
+                /// Check Knowledge Button
+                Expanded(
+                  flex: 1,
+                  child: ElevatedButton(
+                    onPressed: () => LocalStorage().readData('general', 'currentUser') != null ? Navigator.pushNamed(context, '/quiz') : Navigator.pushNamed(context, '/signup'),
+                    style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
+                    child: Text(ADTexts.checkKnowledge, style: Theme.of(context).textTheme.bodyMedium!.apply(color: ADColors.white)),
+                  ),
+                )
               ],
             ),
           ],

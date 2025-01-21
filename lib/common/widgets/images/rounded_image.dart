@@ -50,13 +50,20 @@ class RoundedImage extends StatelessWidget {
             /// Image
             ClipRRect(
               borderRadius: applyImageRadius ? BorderRadius.circular(borderRadius) : BorderRadius.zero,
-              child: CachedNetworkImage(
-                fit: fit,
-                imageUrl: imageUrl,
-                width: double.infinity,
-                height: double.infinity,
-                placeholder: (_, __) => const ADShimmerEffect(width: double.infinity, height: double.infinity),
-              ),
+              child: isNetworkImage
+                  ? CachedNetworkImage(
+                      fit: fit,
+                      imageUrl: imageUrl,
+                      width: double.infinity,
+                      height: double.infinity,
+                      placeholder: (_, __) => const ADShimmerEffect(width: double.infinity, height: double.infinity),
+                    )
+                  : Image.asset(
+                      fit: fit,
+                      imageUrl,
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
             ),
 
             /// Child

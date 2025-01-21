@@ -9,14 +9,14 @@ import 'package:nabeey/features/authentication/blocs/signup/signup_state.dart';
 import 'package:nabeey/features/authentication/blocs/signup/signup_event.dart';
 
 class SignupForm extends StatelessWidget {
-  const SignupForm({super.key});
+  const SignupForm({super.key, required this.bloc});
+
+  final SignupBloc bloc;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignupBloc, SignupState>(builder: (context, state) {
-      final bloc = BlocProvider.of<SignupBloc>(context);
-
-      return Form(
+    return BlocBuilder<SignupBloc, SignupState>(
+      builder: (context, state) => Form(
         key: bloc.signupFormKey,
         child: Column(
           children: [
@@ -75,7 +75,7 @@ class SignupForm extends StatelessWidget {
             ),
           ],
         ),
-      );
-    });
+      ),
+    );
   }
 }

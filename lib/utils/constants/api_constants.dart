@@ -1,9 +1,10 @@
 import 'package:nabeey/features/explore/models/article_model.dart';
 import 'package:nabeey/features/explore/models/audio_model.dart';
 import 'package:nabeey/features/explore/models/book_model.dart';
-import 'package:nabeey/features/explore/models/category_model.dart';
-import 'package:nabeey/features/explore/models/user_model.dart';
+import 'package:nabeey/data/models/category_model.dart';
+import 'package:nabeey/data/models/user_model.dart';
 import 'package:nabeey/features/explore/models/video_model.dart';
+import 'package:nabeey/features/quiz/models/quiz_model.dart';
 
 class ADAPIs {
   /// API Endpoints
@@ -15,6 +16,7 @@ class ADAPIs {
       BookModel: 'api/books/create',
       AudioModel: 'api/content-audios/create',
       VideoModel: 'api/content-videos/create',
+      QuizModel: 'api/quizzes/create',
     },
     'GET': {
       CategoryModel: 'api/content-categories/get/',
@@ -23,6 +25,7 @@ class ADAPIs {
       BookModel: 'api/books/get/',
       AudioModel: 'api/content-audios/get/',
       VideoModel: 'api/content-videos/get/',
+      QuizModel: 'api/quizzes/get/',
     },
     'GETBYCATEGORY': {
       ArticleModel: 'api/article/get-by-category/',
@@ -37,12 +40,14 @@ class ADAPIs {
       BookModel: 'api/books/get-all',
       AudioModel: 'api/content-audios/get-all',
       VideoModel: 'api/content-videos/get-all',
+      QuizModel: 'api/quizzes/get-all',
     },
     'UPDATE': {
       CategoryModel: 'api/content-categories/update',
       UserModel: 'api/user/update',
       ArticleModel: 'api/article/update',
       BookModel: 'api/books/update',
+      QuizModel: 'api/quizzes/update',
     },
     'DELETE': {
       CategoryModel: 'api/content-categories/delete/',
@@ -51,6 +56,7 @@ class ADAPIs {
       BookModel: 'api/books/delete/',
       AudioModel: 'api/content-audios/delete/',
       VideoModel: 'api/content-videos/delete/',
+      QuizModel: 'api/quizzes/delete/',
     },
   };
 

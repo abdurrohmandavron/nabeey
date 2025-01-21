@@ -1,12 +1,14 @@
-import 'package:nabeey/features/explore/models/article_model.dart';
-import 'package:nabeey/features/explore/models/audio_model.dart';
-import 'package:nabeey/features/explore/models/book_model.dart';
-import 'package:nabeey/features/explore/models/category_model.dart';
-import 'package:nabeey/features/explore/models/user_model.dart';
-import 'package:nabeey/features/explore/models/video_model.dart';
-import 'package:nabeey/utils/constants/api_constants.dart';
+import 'package:http/http.dart' as http show MultipartFile;
 
 import '../../utils/http/http_client.dart';
+import '../../data/models/user_model.dart';
+import '../../data/models/category_model.dart';
+import '../../utils/constants/api_constants.dart';
+import '../../features/quiz/models/quiz_model.dart';
+import '../../features/explore/models/book_model.dart';
+import '../../features/explore/models/audio_model.dart';
+import '../../features/explore/models/video_model.dart';
+import '../../features/explore/models/article_model.dart';
 
 class BaseRepository<T> {
   BaseRepository() {
@@ -55,12 +57,18 @@ class BaseRepository<T> {
     }
   }
 
-  Future<T> create(Map<String, dynamic> json) async {
+  Future<T> create(Map<String, dynamic> jsonData, [List<http.MultipartFile>? files]) async {
     try {
       final String apiEndpoint = ADAPIs.endpoints['CREATE']![T]!;
-      final response = await httpClient.post(apiEndpoint, json);
+      final Map<String, dynamic> jsonResponse;
 
-      return response['data'] != null ? fromJson(response['data']) : empty();
+      if (files != null) {
+        jsonResponse = await httpClient.postMultipart(apiEndpoint, jsonData, files);
+      } else {
+        jsonResponse = await httpClient.post(apiEndpoint, jsonData);
+      }
+
+      return jsonResponse['data'] != null ? fromJson(jsonResponse['data']) : empty();
     } catch (e) {
       rethrow;
     }
@@ -90,6 +98,9 @@ class BaseRepository<T> {
     if (T == CategoryModel) {
       fromJson = (json) => CategoryModel.fromJson(json) as T;
       empty = () => CategoryModel.empty() as T;
+    } else if (T == QuizModel) {
+      fromJson = (json) => QuizModel.fromJson(json) as T;
+      empty = () => QuizModel.empty() as T;
     } else if (T == UserModel) {
       fromJson = (json) => UserModel.fromJson(json) as T;
       empty = () => UserModel.empty() as T;

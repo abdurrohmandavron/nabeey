@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
-import 'package:nabeey/common/widgets/header/header.dart';
+import 'package:nabeey/common/widgets/headers/header.dart';
 import 'package:nabeey/features/explore/blocs/base/base_state.dart';
-import 'package:nabeey/features/explore/models/category_model.dart';
+import 'package:nabeey/data/models/category_model.dart';
 import 'package:nabeey/features/explore/blocs/video/video_bloc.dart';
 import 'package:nabeey/features/explore/blocs/video/video_state.dart';
 import 'package:nabeey/features/explore/screens/video/widgets/author_video_list.dart';

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../utils/constants/sizes.dart';
-import '../../../../common/widgets/header/header.dart';
+import '../../../../common/widgets/headers/header.dart';
 import '../../../../utils/helpers/check_bloc_state.dart';
 import '../../../../features/explore/models/book_model.dart';
 import '../../../../features/explore/blocs/base/base_bloc.dart';
 import '../../../../features/explore/blocs/base/base_state.dart';
-import '../../../../features/explore/models/category_model.dart';
+import '../../../../data/models/category_model.dart';
 import '../../../../features/explore/screens/book/widgets/book_item.dart';
 
 class BookScreen extends StatelessWidget {

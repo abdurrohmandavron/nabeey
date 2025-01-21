@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:nabeey/features/explore/models/user_model.dart';
+import 'package:nabeey/data/models/user_model.dart';
 
 class LocalStorage {
   static final LocalStorage _instance = LocalStorage._internal();

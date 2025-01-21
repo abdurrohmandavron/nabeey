@@ -1,8 +1,8 @@
-import '../../../features/explore/models/file_model.dart';
-import '../../../features/explore/models/book_model.dart';
-import '../../../features/explore/models/audio_model.dart';
-import '../../../features/explore/models/video_model.dart';
-import '../../../features/explore/models/article_model.dart';
+import 'file_model.dart';
+import '../../features/explore/models/book_model.dart';
+import '../../features/explore/models/audio_model.dart';
+import '../../features/explore/models/video_model.dart';
+import '../../features/explore/models/article_model.dart';
 
 class CategoryModel {
   final int id;

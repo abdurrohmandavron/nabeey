@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:nabeey/features/explore/models/file_model.dart';
+import 'package:nabeey/data/models/file_model.dart';
 
 part 'user_model.g.dart';
 
