@@ -7,7 +7,7 @@ abstract class BaseState extends Equatable {
   List<Object?> get props => [];
 }
 
-class ItemsInit extends BaseState {}
+class ItemsLoading extends BaseState {}
 
 class ItemsLoaded<T> extends BaseState {
   final List<T> items;

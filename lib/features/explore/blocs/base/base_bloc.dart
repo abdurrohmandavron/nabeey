@@ -12,7 +12,7 @@ class BaseBloc<T> extends Bloc<BaseEvent, BaseState> {
 
   AudioModel? playingAudio;
 
-  BaseBloc(this._repository) : super(ItemsInit()) {
+  BaseBloc(this._repository) : super(ItemsLoading()) {
     on<LoadItems>(_loadItems);
 
     add(LoadItems());

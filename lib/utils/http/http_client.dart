@@ -14,7 +14,7 @@ class HttpHelper {
     'Content-Type': 'application/json',
   };
 
-  final String _baseUrl = kDebugMode ? 'nabeey.ddns.net:8080' : dotenv.env['BASE_URL']!;
+  final String _baseUrl = kDebugMode ? 'nabeey2.ddns.net:8080' : dotenv.env['BASE_URL']!;
   final String _youtubeBase = ADAPIs.youtubeBase;
 
   Future<Map<String, dynamic>> get(String path) async {

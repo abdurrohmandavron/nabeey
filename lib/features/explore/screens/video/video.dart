@@ -27,7 +27,7 @@ class VideoScreen extends StatelessWidget {
               padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
               child: BlocBuilder<VideoBloc, BaseState>(
                 builder: (context, state) {
-                  if (state is ItemsInit) {
+                  if (state is ItemsLoading) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (state is VideosLoaded) {
                     return ListView.separated(

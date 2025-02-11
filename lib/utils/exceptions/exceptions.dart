@@ -1,12 +1,10 @@
-import 'package:flutter/foundation.dart';
-import 'package:nabeey/utils/logging/logger.dart';
+class ADException implements Exception {
+  final dynamic error;
+  final String message;
+  final String code;
 
-class ADException {
-  late String message;
-  String code = '';
-  ADException(exception) {
-    message = "Xatolik yuz berdi.";
+  ADException(this.error, {required this.message, required this.code});
 
-    if (kDebugMode) LoggerHelper.error(exception.toString() + code + message);
-  }
+  @override
+  String toString() => message;
 }

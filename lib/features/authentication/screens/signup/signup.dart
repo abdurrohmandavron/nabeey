@@ -6,6 +6,7 @@ import 'package:nabeey/utils/constants/text_strings.dart';
 import 'package:nabeey/common/widgets/appbar/appbar.dart';
 import 'package:nabeey/features/authentication/screens/signup/widgets/signup_form.dart';
 
+import '../../../../routes/routes.dart';
 import '../../blocs/signup/signup_bloc.dart';
 
 class SignupScreen extends StatelessWidget {
@@ -33,6 +34,16 @@ class SignupScreen extends StatelessWidget {
               /// Form
               SignupForm(bloc: bloc),
               const SizedBox(height: ADSizes.spaceBtwSections),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(ADTexts.haveAccount),
+                  TextButton(
+                    onPressed: () => Navigator.pushNamed(context, ADRoutes.login), 
+                    child: const Text(ADTexts.toLogin),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

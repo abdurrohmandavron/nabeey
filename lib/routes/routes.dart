@@ -1,6 +1,7 @@
 class ADRoutes {
   static const home = '/';
   static const quiz = '/quiz';
+  static const login = '/login';
   static const signup = '/signup';
   static const rating = '/rating';
   static const profile = '/profile';

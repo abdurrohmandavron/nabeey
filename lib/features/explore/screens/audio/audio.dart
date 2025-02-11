@@ -39,7 +39,7 @@ class AudioScreen extends StatelessWidget {
                 ),
                 child: BlocBuilder<BaseBloc<AudioModel>, BaseState>(
                   builder: (context, state) {
-                    if (state is ItemsInit) {
+                    if (state is ItemsLoading) {
                       return const Center(child: CircularProgressIndicator());
                     } else if (state is ItemsLoaded) {
                       final audios = state.items as List<AudioModel>;

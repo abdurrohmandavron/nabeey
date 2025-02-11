@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import '../logging/logger.dart';
 
 class NetworkManager {
   final Connectivity _connectivity = Connectivity();
-
+  late StreamSubscription<List<ConnectivityResult>> _subscription;
   final StreamController<ConnectivityResult> connectionStatusController = StreamController<ConnectivityResult>.broadcast();
 
   NetworkManager() {
@@ -11,25 +12,41 @@ class NetworkManager {
   }
 
   void _listenChange() async {
-    List<ConnectivityResult> result = await _connectivity.checkConnectivity();
-    connectionStatusController.add(result[0]); // Add the first element (ConnectivityResult)
-    _connectivity.onConnectivityChanged.listen((newList) {
-      if (newList[0] != result[0]) {
-        result = newList;
-        connectionStatusController.add(result[0]);
-        isConnected(); // Call isConnected on change
-      }
-    });
+    try {
+      List<ConnectivityResult> result = await _connectivity.checkConnectivity();
+      _handleConnectivityResult(result);
+
+      _subscription = _connectivity.onConnectivityChanged.listen(
+        _handleConnectivityResult,
+        onError: (error) {
+          LoggerHelper.error('Connectivity error: $error');
+        },
+      );
+    } catch (e) {
+      LoggerHelper.error('Failed to initialize connectivity: $e');
+    }
   }
 
-  // Check current connectivity status
+  void _handleConnectivityResult(List<ConnectivityResult> result) {
+    if (!connectionStatusController.isClosed) {
+      connectionStatusController.add(result[0]);
+      _checkConnection(result[0]);
+    }
+  }
+
+  Future<void> _checkConnection(ConnectivityResult result) async {
+    if (result == ConnectivityResult.none) {
+      // Show no internet warning
+      LoggerHelper.warning("Internet aloqasi yo'q");
+    }
+  }
+
   Future<bool> isConnected() async {
-    var connectivityResult = await _connectivity.checkConnectivity();
-    if (connectivityResult[0] != ConnectivityResult.none) {
-      return true;
-    } else {
-      // Show snackbar using a separate function (not included here)
-      // e.g., showWarningSnackbar(title: "Internet aloqasi yo'q");
+    try {
+      var connectivityResult = await _connectivity.checkConnectivity();
+      return connectivityResult[0] != ConnectivityResult.none;
+    } catch (e) {
+      LoggerHelper.error('Connection check failed: $e');
       return false;
     }
   }
@@ -37,6 +54,7 @@ class NetworkManager {
   Stream<ConnectivityResult> get connectionChange => connectionStatusController.stream;
 
   void dispose() {
+    _subscription.cancel();
     connectionStatusController.close();
   }
 }

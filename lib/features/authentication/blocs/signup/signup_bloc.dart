@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nabeey/data/models/user_model.dart';
-import 'package:nabeey/utils/exceptions/exceptions.dart';
 import 'package:nabeey/utils/helpers/network_manager.dart';
 import 'package:nabeey/features/authentication/blocs/user/user_bloc.dart';
 import 'package:nabeey/features/authentication/blocs/user/user_event.dart';
 import 'package:nabeey/features/authentication/blocs/signup/signup_event.dart';
 import 'package:nabeey/features/authentication/blocs/signup/signup_state.dart';
+import '../../../../utils/logging/logger.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   /// Variables
@@ -51,8 +51,8 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
         // Emit Success Status
         emit(SignupSuccess(UserBloc.currentUser!));
       } catch (e) {
-        ADException(e);
-        emit(SignupError('An error occurred: $e'));
+        LoggerHelper.error('Signup failed: $e');
+        emit(SignupError(e.toString()));
       }
     });
   }

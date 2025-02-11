@@ -20,4 +20,8 @@ class ADTexts {
   static const String exit = "Chiqish";
   static const String correctAnswers = "To'g'ri javoblar soni: ";
   static const String incorrectAnswers = "Noto'g'ri javoblar soni: ";
+  static const String login = "Kirish";
+  static const String toLogin = "Kirish";
+  static const String noAccount = "Hisobingiz yo'qmi?";
+  static const String haveAccount = "Hisobingiz bormi?";
 }

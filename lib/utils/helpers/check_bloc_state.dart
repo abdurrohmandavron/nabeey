@@ -4,7 +4,7 @@ import 'package:nabeey/utils/constants/sizes.dart';
 
 class CheckBlocState {
   static Widget? checkState(BuildContext context, BaseState state) {
-    if (state is ItemsInit) {
+    if (state is ItemsLoading) {
       return const Center(child: CircularProgressIndicator());
     } else if (state is ItemsLoaded) {
       return null;

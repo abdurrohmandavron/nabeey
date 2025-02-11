@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
+import '../logging/logger.dart';
 
 class ADDeviceUtils {
   ADDeviceUtils._();
@@ -32,6 +33,7 @@ class ADDeviceUtils {
       final result = await InternetAddress.lookup('fast.com');
       return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
     } catch (e) {
+      LoggerHelper.error('Internet connection check failed: $e');
       return false;
     }
   }

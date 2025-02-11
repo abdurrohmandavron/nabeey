@@ -16,7 +16,7 @@ class CategoryScreen extends StatelessWidget {
       appBar: AppBar(title: Text('Nabeey', style: Theme.of(context).textTheme.headlineLarge)),
       body: BlocBuilder<BaseBloc<CategoryModel>, BaseState>(
         builder: (context, state) {
-          if (state is ItemsInit) {
+          if (state is ItemsLoading) {
             return Container(
               margin: const EdgeInsets.only(top: 20),
               padding: const EdgeInsets.symmetric(horizontal: 20),

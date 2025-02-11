@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http show MultipartFile;
+import '../../utils/logging/logger.dart';
 
 import '../../utils/http/http_client.dart';
 import '../../data/models/user_model.dart';
@@ -29,6 +30,7 @@ class BaseRepository<T> {
 
       return response['data'] != null ? fromJson(response['data']) : empty();
     } catch (e) {
+      LoggerHelper.error('Repository operation failed: $e');
       rethrow;
     }
   }
@@ -41,6 +43,7 @@ class BaseRepository<T> {
       final List<dynamic> jsonList = response['data'] ?? [];
       return jsonList.map<T>((json) => fromJson(json)).toList();
     } catch (e) {
+      LoggerHelper.error('Repository operation failed: $e');
       rethrow;
     }
   }
@@ -53,6 +56,7 @@ class BaseRepository<T> {
       final List<dynamic> jsonList = response['data'] ?? [];
       return jsonList.map((json) => fromJson(json)).toList();
     } catch (e) {
+      LoggerHelper.error('Repository operation failed: $e');
       rethrow;
     }
   }
@@ -70,6 +74,7 @@ class BaseRepository<T> {
 
       return jsonResponse['data'] != null ? fromJson(jsonResponse['data']) : empty();
     } catch (e) {
+      LoggerHelper.error('Repository operation failed: $e');
       rethrow;
     }
   }
@@ -81,6 +86,7 @@ class BaseRepository<T> {
 
       return response['data'] != null ? fromJson(response['data']) : empty();
     } catch (e) {
+      LoggerHelper.error('Repository operation failed: $e');
       rethrow;
     }
   }
@@ -90,6 +96,7 @@ class BaseRepository<T> {
       final String apiEndpoint = ADAPIs.endpoints['DELETE']![T]! + id.toString();
       await httpClient.delete(id, apiEndpoint);
     } catch (e) {
+      LoggerHelper.error('Repository operation failed: $e');
       rethrow;
     }
   }
