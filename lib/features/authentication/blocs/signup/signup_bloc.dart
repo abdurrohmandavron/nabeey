@@ -1,12 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nabeey/data/models/user_model.dart';
-import 'package:nabeey/utils/helpers/network_manager.dart';
-import 'package:nabeey/features/authentication/blocs/user/user_bloc.dart';
-import 'package:nabeey/features/authentication/blocs/user/user_event.dart';
+import 'package:nabeey/data/repositories/auth_repository.dart';
 import 'package:nabeey/features/authentication/blocs/signup/signup_event.dart';
 import 'package:nabeey/features/authentication/blocs/signup/signup_state.dart';
-import '../../../../utils/logging/logger.dart';
+import 'package:nabeey/utils/helpers/network_manager.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   /// Variables
@@ -18,10 +15,11 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
   final GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 
-  final UserBloc userBloc;
+  final AuthRepository authRepository;
 
-  SignupBloc(this.userBloc) : super(SignupLoading()) {
+  SignupBloc({required this.authRepository}) : super(SignupLoading()) {
     on<SignupSubmit>((event, emit) async {
+      emit(SignupLoading());
       try {
         // Check Internet Connectivity
         bool isConnected = await NetworkManager().isConnected();
@@ -29,30 +27,21 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
           return;
         }
 
-        // Form Validation
+        // // Form Validation
         if (!signupFormKey.currentState!.validate()) {
           return;
         }
 
-        // Assign User to variable
-        final user = UserModel(
-          id: 0,
-          userRole: 0,
-          firstName: firstName.text.trim(),
-          lastName: lastName.text.trim(),
-          email: email.text.trim(),
-          phone: '+998${phoneNo.text.trim()}',
-          asset: null,
+        final user = await authRepository.signUp(
+          firstName.text.trim(),
+          lastName.text.trim(),
+          email.text.trim(),
+          '+998${phoneNo.text.trim()}',
+          password.text.trim(),
         );
-
-        // Create User
-        userBloc.add(CreateUser(user: user, password: password.text.trim()));
-
-        // Emit Success Status
-        emit(SignupSuccess(UserBloc.currentUser!));
+        emit(SignupSuccess(user!));
       } catch (e) {
-        LoggerHelper.error('Signup failed: $e');
-        emit(SignupError(e.toString()));
+        emit(SignupError("Signup failed: ${e.toString()}"));
       }
     });
   }

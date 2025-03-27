@@ -37,7 +37,8 @@ class BaseRepository<T> {
 
   Future<List<T>> getByCategoryId() async {
     try {
-      String apiEndpoint = ADAPIs.endpoints['GETBYCATEGORY']![T]! + categoryId.toString();
+      String apiEndpoint =
+          ADAPIs.endpoints['GETBYCATEGORY']![T]! + categoryId.toString();
       final response = await httpClient.get(apiEndpoint);
 
       final List<dynamic> jsonList = response['data'] ?? [];
@@ -61,18 +62,22 @@ class BaseRepository<T> {
     }
   }
 
-  Future<T> create(Map<String, dynamic> jsonData, [List<http.MultipartFile>? files]) async {
+  Future<T> create(Map<String, dynamic> jsonData,
+      [List<http.MultipartFile>? files]) async {
     try {
       final String apiEndpoint = ADAPIs.endpoints['CREATE']![T]!;
       final Map<String, dynamic> jsonResponse;
 
-      if (files != null) {
-        jsonResponse = await httpClient.postMultipart(apiEndpoint, jsonData, files);
+      if (files != null || files!.isNotEmpty) {
+        jsonResponse =
+            await httpClient.postMultipart(apiEndpoint, jsonData, files);
       } else {
         jsonResponse = await httpClient.post(apiEndpoint, jsonData);
       }
 
-      return jsonResponse['data'] != null ? fromJson(jsonResponse['data']) : empty();
+      return jsonResponse['data'] != null
+          ? fromJson(jsonResponse['data'])
+          : empty();
     } catch (e) {
       LoggerHelper.error('Repository operation failed: $e');
       rethrow;
@@ -93,7 +98,8 @@ class BaseRepository<T> {
 
   Future<void> delete(int id) async {
     try {
-      final String apiEndpoint = ADAPIs.endpoints['DELETE']![T]! + id.toString();
+      final String apiEndpoint =
+          ADAPIs.endpoints['DELETE']![T]! + id.toString();
       await httpClient.delete(id, apiEndpoint);
     } catch (e) {
       LoggerHelper.error('Repository operation failed: $e');

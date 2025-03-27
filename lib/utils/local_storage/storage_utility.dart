@@ -18,7 +18,7 @@ class LocalStorage {
     final appDocumentDirectory = await getApplicationDocumentsDirectory();
     Hive.init(appDocumentDirectory.path);
     await _initHive();
-    Hive.openBox('general');
+    await Hive.openBox('general');
   }
 
   Future<void> openBox(String boxName) async {

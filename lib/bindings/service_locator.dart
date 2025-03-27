@@ -4,6 +4,7 @@ import 'package:nabeey/data/models/category_model.dart';
 import 'package:nabeey/data/models/user_model.dart';
 import 'package:nabeey/data/repositories/base_repository.dart';
 import 'package:nabeey/data/repositories/video_repository.dart';
+import 'package:nabeey/features/authentication/blocs/profile/profile_bloc.dart';
 import 'package:nabeey/features/authentication/blocs/user/user_bloc.dart';
 import 'package:nabeey/features/explore/blocs/base/base_bloc.dart';
 import 'package:nabeey/features/explore/blocs/video/video_bloc.dart';
@@ -14,7 +15,8 @@ import 'package:nabeey/features/quiz/models/quiz_model.dart';
 import 'package:nabeey/utils/helpers/network_manager.dart';
 
 import '../features/authentication/blocs/signup/signup_bloc.dart';
-import '../features/authentication/blocs/login/login_bloc.dart';
+import 'package:nabeey/data/repositories/auth_repository.dart';
+import 'package:nabeey/features/authentication/blocs/login/login_bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -34,6 +36,14 @@ void _registerRepositories() {
   );
   getIt.registerLazySingleton<BaseRepository<UserModel>>(
     () => BaseRepository<UserModel>(),
+  );
+
+  // Add AuthRepository
+  getIt.registerLazySingleton<AuthRepository>(
+    () => AuthRepository(
+      userRepository: getIt<BaseRepository<UserModel>>(),
+      networkManager: getIt<NetworkManager>(),
+    ),
   );
 
   // Parameterized repositories
@@ -61,6 +71,9 @@ void _registerBlocs() {
   );
   getIt.registerFactory<BaseBloc<UserModel>>(
     () => BaseBloc(getIt<BaseRepository<UserModel>>()),
+  );
+  getIt.registerFactory<ProfileBloc>(
+    () => ProfileBloc(authRepository: getIt<AuthRepository>()),
   );
 
   // User bloc
@@ -95,8 +108,10 @@ void _registerBlocs() {
   );
 
   // Auth blocs
-  getIt.registerFactory(() => SignupBloc(getIt<UserBloc>()));
-  getIt.registerFactory(() => LoginBloc(getIt<UserBloc>()));
+  getIt.registerFactory(
+      () => SignupBloc(authRepository: getIt<AuthRepository>()));
+  getIt.registerFactory(
+      () => LoginBloc(authRepository: getIt<AuthRepository>()));
 }
 
 void _registerServices() {

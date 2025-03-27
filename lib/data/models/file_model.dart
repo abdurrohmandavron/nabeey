@@ -15,8 +15,8 @@ class FileModel {
     if (json == null) return FileModel.empty();
     return FileModel(
       fileName: json["fileName"] ?? '',
-      // filePath: json["filePath"] ?? '', TODO
-      filePath: (json["filePath"] as String? ?? '').replaceAll('localhost', dotenv.env['BASE_URL']!),
+      filePath: (json["filePath"] as String? ?? '')
+          .replaceAll('localhost', dotenv.env['BASE_URL']!),
     );
   }
 

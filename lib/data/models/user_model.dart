@@ -53,20 +53,20 @@ class UserModel extends HiveObject {
   }
 
   // Method to serialize to JSON
-  Map<String, dynamic> toJson({String? password}) {
-    final Map<String, dynamic> json = {
+  Map<String, String> toJson({String? password}) {
+    final Map<String, String> json = {
       "firstName": firstName,
       "lastName": lastName,
       "email": email,
       "phone": phone,
-      "userRole": userRole,
-      "asset": asset?.toJson(),
+      // "userRole": userRole,
+      // "asset": asset?.toJson(),
     };
 
     if (password != null) {
       json["password"] = password;
     } else {
-      json["id"] = id;
+      // json["id"] = id;
     }
 
     return json;

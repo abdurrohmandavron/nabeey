@@ -58,6 +58,9 @@ class ADAPIs {
       VideoModel: 'api/content-videos/delete/',
       QuizModel: 'api/quizzes/delete/',
     },
+    'LOGIN': {
+      UserModel: 'api/auth/login',
+    },
   };
 
   static const String youtubeBase = 'www.googleapis.com';

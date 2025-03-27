@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http show MultipartFile;
 
 import 'package:nabeey/data/models/user_model.dart';
 import 'package:nabeey/data/repositories/base_repository.dart';
+import 'package:nabeey/utils/helpers/network_manager.dart';
 import 'package:nabeey/utils/local_storage/storage_utility.dart';
 
 import '../../../../utils/logging/logger.dart';
@@ -11,12 +12,16 @@ import 'user_event.dart';
 import 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
-  final baseRepository = BaseRepository();
+  final BaseRepository baseRepository;
+  final NetworkManager networkManager;
 
   /// Variables
   static UserModel? currentUser;
 
-  UserBloc() : super(UserLoading()) {
+  UserBloc({
+    required this.baseRepository,
+    required this.networkManager,
+  }) : super(UserLoading()) {
     on<CreateUser>((event, emit) async {
       try {
         final jsonUser = event.user.toJson(password: event.password);
@@ -31,7 +36,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
               ]
             : <http.MultipartFile>[];
 
-        final user = await baseRepository.create(jsonUser, files);
+        final UserModel user = await baseRepository.create(jsonUser, files);
 
         currentUser = user;
         LocalStorage().saveData('general', 'currentUser', currentUser);

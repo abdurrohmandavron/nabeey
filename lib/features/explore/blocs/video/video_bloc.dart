@@ -19,6 +19,8 @@ class VideoBloc extends Bloc<BaseEvent, BaseState> {
   })  : _networkManager = networkManager,
         super(ItemsLoading()) {
     on<LoadItems>(_handleLoadItems);
+
+    add(LoadItems());
   }
 
   Future<void> _handleLoadItems(LoadItems event, Emitter<BaseState> emit) async {

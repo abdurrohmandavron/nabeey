@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_flutter/icons_flutter.dart';
+import 'package:nabeey/features/authentication/blocs/profile/profile_bloc.dart';
 
 import '../category/category.dart';
 import 'widgets/navigation_bar.dart';
 import '../../blocs/base/base_bloc.dart';
 import '../../models/navigation_model.dart';
-import '../../../../data/models/user_model.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../bindings/service_locator.dart';
 import '../../../../data/models/category_model.dart';
 import '../../../../utils/helpers/helper_functions.dart';
 import '../../../../features/quiz/models/quiz_model.dart';
 import '../../../../features/quiz/screens/quiz/quiz.dart';
+import '../../../authentication/screens/profile/profile.dart';
 import '../../../../features/explore/cubits/navigation/navigation_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -36,12 +37,16 @@ class HomeScreen extends StatelessWidget {
                 color: ADColors.white,
                 selectedIndex: state.index,
                 selectedItemColor: const Color(0xFFF59C16),
-                unselectedItemColor: dark ? ADColors.white : const Color.fromRGBO(17, 17, 17, 0.5),
+                unselectedItemColor: dark
+                    ? ADColors.white
+                    : const Color.fromRGBO(17, 17, 17, 0.5),
                 onDestinationSelected: cubit.onDestinationSelected,
                 destinations: const [
                   NavigationModel(icon: Icon(Feather.home), label: "Asosiy"),
-                  NavigationModel(icon: Icon(Feather.help_circle), label: "Test"),
-                  NavigationModel(icon: Icon(Feather.activity), label: "Reyting"),
+                  NavigationModel(
+                      icon: Icon(Feather.help_circle), label: "Test"),
+                  NavigationModel(
+                      icon: Icon(Feather.activity), label: "Reyting"),
                   NavigationModel(icon: Icon(Feather.user), label: "Profil"),
                 ],
               );
@@ -61,11 +66,11 @@ class HomeScreen extends StatelessWidget {
                 // BlocProvider<BaseBloc<RatingModel>>(
                 //   create: (context) => getIt<BaseBloc<RatingModel>>(),
                 //   child: const RatingScreen(),
-                const SizedBox(),
                 // ),
-                BlocProvider<BaseBloc<UserModel>>(
-                  create: (context) => getIt<BaseBloc<UserModel>>(),
-                  // child: const ProfileScreen(),
+                const SizedBox(), // TODO
+                BlocProvider<ProfileBloc>(
+                  create: (context) => getIt<ProfileBloc>(),
+                  child: const ProfileScreen(),
                 ),
               ][state.index];
             },

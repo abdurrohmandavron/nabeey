@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nabeey/features/authentication/blocs/signup/signup_state.dart';
 import 'package:nabeey/utils/constants/sizes.dart';
 import 'package:nabeey/utils/constants/colors.dart';
 import 'package:nabeey/utils/constants/text_strings.dart';
@@ -15,36 +16,54 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<SignupBloc>(context);
-    return Scaffold(
-      appBar: const ADAppBar(showBackArrow: true),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(ADSizes.defaultSpace),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /// For Test Text
-              Text(ADTexts.forTest, style: Theme.of(context).textTheme.bodyMedium!.apply(color: ADColors.textBlue)),
-              const SizedBox(height: ADSizes.sm),
+    return BlocListener<SignupBloc, SignupState>(
+      listener: (context, state) {
+        if (state is SignupError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message)),
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: const ADAppBar(showBackArrow: true),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(ADSizes.defaultSpace),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// For Test Text
+                Text(
+                  ADTexts.forTest,
+                  style: Theme.of(context).textTheme.bodyMedium!.apply(
+                        color: ADColors.textBlue,
+                      ),
+                ),
+                const SizedBox(height: ADSizes.sm),
 
-              /// Sign Up text
-              Text(ADTexts.signup, style: Theme.of(context).textTheme.headlineLarge),
-              const SizedBox(height: ADSizes.spaceBtwSections),
+                /// Sign Up text
+                Text(
+                  ADTexts.signup,
+                  style: Theme.of(context).textTheme.headlineLarge,
+                ),
+                const SizedBox(height: ADSizes.spaceBtwSections),
 
-              /// Form
-              SignupForm(bloc: bloc),
-              const SizedBox(height: ADSizes.spaceBtwSections),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(ADTexts.haveAccount),
-                  TextButton(
-                    onPressed: () => Navigator.pushNamed(context, ADRoutes.login), 
-                    child: const Text(ADTexts.toLogin),
-                  ),
-                ],
-              ),
-            ],
+                /// Form
+                SignupForm(bloc: bloc),
+                const SizedBox(height: ADSizes.spaceBtwSections),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(ADTexts.haveAccount),
+                    TextButton(
+                      onPressed: () =>
+                          Navigator.pushNamed(context, ADRoutes.login),
+                      child: const Text(ADTexts.toLogin),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,5 +1,6 @@
 class Validator {
-  static String? validateEmptyText(String? fieldName, String? value) => value == null || value.isEmpty ? "$fieldName yozilishi shart." : null;
+  static String? validateEmptyText(String? fieldName, String? value) =>
+      value == null || value.isEmpty ? "$fieldName yozilishi shart." : null;
 
   static String? validateEmail(String? value) {
     String? result;
@@ -32,10 +33,10 @@ class Validator {
       return "Telefon raqam yozilishi shart";
     }
 
-    final phoneRegExp = RegExp(r'^\d{10}$');
+    final phoneRegExp = RegExp(r'^\d{9}$');
 
     if (!phoneRegExp.hasMatch(value)) {
-      return "Noto'g'i telefon raqam formati (10 ta raqam)";
+      return "Noto'g'i telefon raqam formati (9 ta raqam)";
     }
 
     return null;

@@ -7,4 +7,5 @@ class ADRoutes {
   static const profile = '/profile';
   static const onBoarding = '/on-boarding';
   static const editProfile = '/edit-profile';
+  static const sendArticle = '/send-article';
 }

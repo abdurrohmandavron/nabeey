@@ -69,7 +69,7 @@ class SignupForm extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 bloc.add(SignupSubmit());
-                Navigator.pop(context);
+                // Navigator.pop(context); // TODO
               },
               child: const Text(ADTexts.signup),
             ),
